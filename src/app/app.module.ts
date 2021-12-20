@@ -9,14 +9,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {authInterceptorProviders} from "./helper/auth-interceptor.service";
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
-import { JustTestComponent } from './justTest/just-test/just-test.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
-    JustTestComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
