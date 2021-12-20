@@ -1,40 +1,71 @@
 import {Component, OnInit} from '@angular/core';
-
 import {AuthService} from "../../services/auth.service";
+import {NotificationService} from "../../services/notification.service";
+
+class objSignIn {
+  refreshToken?: '';
+  success?: '';
+  token?: '';
+}
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
+  public email = 'ivanov11@mail.ru';
+  public password = 'test123';
+
+  constructor(private authService: AuthService,
+              private notificationService: NotificationService) {
   }
 
-  getTestText?: String;
+  refreshToken?: String = '';
+  success?: String = '';
+  token?: String = '';
+  next?: String = '';
+  error?: String = '';
 
-  userError:{email:string,password:string} = {
-    email:'',
-    password:''
-}
+  apiAuth(login: string, password: string): any {
+    let o = {
+      email: '',
+      password: ''
+    }
+    o.email = login;
+    o.password = password;
 
-  getUserSignInPost() {
-    this.authService.login(this.userData).subscribe(response => this.object(response),error => this.object(error.error));
-    // this.authService.login(this.userData).subscribe({
-    //   next:()=>{this.userData.email}
-    //
-    // });
+    this.authService.login(o).subscribe({
+      next: (v: objSignIn) => {
+        this.pressTestShowBar();
+        this.refreshToken = v.refreshToken;
+        this.success = v.success;
+        this.token = v.token;
+        console.log(v);
+        console.log(this.refreshToken);
+        console.log(this.success);
+        console.log(this.token);
+      },
+      error: (e) => {
+        this.pressTestShowBar(
+          JSON.stringify(e.error));
+        console.log(e);
+        this.error = e.error
+      },
+      complete: () => console.info('complete')
+    });
+
+
   }
-  object(test: any): any {
-    this.getTestText = JSON.stringify(test);
+
+  pressTestShowBar(message?: String) {
+    this.notificationService.showSnackBar('' + message
+    );
   }
-  userData: {email: string, password: string } = {
-    email: '1',
-    password: '1'
-  }
+
   ngOnInit() {
-    console.log(Object(this.userData));
-    // console.log(this.userData.email);
+    // console.log('getUserSignInPost ', this.getUserSignInPost().next());
   }
 }

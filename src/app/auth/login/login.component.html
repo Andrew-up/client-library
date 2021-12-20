@@ -1,24 +1,23 @@
 
 <div class="login">
   <div class="spacer">
-    <input type="text" placeholder="email" [(ngModel)]="userData.email">
+    <input type="text" placeholder="email" [(ngModel)]="email">
   </div>
   <div class="spacer">
-    <input type="password" placeholder="password" [(ngModel)]="userData.password" class=""/>
+    <input type="password" placeholder="password" [(ngModel)]="password" class=""/>
+
   </div>
-  <button (click)="getUserSignInPost()">CLICK ME</button>
+  <button (click)="apiAuth(email,password)">CLICK ME</button>
+  <button (click)="pressTestShowBar('privet')">SHOW BAR</button>
   <div class="spacer">
 
-    <p>{{userData.email}}</p>
-    <p>{{userData.password}}</p>
+
   </div>
 </div>
 
 
 <div class="login">
 <!--<p>{{otvetString}}</p>-->
-<p>{{getTestText}}</p>
-<p>{{userError.email + userError.password}}</p>
-</div>
 
+</div>
 

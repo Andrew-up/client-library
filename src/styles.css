@@ -1,4 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+.snackbar {
+  max-width: 50% !important;
+  background: #cfffd2;
+  word-wrap: break-word;
+  word-break: break-all; /* более приоритетно */
+  /*margin-left: 500pt;*/
+  border: 3pt double rebeccapurple;
+  /*box-shadow:   0px 0px 20px 5px black;*/
+  position:absolute; /* добавили */
+  bottom:0; /* добавили */
+  left: 0;
+  right: 0;
+
+}
+.mat-snack-bar-container{
+margin: 0 !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  /*margin-left: auto !important;*/
+  /*margin-right: auto !important;*/
+}
+
+
+

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {observable, Observable} from "rxjs";
 
 
 const AUTH_API = 'http://localhost:8099/api/auth';
@@ -12,10 +12,6 @@ export class AuthService {
 
 
   constructor(private httpClient: HttpClient) {
-  }
-
-  public get(): Observable<any>{
-    return this.httpClient.get('http://localhost:8099/api/books/all');
   }
 
   public login(user:any):Observable<any>{
