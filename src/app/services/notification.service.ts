@@ -12,7 +12,7 @@ export class NotificationService {
   }
   public showSnackBar(message:string):void{
     this.snackBar.open(message,void 0, {
-      duration: 20000,
+      duration: 2000,
       panelClass: ['snackbar'],
     });
   }

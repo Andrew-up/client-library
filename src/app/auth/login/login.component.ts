@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {NotificationService} from "../../services/notification.service";
-
-class objSignIn {
-  refreshToken?: '';
-  success?: '';
-  token?: '';
-}
+import {TokenStorageService} from "../../services/token-storage.service";
+import {Token} from "../../models/Token";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/User";
 
 @Component({
   selector: 'app-login',
@@ -20,16 +18,19 @@ export class LoginComponent implements OnInit {
   public password = 'test123';
 
   constructor(private authService: AuthService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private tokenStorageService: TokenStorageService,
+              private userService: UserService) {
   }
 
-  refreshToken?: String = '';
-  success?: String = '';
-  token?: String = '';
-  next?: String = '';
-  error?: String = '';
+
+  refreshToken?: string = '';
+  success?: boolean;
+  token?: string = '';
+  error?: string = '';
 
   apiAuth(login: string, password: string): any {
+
     let o = {
       email: '',
       password: ''
@@ -38,15 +39,17 @@ export class LoginComponent implements OnInit {
     o.password = password;
 
     this.authService.login(o).subscribe({
-      next: (v: objSignIn) => {
+      next: (v: Token) => {
         this.pressTestShowBar();
         this.refreshToken = v.refreshToken;
         this.success = v.success;
         this.token = v.token;
-        console.log(v);
-        console.log(this.refreshToken);
-        console.log(this.success);
-        console.log(this.token);
+        if (v.success) {
+          this.tokenStorageService.saveToken(this.token + '', v.refreshToken + '');
+          this.tokenStorageService.saveUser(v);
+          this.pressTestShowBar('Успешно!');
+          window.location.reload();
+        }
       },
       error: (e) => {
         this.pressTestShowBar(
@@ -56,16 +59,28 @@ export class LoginComponent implements OnInit {
       },
       complete: () => console.info('complete')
     });
-
-
   }
 
   pressTestShowBar(message?: String) {
-    this.notificationService.showSnackBar('' + message
-    );
+    this.notificationService.showSnackBar('' + message);
   }
 
+  checkToken() {
+    this.token = this.tokenStorageService.getToken() + '';
+    this.refreshToken = this.tokenStorageService.getRefreshToken() + '';
+    // console.log('getCurrentUser: '+this.tokenStorageService.getUser());
+    console.log('getCurrentUser: '+this.userService.getCurrentUser().subscribe({
+      next: (v:User)=>{
+        console.log('id: '+v.id);
+        console.log('email: '+v.username);
+        console.log('firstname: '+v.firstname);
+        console.log('lastname: '+v.lastname);
+    }
+    }));
+    // this.userService.getCurrentUser().subscribe();
+  }
+
+
   ngOnInit() {
-    // console.log('getUserSignInPost ', this.getUserSignInPost().next());
   }
 }
