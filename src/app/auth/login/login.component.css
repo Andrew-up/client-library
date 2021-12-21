@@ -1,10 +1,30 @@
-.login{
-  padding: .5em 1em;
-  border: 1px dashed #ccc;
-  width: 50%;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #f4f4ff;
-  word-wrap:break-word;
+.back-login-form {
+  display: flex;
+  background: #4e5d43;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
+
+.login-form {
+  flex-direction: column;
+  display: flex;
+  min-width: 30%;
+  background-color: #f4f4ff;
+}
+
+.form-input {
+  margin-top: 5pt;
+  margin-bottom: 5pt;
+}
+
+.info_footer{
+  border: 1px dashed #ccc;
+  background-color: #f4f4ff;
+  word-wrap: break-word;
+  overflow: hidden;
+  padding: 10pt;
+  min-width: 30%;
+}
+

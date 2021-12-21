@@ -14,7 +14,7 @@ import {User} from "../../models/User";
 })
 export class LoginComponent implements OnInit {
 
-  public email = 'ivanov11@mail.ru';
+  public email = 'ivanov10@mail.ru';
   public password = 'test123';
 
   constructor(private authService: AuthService,
