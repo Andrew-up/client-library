@@ -5,4 +5,6 @@ export interface User{
   lastname:string;
   email:string;
   info:string;
+  name:string;
+  surname:string;
 }

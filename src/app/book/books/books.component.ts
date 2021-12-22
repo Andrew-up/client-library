@@ -12,27 +12,15 @@ export class BooksComponent implements OnInit {
   constructor(public booksService: BooksService) {
   }
 
-  items = [
-    'Apple iPhone 7',
-    'Huawei Mate 9',
-    'Samsung Galaxy S7',
-    'Motorola Moto Z',
-  ]
-
-  condition: boolean = true
-  toggle() {
-    this.condition = !this.condition
-  }
-
-
- // public book: Book[] = [{bookTitle:'',genreCode:'',numberPages:0,releaseDate:''}];
+ // public book: Book[] = [];
 book: Book[] =
   [{bookTitle:'123',genreCode:'222',numberPages:0,releaseDate:'123'}];
 
   getAllBook() {
     this.booksService.getAllBooks().subscribe(res=>{
-      // this.book = res;
-      // console.log(this.book);
+      this.book = res;
+      console.log(this.book);
+      console.log(res);
     })
   }
 

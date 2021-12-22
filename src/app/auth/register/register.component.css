@@ -1,0 +1,17 @@
+.register_parent{
+  background: #ffcfcf;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+margin-left: 30%;
+  margin-right: 30%;
+}
+
+.form-input {
+  margin-top: 5pt;
+  margin-bottom: 5pt;
+}
+.p{
+  word-wrap: break-word;
+}

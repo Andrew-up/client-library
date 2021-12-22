@@ -1,1 +1,17 @@
-<p>register works!</p>
+<script src="../../../../../../Users/L/Downloads/Telegram Desktop/login.component.ts"></script>
+<div>
+<div class="register_parent">
+
+  <input  class="form-input" type="text" placeholder="email" [(ngModel)]="email">
+  <input class="form-input" type="text" placeholder="name" [(ngModel)]="name">
+  <input class="form-input" type="text" placeholder="surname" [(ngModel)]="surname">
+  <input class="form-input" type="text" placeholder="password" [(ngModel)]="password">
+  <button (click)="apiRegister(email,name,surname,password)">Registration</button>
+  <br>
+  <div>
+    <p class="p">{{message}}</p>
+
+  </div>
+</div>
+
+</div>

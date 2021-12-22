@@ -4,6 +4,7 @@
       <p>Название: {{item.bookTitle}}</p>
       <p>Жанр: {{item.genreCode}}</p>
       <p>Дата выхода: {{item.releaseDate}}</p>
+<!--      <p>{{item.}}</p>-->
 <!--      <p>Серия: {{item.series}}</p>-->
 <!--      <p>Перевод: {{item.translation}}</p>-->
       <p>Страниц: {{item.numberPages}}</p>
@@ -11,14 +12,7 @@
     </div>
   </div>
 </div>
-<ul>
-  <li *ngFor="let item of items">{{ item }}</li>
-</ul>
 
-
-<p *ngIf="condition">Привет мир</p>
-<p *ngIf="!condition">Пока мир</p>
-<button (click)="toggle()">Toggle</button>
 
 <p>books works!</p>
 <button (click)="getAllBook()"> get all</button>
