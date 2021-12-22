@@ -10,13 +10,16 @@ import {authInterceptorProviders} from "./helper/auth-interceptor.service";
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {BooksComponent} from './book/books/books.component';
+import {CommonModule} from "@angular/common";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    BooksComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,8 +29,10 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CommonModule
   ],
+  exports:[AppComponent],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })

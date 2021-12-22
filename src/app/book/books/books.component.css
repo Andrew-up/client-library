@@ -1,0 +1,16 @@
+.books_parent {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f3f3f3;
+  flex-direction: row;
+}
+
+.books_child {
+  padding: 5pt;
+  display: flex;
+  flex-direction: column;
+  background-color: #e4e4fd;
+  margin: 10pt;
+  width: 200pt;
+  height: auto;
+}

@@ -1,0 +1,36 @@
+<div class="books_parent">
+  <div *ngFor="let item of book">
+    <div class="books_child">
+      <p>Название: {{item.bookTitle}}</p>
+      <p>Жанр: {{item.genreCode}}</p>
+      <p>Дата выхода: {{item.releaseDate}}</p>
+<!--      <p>Серия: {{item.series}}</p>-->
+<!--      <p>Перевод: {{item.translation}}</p>-->
+      <p>Страниц: {{item.numberPages}}</p>
+      <button>Подробнее</button>
+    </div>
+  </div>
+</div>
+<ul>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+
+
+<p *ngIf="condition">Привет мир</p>
+<p *ngIf="!condition">Пока мир</p>
+<button (click)="toggle()">Toggle</button>
+
+<p>books works!</p>
+<button (click)="getAllBook()"> get all</button>
+
+<!--<div class="">-->
+<!--  <ul class="list-group">-->
+<!--    <li *ngFor="let books of book ">-->
+
+<!--      <h3>{{books.bookTitle}}</h3>-->
+<!--      <h3>{{books}}</h3>-->
+
+
+<!--    </li>-->
+<!--  </ul>-->
+<!--</div>-->
