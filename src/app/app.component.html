@@ -8,9 +8,10 @@
   <title>doc1</title>
 </head>
 <body>
+
 <div class="header">
   <h1>LIBRARY</h1>
-  <div class="hamburger-menu">
+  <div (click)="getLoggerInUserRole()" class="hamburger-menu">
     <input id="menu__toggle" type="checkbox"/>
     <label class="menu__btn" for="menu__toggle">
       <span></span>
@@ -23,8 +24,41 @@
       <li><a class="menu__item" href="#">Авторы</a></li>
       <li><a class="menu__item" href="#">Контакты</a></li>
       <li *ngIf="!getLoggedInStatus()"><a class="menu__item" (click)="logout()" href="#">Выход</a></li>
+      <div *ngIf="getLoggerInUser">
+        <li><a class="menu__item" href="#">ROLE_USER</a></li>
+      </div>
+      <div *ngIf="getLoggerInWorker">
+        <div class="mainMenu">
+          <ul>
+            <li><a class="menu__item" href="#">Пункт 1</a>
+            <ul class="submenu">
+              <li><a href="#">Подпункт</a></li>
+              <li><a href="#">Подпункт</a></li>
+              <li><a href="#">Подпункт</a></li>
+            </ul>
+            </li>
+          <li><a href="#">Пункт 2</a>
+          <ul class="submenu">
+            <li><a href="#">Подпункт</a></li>
+            <li><a href="#">Подпункт</a></li>
+            <li><a href="#">Подпункт</a></li>
+          </ul>
+          </li>
+          </ul>
+        </div>
+        <!--        </nav>-->
+      </div>
+
+      <div *ngIf="getLoggerInAdmin">
+        <li><a class="menu__item" href="/admin">ROLE_ADMIN</a></li>
+      </div>
+
     </ul>
+
   </div>
+  <button (click)="checkStorage()"> check role</button>
+  <p>{{test}}</p>
+
 
 </div>
 

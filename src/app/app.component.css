@@ -9,7 +9,7 @@
   font-family: 'PT Sans Caption', sans-serif;
   display: flex;
   justify-content: center;
-align-items: center;
+  align-items: center;
 }
 
 
@@ -20,6 +20,37 @@ align-items: center;
   font-size: 30pt;
   border: 5pt solid black;
 }
+
+.mainMenu ul li a{
+  display: block;
+  background: #90DA93;
+  border: 1px solid #060A13;
+  color: #060A13;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+
+.mainMenu li a:hover{
+  background: #2F718E;
+}
+.mainMenu  ul li{
+  list-style: none;
+}
+.mainMenu ul .submenu{
+  display: none;
+  /*position: absolute;*/
+  /*background: #333333;*/
+  left: auto;
+  /*top: 100%;*/
+}
+
+.mainMenu li:hover .submenu{
+  display: block;
+}
+
+
 
 /* скрываем чекбокс */
 #menu__toggle {
@@ -123,3 +154,8 @@ align-items: center;
 .menu__item {
   transition-duration: .25s;
 }
+
+
+
+
+

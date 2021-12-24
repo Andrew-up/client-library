@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit {
               private tokenStorageService: TokenStorageService,
               private userService: UserService,
               private router: Router) {
-    if (this.tokenStorageService.getUser()) {
-      this.router.navigate(['/']);
-    }
+    // if (this.tokenStorageService.getUser()) {
+    //   this.router.navigate(['/']);
+    // }
   }
 
 
@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   success?: boolean;
   token?: string = '';
   error?: string = '';
+  eRole?:string ='';
 
   apiAuth(login: string, password: string): any {
 
@@ -50,12 +51,15 @@ export class LoginComponent implements OnInit {
         this.refreshToken = v.refreshToken;
         this.success = v.success;
         this.token = v.token;
+        this.eRole = v.role;
         if (v.success) {
           this.tokenStorageService.saveToken(this.token + '', v.refreshToken + '');
           this.tokenStorageService.saveUser(v);
+          this.tokenStorageService.saveRole(this.eRole+'');
           this.pressTestShowBar('Успешно!');
-          window.location.reload();
+          // window.location.reload();
         }
+
       },
       error: (e) => {
         this.pressTestShowBar(
@@ -67,6 +71,14 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  saveRole(){
+    this.userService.getCurrentUser().subscribe({
+      next: (v: User) => {
+        this.tokenStorageService.saveRole(v.role);
+        console.log(v.role);
+      }
+    });
+  }
   pressTestShowBar(message?: String) {
     this.notificationService.showSnackBar('' + message);
   }
