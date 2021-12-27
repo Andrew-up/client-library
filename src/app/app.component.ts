@@ -1,6 +1,8 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, ViewEncapsulation} from '@angular/core';
 import {AuthService} from "./services/auth.service";
 import {TokenStorageService} from "./services/token-storage.service";
+
+
 
 @Component({
   selector: 'app-root',
@@ -46,12 +48,20 @@ export class AppComponent {
     }
   }
 
-
   test?: string;
 
   checkStorage(): string {
     this.test = this.token.getRole() + '';
     return this.token.getRole() + '';
   }
+
+
+  public isVisited = false;
+
+  openSubmenu() {
+
+    this.isVisited = !this.isVisited;
+  }
+
 
 }

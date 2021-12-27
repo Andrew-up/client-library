@@ -12,6 +12,7 @@ import {RegisterComponent} from './auth/register/register.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BooksComponent} from './book/books/books.component';
 import {CommonModule} from "@angular/common";
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({

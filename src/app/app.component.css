@@ -21,35 +21,52 @@
   border: 5pt solid black;
 }
 
-.mainMenu ul li a{
+.mainMenu ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+
+}
+
+.mainMenu ul li a {
+  list-style: none;
   display: block;
-  background: #90DA93;
-  border: 1px solid #060A13;
-  color: #060A13;
-  padding: 8px;
-  text-align: center;
+  padding: 12px 24px;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
   text-decoration: none;
 }
 
+.mainMenu li a:hover {
+  background-color: #CFD8DC;
+}
 
-.mainMenu li a:hover{
-  background: #2F718E;
-}
-.mainMenu  ul li{
-  list-style: none;
-}
-.mainMenu ul .submenu{
+.mainMenu ul .submenu {
   display: none;
-  /*position: absolute;*/
-  /*background: #333333;*/
-  left: auto;
-  /*top: 100%;*/
+  /*background: #ffb0b0;*/
+  position: absolute;
+  /*background: red;*/
+  left: 200pt;
+  margin-top: -40pt;
+
+
 }
 
-.mainMenu li:hover .submenu{
+.mainMenu li:hover .submenu {
   display: block;
 }
 
+.submenu li a {
+  background: #ECEFF1;
+  margin: 0 0 5pt 5pt;
+  border-radius: 10pt;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-decoration: none;
+}
 
 
 /* скрываем чекбокс */
@@ -97,7 +114,7 @@
   visibility: hidden;
   top: 0;
   left: -100%;
-  width: 300px;
+  width: 200pt;
   height: 100%;
   margin: 0;
   padding: 80px 0;
@@ -110,7 +127,7 @@
 /* элементы меню */
 .menu__item {
   display: block;
-  padding: 12px 24px;
+  padding: 10pt 20pt;
   color: #333;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
