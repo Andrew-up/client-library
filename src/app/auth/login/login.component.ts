@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
   success?: boolean;
   token?: string = '';
   error?: string = '';
-  eRole?:string ='';
+  eRole?: string = '';
+
 
   apiAuth(login: string, password: string): any {
 
@@ -50,12 +51,12 @@ export class LoginComponent implements OnInit {
         this.pressTestShowBar();
         this.refreshToken = v.refreshToken;
         this.success = v.success;
-        this.token = v.token;
+        this.token = v.accessToken;
         this.eRole = v.role;
         if (v.success) {
           this.tokenStorageService.saveToken(this.token + '', v.refreshToken + '');
           this.tokenStorageService.saveUser(v);
-          this.tokenStorageService.saveRole(this.eRole+'');
+          this.tokenStorageService.saveRole(this.eRole + '');
           this.pressTestShowBar('Успешно!');
           // window.location.reload();
         }
@@ -71,14 +72,15 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  saveRole(){
+  saveRole() {
     this.userService.getCurrentUser().subscribe({
       next: (v: User) => {
-        this.tokenStorageService.saveRole(v.role);
+        this.tokenStorageService.saveRole(v.role+'');
         console.log(v.role);
       }
     });
   }
+
   pressTestShowBar(message?: String) {
     this.notificationService.showSnackBar('' + message);
   }
@@ -98,6 +100,9 @@ export class LoginComponent implements OnInit {
     // this.userService.getCurrentUser().subscribe();
   }
 
+  getUser() {
+    this.authService
+  }
 
   ngOnInit() {
   }

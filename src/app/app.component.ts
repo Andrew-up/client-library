@@ -1,7 +1,7 @@
 import {Component, EventEmitter, ViewEncapsulation} from '@angular/core';
 import {AuthService} from "./services/auth.service";
 import {TokenStorageService} from "./services/token-storage.service";
-
+import {ErrorInterceptorService} from "./helper/error-interceptor.service";
 
 
 @Component({
@@ -13,33 +13,33 @@ import {TokenStorageService} from "./services/token-storage.service";
 export class AppComponent {
   title = 'client';
 
-
-  constructor(private token: TokenStorageService) {
+  constructor(private token: TokenStorageService,
+              private errorInterceptorService: ErrorInterceptorService) {
   }
 
   logout() {
     this.token.logOut();
   }
 
+
   getLoggedInStatus() {
-    if (this.token.getToken() != null) {
-      return false;
-    } else {
-      return true;
-    }
+    return this.token.getToken() == null;
   }
 
   public getLoggerInUser = false;
   public getLoggerInWorker = false;
   public getLoggerInAdmin = false;
 
-  getLoggerInUserRole() {
+  public getLoggerInUserRole() {
     if (this.token.getRole() == 'ROLE_USER') {
       this.getLoggerInUser = true;
+      this.getLoggerInWorker = false;
+      this.getLoggerInAdmin = false;
     }
     if (this.token.getRole() == 'ROLE_WORKER') {
       this.getLoggerInUser = true;
       this.getLoggerInWorker = true;
+      this.getLoggerInAdmin = false;
     }
     if (this.token.getRole() == 'ROLE_ADMIN') {
       this.getLoggerInUser = true;
@@ -59,7 +59,6 @@ export class AppComponent {
   public isVisited = false;
 
   openSubmenu() {
-
     this.isVisited = !this.isVisited;
   }
 

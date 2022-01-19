@@ -1,0 +1,29 @@
+.CommonParent{
+  background: #ffcfcf;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+.CommonParent p{
+  margin-left: 5%;
+  margin-top: 5pt;
+  margin-bottom: 0;
+}
+.CommonParent input{
+  margin: 0;
+  padding: 0;
+}
+
+.buttonCreateBook{
+  margin: 0 auto;
+  padding-bottom: 20pt;
+}
+
+.page{
+  padding-bottom: 50pt;
+  padding-top: 20pt;
+}
+
+

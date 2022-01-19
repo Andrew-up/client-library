@@ -1,0 +1,14 @@
+<div class="page">
+  <div class="CommonParent">
+    <p>Имя </p>
+    <input  class="form-input" type="text" placeholder="Имя" [(ngModel)]="firstname">
+    <p>Фамилия </p>
+    <input  class="form-input" type="text" placeholder="Фамилия" [(ngModel)]="lastname">
+    <p>Отчество </p>
+    <input  class="form-input" type="text" placeholder="Отчество" [(ngModel)]="patronymic">
+    <p>Дата рождения</p>
+    <input  class="form-input" type="date" placeholder="Имя" value="1980-01-01" [(ngModel)]="dateOfBirth">
+    <button (click)="createAuthor()"> Отправить</button>
+  </div>
+  <h4>{{response}}</h4>
+</div>

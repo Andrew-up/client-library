@@ -29,43 +29,54 @@
 }
 
 .mainMenu ul li a {
-  list-style: none;
   display: block;
+  list-style: none;
   padding: 12px 24px;
   color: #333;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
-  font-weight: 600;
   text-decoration: none;
+  font-weight: 600;
+
 }
 
 .mainMenu li a:hover {
   background-color: #CFD8DC;
+  color: #0a58c9;
 }
 
 .mainMenu ul .submenu {
   display: none;
+  /*flex-direction: column;*/
   /*background: #ffb0b0;*/
   position: absolute;
   /*background: red;*/
   left: 200pt;
   margin-top: -40pt;
-
-
+  height: 300pt;
 }
 
+
 .mainMenu li:hover .submenu {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /*background: rebeccapurple;*/
+  /*word-wrap: normal;*/
 }
 
 .submenu li a {
-  background: #ECEFF1;
+  /*background: #ECEFF1;*/
   margin: 0 0 5pt 5pt;
   border-radius: 10pt;
   font-family: 'Roboto', sans-serif;
   font-size: 20px;
-  font-weight: 600;
   text-decoration: none;
+  font-weight: 600;
+  min-width: 150pt;
+  border: 1pt solid #ccc;
+  background: rgba(236, 239, 241, 0.85);
+
 }
 
 
@@ -137,6 +148,7 @@
 
 .menu__item:hover {
   background-color: #CFD8DC;
+  cursor: pointer;
 }
 
 #menu__toggle:checked ~ .menu__btn > span {

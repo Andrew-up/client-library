@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {User} from "../models/User";
 
 
 const USER_API ='http://localhost:8099/api/user/';
@@ -23,5 +24,9 @@ export class UserService {
 
   updateUser(user:any): Observable<any>{
     return this.httpclient.post(USER_API+'update',user);
+  }
+
+  public getAllUsers():Observable<User[]>{
+   return this.httpclient.get<User[]>(USER_API+'all')
   }
 }

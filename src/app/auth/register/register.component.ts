@@ -15,7 +15,8 @@ export class RegisterComponent implements OnInit {
   surname = 'Ivanov1';
   password = 'test123';
 
-  message?:string;
+
+  message?: string;
 
   constructor(private authService: AuthService,
               private notificationService: NotificationService,) {
@@ -37,11 +38,11 @@ export class RegisterComponent implements OnInit {
     o.password = password;
 
     this.authService.register(o).subscribe({
-      next:(value:User)=>{
+      next: (value: User) => {
         this.message = JSON.stringify(value);
         this.notificationService.showSnackBar('Регистрация успешна');
       },
-      error:(e)=>{
+      error: (e) => {
         this.message = JSON.stringify(e.error);
         console.log(e)
       }

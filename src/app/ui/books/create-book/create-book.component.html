@@ -1,0 +1,83 @@
+<div class="page">
+  <div class="CommonParent">
+
+    <p>Название книги</p>
+    <input  class="form-input" type="text" placeholder="Name Book" [(ngModel)]="selectedBookTitle">
+<p>Автор</p>
+    <select  [(ngModel)]="selectedAuthors">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
+    </select>
+    <p>{{ selectedAuthors }}</p>
+<p>Жанр</p>
+    <select  [(ngModel)]="selectedGenres">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of bookGenresName" [value]="item.bookGenresId">{{item.genresName}}</option>
+    </select>
+    <p>{{ selectedGenres }}</p>
+<p>Дата релиза</p>
+    <input  class="form-input" type="date" placeholder="Release Date" value="1980-01-01" [max]="maxDate" [(ngModel)]="selectedReleaseDate">
+<p>Издательство</p>
+    <select  [(ngModel)]="selectedPublisherId">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of publisherName" [value]="item.publisherId">{{item.publisherName}}</option>
+    </select>
+    <p>{{ selectedPublisherId }}</p>
+
+
+<p>Кол-во страниц</p>
+    <input  class="form-input" type="text" placeholder="Number pages" [(ngModel)]="selectedNumberPages">
+<p>Тип обложки</p>
+
+    <select  [(ngModel)]="selectedCoverCode">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of coverCodeName" [value]="item.coverCodeId">{{item.coverCodeName}}</option>
+    </select>
+    <p>{{ selectedCoverCode }}</p>
+
+    <p>Серия</p>
+
+    <select  [(ngModel)]="selectedSeries">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of series" [value]="item.seriesId">{{item.seriesName}}</option>
+    </select>
+    <p>{{ selectedSeries }}</p>
+
+<p>ISBN</p>
+    <input  class="form-input" type="text" placeholder="ISBN" [(ngModel)]="selectedISBN">
+<p>Возрастное ограничение</p>
+
+    <select  [(ngModel)]="selectedAgeLimit">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of ageLimit" [value]="item.ageLimitId">{{item.ageLimitName}}</option>
+    </select>
+    <p>{{ selectedAgeLimit }}</p>
+
+<p>Язык издания</p>
+
+    <select  [(ngModel)]="selectedEditionLanguage">
+      <option [value]="null">Не выбрано</option>
+      <option  *ngFor="let item of editionLanguage" [value]="item.languageId">{{item.languageName}}</option>
+    </select>
+    <p>{{ selectedEditionLanguage }}</p>
+
+    <p>Автор перевода</p>
+
+    <select  [(ngModel)]="selectedTranslation">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of translation" [value]="item.translationId">{{item.translationName}}</option>
+    </select>
+    <p>{{ selectedTranslation }}</p>
+
+<p>Изображение книги</p>
+    <input  class="form-input" type="text" placeholder="Image Book"  [(ngModel)]="selectedImageId">
+    <br>
+    <div class="buttonCreateBook">
+      <div>
+        <button (click)="createBook()">Добавить книгу</button>
+      </div>
+    </div>
+    <p>{{response}}</p>
+  </div>
+
+</div>
