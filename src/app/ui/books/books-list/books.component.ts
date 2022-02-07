@@ -13,7 +13,7 @@ export class BooksComponent implements OnInit {
   }
 
 book: Book[] =
-  [{bookTitle:'123',genreCode:'222',numberPages:'0',bookReleaseDate:'123'}];
+  [{bookTitle:'123',genreCode:'222',numberPages:'0',bookReleaseDate:'123',genreName:'123'}];
 
   getAllBook() {
     this.booksService.getAllBooks().subscribe(res=>{

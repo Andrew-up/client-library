@@ -1,19 +1,23 @@
-export interface Book{
+export interface Book {
 
-  id?:string;
-  authors?:string;
-  bookTitle?:string;
-  genreCode?:string;
-  bookReleaseDate?:string;
-  publisherId?:string;
-  numberPages?:string;
-  coverId?:string;
-  series?:string;
-  nameISBN?:string;
-  ageLimitCode?:string;
-  languageId?:string;
-  translation?:string;
-  publisherName?:string;
-  imageId?:string;
+  id?: string;
+  authors?: string;
+  bookTitle?: string;
+  genreCode?: string;
+  bookReleaseDate?: string;
+  publisherId?: string;
+  numberPages?: string;
+  coverId?: string;
+  bookSeries?: string;
+  nameISBN?: string;
+  ageLimitCode?: string;
+  languageId?: string;
+  translationId?: string;
+  publisherName?: string;
+  imageId?: string;
 
+  //name
+  genreName?: string;
+  seriesName?:string;
+  translationName?: string;
 }

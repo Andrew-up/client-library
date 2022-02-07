@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
 
 
   apiAuth(login: string, password: string): any {
-
     let o = {
       email: '',
       password: ''
@@ -60,22 +59,20 @@ export class LoginComponent implements OnInit {
           this.pressTestShowBar('Успешно!');
           // window.location.reload();
         }
-
       },
       error: (e) => {
-        this.pressTestShowBar(
-          JSON.stringify(e.error));
-        console.log(e);
-        this.error = e.error
-      },
-      complete: () => console.info('complete')
+        // this.pressTestShowBar(JSON.stringify(e.error));
+        // console.log(e);
+        // this.error = e.error
+        // this.token = e;
+      }
     });
   }
 
   saveRole() {
     this.userService.getCurrentUser().subscribe({
       next: (v: User) => {
-        this.tokenStorageService.saveRole(v.role+'');
+        this.tokenStorageService.saveRole(v.role + '');
         console.log(v.role);
       }
     });
@@ -98,10 +95,6 @@ export class LoginComponent implements OnInit {
       }
     }));
     // this.userService.getCurrentUser().subscribe();
-  }
-
-  getUser() {
-    this.authService
   }
 
   ngOnInit() {

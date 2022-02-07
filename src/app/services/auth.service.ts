@@ -33,11 +33,9 @@ export class AuthService {
     });
   }
 
-
   public updateJwtToken():Observable<Token>{
     console.log(this.tokenStorageService.getRefreshToken());
     return this.httpClient.post(UPDATE_TOKEN_API,{
-
       refreshToken: this.tokenStorageService.getRefreshToken()
     })
   }

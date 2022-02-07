@@ -10,20 +10,14 @@ import {User} from "../../models/User";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  email = 'Ivanov10@mail.ru';
-  name = 'Ivanov1';
-  surname = 'Ivanov1';
-  password = 'test123';
-
-
-  message?: string;
-
   constructor(private authService: AuthService,
               private notificationService: NotificationService,) {
   }
-
-  ngOnInit(): void {
-  }
+  email = '';
+  name = '';
+  surname = '';
+  password = '';
+  message?: string;
 
   apiRegister(email: string, name: string, surname: string, password: string): any {
     let o = {
@@ -46,11 +40,8 @@ export class RegisterComponent implements OnInit {
         this.message = JSON.stringify(e.error);
         console.log(e)
       }
-
     })
   }
-
-  // onSubmit() {
-  //   console.log("Имя: " + this.name + ". Пароль: " + this.password);
-  // }
+  ngOnInit(): void {
+  }
 }

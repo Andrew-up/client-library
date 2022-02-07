@@ -14,7 +14,6 @@ export class TokenStorageService {
   constructor() {
   }
 
-
   public saveToken(token: string, refresh_token: string): void {
     window.sessionStorage.removeItem(KEY_TOKEN);
     window.sessionStorage.removeItem(KEY_REFRESH_TOKEN);

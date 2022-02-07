@@ -2,11 +2,11 @@
   <div *ngFor="let item of book">
     <div class="books_child">
       <p>Название: {{item.bookTitle}}</p>
-      <p>Жанр: {{item.genreCode}}</p>
+      <p>Жанр: {{item.genreName}}</p>
       <p>Дата выхода: {{item.bookReleaseDate}}</p>
 <!--      <p>{{item.}}</p>-->
-<!--      <p>Серия: {{item.series}}</p>-->
-<!--      <p>Перевод: {{item.translation}}</p>-->
+      <p>Серия: {{item.seriesName}}</p>
+      <p>Перевод: {{item.translationName}}</p>
       <p>Страниц: {{item.numberPages}}</p>
       <button>Подробнее</button>
     </div>

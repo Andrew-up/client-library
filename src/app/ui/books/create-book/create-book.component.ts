@@ -162,11 +162,11 @@ export class CreateBookComponent implements OnInit {
       publisherId: this.selectedPublisherId + '',
       numberPages: this.selectedNumberPages + '',
       coverId: this.selectedCoverCode + '',
-      series: this.selectedSeries + '',
+      bookSeries: this.selectedSeries + '',
       nameISBN: this.selectedISBN + '',
       ageLimitCode: this.selectedAgeLimit + '',
       languageId: this.selectedEditionLanguage + '',
-      translation: this.selectedTranslation + '',
+      translationId: this.selectedTranslation + '',
       imageId: this.selectedImageId + '',
     }
     console.log(JSON.stringify(obj));
