@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Publisher} from "../models/Publisher";
 import {Observable} from "rxjs";
 
-const PUBLISHER_API ='http://localhost:8099/api/books/series/'
+const PUBLISHER_API ='http://localhost:8099/api/books/publisher/'
 
 @Injectable({
   providedIn: 'root'

@@ -1,0 +1,46 @@
+<div class="page">
+  <div class="CommonParent">
+
+    <p>Дата выдачи</p>
+    <input  class="form-input" type="date" placeholder="Release Date" value="1980-01-01" [max]="maxDate" [(ngModel)]="selectedDateIssue">
+    <p>Дата возврата</p>
+    <input  class="form-input" type="date" placeholder="Release Date" value="1980-01-01" [min]="maxDate" [(ngModel)]="selectedDateReturn">
+    <p>Кем выдано:</p>
+    <p>{{ selectedEmployee }}</p>
+    <p>Книга</p>
+    <select  [(ngModel)]="selectedBookTitle">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of book" [value]="item.bookId">{{item.bookTitle}}</option>
+    </select>
+    <p>{{ selectedBookTitle }}</p>
+
+
+  <p>Оплата: </p>
+
+    <select  [(ngModel)]="selectedPriceRent">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of rent" [value]="item.id">{{item.priceName}}</option>
+    </select>
+    <p>{{ selectedPriceRent }}</p>
+
+    <p>Кому выдана:</p>
+
+    <select [(ngModel)]="selectedUser">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of users" [value]="item.id">{{item.username}}</option>
+    </select>
+    <p>{{ selectedUser }}</p>
+
+    <br>
+    <div class="buttonCreateBook">
+      <div>
+        <button  class="btn btn-light" (click)="addRent()">Добавить аренду</button>
+      </div>
+    </div>
+    <p>{{response}}</p>
+    <button class="btn btn-primary" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="responseBool"></span>
+    </button>
+  </div>
+
+</div>

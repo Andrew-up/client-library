@@ -15,6 +15,9 @@ import {CoverTypesComponent} from "./ui/books/cover-types/cover-types.component"
 import {CreateTranslationBookComponent} from "./ui/books/create-translation-book/create-translation-book.component";
 import {EditionLanguageComponent} from "./ui/books/edition-language/edition-language.component";
 import {ListUsersComponent} from "./ui/users/list-users/list-users.component";
+import {RentComponent} from "./ui/books/rent/rent.component";
+import {AddRentToUserComponent} from "./ui/books/add-rent-to-user/add-rent-to-user.component";
+import {CreatePriceComponent} from "./ui/books/create-price/create-price.component";
 
 const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -31,7 +34,10 @@ const routes: Routes = [
   {path:'book/cover-type',component:CoverTypesComponent},
   {path:'book/translation',component:CreateTranslationBookComponent},
   {path:'book/edition-language',component:EditionLanguageComponent},
-  {path:'user/user-list',component:ListUsersComponent}
+  {path:'user/user-list',component:ListUsersComponent},
+  {path:'book/rent',component:RentComponent},
+  {path:'book/rent-add',component:AddRentToUserComponent},
+  {path:'book/create-price',component:CreatePriceComponent}
 ];
 
 @NgModule({

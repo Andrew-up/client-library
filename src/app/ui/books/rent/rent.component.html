@@ -1,1 +1,33 @@
-<p>rent works!</p>
+<div class="center">
+
+
+
+  <div class="bordered">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Дата выдачи</th>
+      <th>Дата возврата</th>
+      <th>Выдано:</th>
+      <th>Книга: </th>
+      <th>Плата: </th>
+      <th>Кому выдана: </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let item of rent">
+    <tr>
+      <td>{{item.id}}</td>
+      <td>{{item.dateIssue}}</td>
+      <td>{{item.dateReturn}}</td>
+      <td>{{item.employeeName}}</td>
+      <td>{{item.bookName}}</td>
+      <td>{{item.priceName}}</td>
+      <td>{{item.userName}}</td>
+      <td><button>Изменить</button></td>
+      <td><button>Удалить</button></td>
+
+    </tr>
+
+    </tbody>
+  </div>
+</div>

@@ -12,8 +12,6 @@ export class ListUsersComponent implements OnInit {
   constructor(private userService: UserService) {
   }
 
-
-
   users: User[] = [{
     id: 0,
   }]

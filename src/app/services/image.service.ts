@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpRequest} from "@angular/common/http";
+import {catchError, Observable, throwError} from "rxjs";
 
 const IMAGE_API ='http://localhost:8099/api/image/';
 
@@ -9,27 +9,36 @@ const IMAGE_API ='http://localhost:8099/api/image/';
 })
 export class ImageService {
 
-  constructor(private httpclient:HttpClient) {
+  constructor(private httpClient:HttpClient) {
 
   }
+
 
   uploadImgToProfile(file:File):Observable<any>{
     const  uploadData = new FormData();
     uploadData.append('file',file);
-    return this.httpclient.post(IMAGE_API+'/upload',uploadData);
+    return this.httpClient.post(IMAGE_API+'/upload',uploadData);
   }
+
+  uploadImgToBook(file:File,id?:number):Observable<any>{
+    const  uploadData = new FormData();
+    uploadData.append('file',file);
+    return this.httpClient.post(IMAGE_API+'book/'+id,uploadData);
+  }
+
+
 
   uploadImgToPost(file:File,postId:number):Observable<any>{
     const  uploadData = new FormData();
     uploadData.append('file',file);
-    return this.httpclient.post(IMAGE_API+'/'+postId+'/upload',uploadData);
+    return this.httpClient.post(IMAGE_API+'/'+postId+'/upload',uploadData);
   }
   getUserProfileImg():Observable<any>{
-    return this.httpclient.get(IMAGE_API+'/profileImage');
+    return this.httpClient.get(IMAGE_API+'/profileImage');
   }
 
-  getPostImg(postId:number):Observable<any>{
-    return this.httpclient.get(IMAGE_API+'/'+postId+'/image');
+  getBookImg(bookId?:number):Observable<any>{
+    return this.httpClient.get(IMAGE_API+'book/'+bookId,{responseType:'blob'});
   }
 
 }

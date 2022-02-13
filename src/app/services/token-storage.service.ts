@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {User} from "../models/User";
 
 const KEY_TOKEN = 'auth-token';
 const KEY_REFRESH_TOKEN = 'auth-token-refresh';
@@ -49,7 +50,7 @@ export class TokenStorageService {
     window.sessionStorage.setItem(KEY_USER, JSON.stringify(user));
   }
 
-  public getUser(): any {
+  public getUser(): User {
     return JSON.parse(<string>sessionStorage.getItem(KEY_USER));
   }
 

@@ -1,6 +1,6 @@
 export interface Book {
 
-  id?: string;
+  bookId?: number;
   authors?: string;
   bookTitle?: string;
   genreCode?: string;
@@ -20,4 +20,16 @@ export interface Book {
   genreName?: string;
   seriesName?:string;
   translationName?: string;
+  authorsName?:string;
+  authorsFullName?:string;
+  languageName?:string;
+  coverName?:string;
+  ageLimitName?:string;
+
+  //Image
+  imageBlob?:Blob;
+
+  test?:string;
+
+  imageSrcTemp?:any;
 }

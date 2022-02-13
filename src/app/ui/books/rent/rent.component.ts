@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {RentBook} from "../../../models/RentBook";
+import {RentService} from "../../../services/rent.service";
 
 @Component({
   selector: 'app-rent',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private rentService:RentService) { }
+
+  rent:RentBook[] =[{
+  }]
+
+  getAllRent(){
+    this.rentService.getAllRent().subscribe( res=>{
+      this.rent = res;
+      console.log(res);
+    })
+  }
 
   ngOnInit(): void {
+    this.getAllRent();
+
   }
 
 }

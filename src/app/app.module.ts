@@ -32,6 +32,9 @@ import { PromocodeComponent } from './ui/users/promocode/promocode.component';
 import {authErrorInterceptorProviders} from "./helper/error-interceptor.service";
 import { IndexComponent } from './ui/index/index.component';
 import { EditionLanguageComponent } from './ui/books/edition-language/edition-language.component';
+import { AddRentToUserComponent } from './ui/books/add-rent-to-user/add-rent-to-user.component';
+import {CreatePriceComponent} from "./ui/books/create-price/create-price.component";
+
 
 
 @NgModule({
@@ -58,6 +61,8 @@ import { EditionLanguageComponent } from './ui/books/edition-language/edition-la
     PromocodeComponent,
     IndexComponent,
     EditionLanguageComponent,
+    AddRentToUserComponent,
+    CreatePriceComponent
   ],
   imports: [
     BrowserModule,

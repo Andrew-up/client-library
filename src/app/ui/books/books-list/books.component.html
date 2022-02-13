@@ -1,20 +1,33 @@
 <div class="books_parent">
+
   <div *ngFor="let item of book">
     <div class="books_child">
       <p>Название: {{item.bookTitle}}</p>
+      <p>Автор :{{item.authorsFullName}}</p>
       <p>Жанр: {{item.genreName}}</p>
       <p>Дата выхода: {{item.bookReleaseDate}}</p>
-<!--      <p>{{item.}}</p>-->
+      <p>Издательство: {{item.publisherName}}</p>
+      <p>Тип обложки: {{item.coverName}}</p>
       <p>Серия: {{item.seriesName}}</p>
+      <p>ISBN: {{item.nameISBN}}</p>
+      <p>Возрастное ограничение: {{item.ageLimitName}}</p>
+      <p>Язык издания: {{item.languageName}}</p>
       <p>Перевод: {{item.translationName}}</p>
       <p>Страниц: {{item.numberPages}}</p>
-      <button>Подробнее</button>
+      <img class="img-fluid img-thumbnail" src="{{item.imageSrcTemp}}" alt="" >
+      <button class="btn btn-primary $gray-300">Добавить в корзину</button>
     </div>
   </div>
 </div>
 
-
 <p>books works!</p>
+<!--<img [src]="imageToShow"-->
+<!--     alt="Place image title"-->
+<!--     *ngIf="!isImageLoading; else noImageFound">-->
+<ng-template #noImageFound>
+<!--  <img src="fallbackImage.png" alt="Fallbackimage">-->
+</ng-template>
+
 <button (click)="getAllBook()"> get all</button>
 
 <!--<div class="">-->

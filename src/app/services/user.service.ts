@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {forkJoin, mergeMap, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../models/User";
 
@@ -21,6 +21,13 @@ export class UserService {
   getCurrentUser(): Observable<any> {
     return this.httpclient.get(USER_API);
   }
+
+
+  getUserBool(): Observable<any>{
+    return this.httpclient.get(USER_API);
+  }
+
+
 
   updateUser(user:any): Observable<any>{
     return this.httpclient.post(USER_API+'update',user);

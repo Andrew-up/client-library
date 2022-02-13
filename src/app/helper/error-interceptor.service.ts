@@ -17,12 +17,14 @@ export class ErrorInterceptorService implements HttpInterceptor {
               private authService: AuthService) {
   }
 
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(catchError(err => {
       if (err.status == 401 && this.tokenService.getToken() != null) {
         this.authService.updateJwtToken().subscribe({
           next: (v: Token) => {
             this.tokenService.saveToken(v.accessToken + '', v.refreshToken + '');
+            // window.location.reload();
             // console.log(this.tokenService.getRefreshToken())
             // console.log(v.refreshToken)
             // console.log(v.accessToken)
@@ -33,14 +35,11 @@ export class ErrorInterceptorService implements HttpInterceptor {
         this.tokenService.logOut();
         window.location.reload();
       }
-      let oError: {
-        email?: string
-        password?: string;
-      }
-      oError = err.error
+
+
       // const error = JSON.stringify(err.error);
-      this.notificationService.showSnackBar(oError.email + '  ' + oError.password);
-      return throwError(oError);
+
+      return throwError(err);
     }));
   }
 }

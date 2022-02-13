@@ -43,8 +43,8 @@ export class LoginComponent implements OnInit {
       password: ''
     }
     o.email = login;
-    o.password = password;
-
+    o.password = btoa(password);
+    // console.log('Password: '+o.password);
     this.authService.login(o).subscribe({
       next: (v: Token) => {
         this.pressTestShowBar();
@@ -54,7 +54,8 @@ export class LoginComponent implements OnInit {
         this.eRole = v.role;
         if (v.success) {
           this.tokenStorageService.saveToken(this.token + '', v.refreshToken + '');
-          this.tokenStorageService.saveUser(v);
+
+          // this.tokenStorageService.saveUser(v);
           this.tokenStorageService.saveRole(this.eRole + '');
           this.pressTestShowBar('Успешно!');
           // window.location.reload();
@@ -62,10 +63,20 @@ export class LoginComponent implements OnInit {
       },
       error: (e) => {
         // this.pressTestShowBar(JSON.stringify(e.error));
-        // console.log(e);
+        this.notificationService.showSnackBar(e.error.error);
+        console.log(e);
         // this.error = e.error
         // this.token = e;
-      }
+      },
+      complete:()=>{
+        this.userService.getCurrentUser().subscribe({
+          next: (v: User) => {
+            this.tokenStorageService.saveUser(v);
+            this.tokenStorageService.saveRole(v.role+'');
+            console.log("test");
+          }
+        })
+    }
     });
   }
 
