@@ -42,7 +42,7 @@ export class CreateBookComponent implements OnInit {
   response = 'Ответ: ';
 
   ageLimit: AgeLimit[] = [{
-    ageLimitId: '1',
+    ageLimitId: 0,
     ageLimitName: 'test'
   }]
 
@@ -71,7 +71,7 @@ export class CreateBookComponent implements OnInit {
   }];
 
   bookGenresName: BookGenres[] = [{
-    bookGenresId: '1',
+    bookGenresId: 0,
     genresName: 'test'
   }]
 

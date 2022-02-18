@@ -1,4 +1,4 @@
 export interface AgeLimit {
-  ageLimitId?:string;
+  ageLimitId?:number;
   ageLimitName?:string;
 }

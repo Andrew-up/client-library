@@ -1,4 +1,4 @@
 export interface BookGenres{
-  bookGenresId?:string;
+  bookGenresId?:number;
   genresName?:string;
 }

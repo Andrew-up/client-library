@@ -19,10 +19,9 @@ import { EditBookComponent } from './ui/books/edit-book/edit-book.component';
 import { CreateAuthorsComponent } from './ui/books/create-authors/create-authors.component';
 import { EditAuthorsComponent } from './ui/books/edit-authors/edit-authors.component';
 import { CreateSeriesBookComponent } from './ui/books/create-series-book/create-series-book.component';
-import { CreateGenreBookComponent } from './ui/books/create-genre-book/create-genre-book.component';
-import { CreateLimitAgeComponent } from './ui/books/create-limit-age/create-limit-age.component';
+import { CreateLimitAgeComponent } from './ui/books/age-limit/create-limit-age/create-limit-age.component';
 import { CreateTranslationBookComponent } from './ui/books/create-translation-book/create-translation-book.component';
-import { RentComponent } from './ui/books/rent/rent.component';
+import { RentComponent } from './ui/books/rent-list/rent.component';
 import { CoverTypesComponent } from './ui/books/cover-types/cover-types.component';
 import { PublishingHouseComponent } from './ui/books/publishing-house/publishing-house.component';
 import { MyBooksComponent } from './ui/users/my-books/my-books.component';
@@ -34,6 +33,10 @@ import { IndexComponent } from './ui/index/index.component';
 import { EditionLanguageComponent } from './ui/books/edition-language/edition-language.component';
 import { AddRentToUserComponent } from './ui/books/add-rent-to-user/add-rent-to-user.component';
 import {CreatePriceComponent} from "./ui/books/create-price/create-price.component";
+import { GenreListComponent } from './ui/books/genre/genre-list/genre-list.component';
+import { CommonGenreComponent } from './ui/books/genre/common-genre/common-genre.component';
+import { CommonAgeLimitComponent } from './ui/books/age-limit/common-age-limit/common-age-limit.component';
+import { AgeLimitListComponent } from './ui/books/age-limit/age-limit-list/age-limit-list.component';
 
 
 
@@ -50,7 +53,6 @@ import {CreatePriceComponent} from "./ui/books/create-price/create-price.compone
     CreateAuthorsComponent,
     EditAuthorsComponent,
     CreateSeriesBookComponent,
-    CreateGenreBookComponent,
     CreateLimitAgeComponent,
     CreateTranslationBookComponent,
     RentComponent,
@@ -62,7 +64,11 @@ import {CreatePriceComponent} from "./ui/books/create-price/create-price.compone
     IndexComponent,
     EditionLanguageComponent,
     AddRentToUserComponent,
-    CreatePriceComponent
+    CreatePriceComponent,
+    GenreListComponent,
+    CommonGenreComponent,
+    CommonAgeLimitComponent,
+    AgeLimitListComponent
   ],
   imports: [
     BrowserModule,

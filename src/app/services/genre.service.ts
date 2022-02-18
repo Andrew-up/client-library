@@ -14,4 +14,16 @@ export class GenreService {
   public createGenre(genre:BookGenres):Observable<any>{
     return this.httpClient.post(GENRE_API+'create',genre);
   }
+
+  public getAllGenres():Observable<BookGenres[]>{
+    return this.httpClient.get<BookGenres[]>(GENRE_API+'all');
+  }
+
+  public updateGenre(update:BookGenres):Observable<BookGenres>{
+    return this.httpClient.post(GENRE_API+'update',update)
+  }
+
+  public deleteGenre(update?:number):Observable<any>{
+    return this.httpClient.post(GENRE_API+'delete',update)
+  }
 }

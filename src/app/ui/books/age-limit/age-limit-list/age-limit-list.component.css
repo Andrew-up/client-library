@@ -1,0 +1,33 @@
+.col-md-1:hover{
+  background-color: #b4e6ff;
+  cursor: pointer;
+}
+
+.col-md-1{
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+.edit:hover{
+  background: rgba(232, 226, 146, 0.5);
+  cursor: pointer;
+}
+
+.cancel:hover{
+  background: rgba(239, 177, 90, 0.5);
+  cursor: pointer;
+}
+
+.save:hover{
+  background: rgba(213, 255, 142, 0.5);
+  cursor: pointer;
+}
+
+.delete:hover{
+  background: rgba(255, 54, 54, 0.5);
+  cursor: pointer;
+}
+.container{
+  margin-top: 50pt;
+}

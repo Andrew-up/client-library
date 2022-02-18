@@ -6,6 +6,7 @@ import {NotificationService} from "../services/notification.service";
 import {AuthService} from "../services/auth.service";
 import {Token} from "../models/Token";
 import {User} from "../models/User";
+import {UserService} from "../services/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
 
   constructor(private tokenService: TokenStorageService,
               private notificationService: NotificationService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private userService:UserService) {
   }
 
 
@@ -24,6 +26,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
         this.authService.updateJwtToken().subscribe({
           next: (v: Token) => {
             this.tokenService.saveToken(v.accessToken + '', v.refreshToken + '');
+            // window.location.reload();
             // window.location.reload();
             // console.log(this.tokenService.getRefreshToken())
             // console.log(v.refreshToken)
@@ -35,12 +38,15 @@ export class ErrorInterceptorService implements HttpInterceptor {
         this.tokenService.logOut();
         window.location.reload();
       }
-
+      if(err.status ==500){
+        this.userService.getCurrentUser();
+      }
 
       // const error = JSON.stringify(err.error);
-
+      // this.notificationService.showSnackBar(err);
       return throwError(err);
     }));
+
   }
 }
 

@@ -1,6 +1,7 @@
 .body, html {
   margin: auto;
   width: 95%;
+  /*margin-top: 10%;*/
 }
 
 .header {
@@ -21,170 +22,88 @@
   border: 5pt solid black;
 }
 
-.mainMenu ul {
-  list-style: none;
-  margin-left: 0;
-  padding-left: 0;
 
+li{
+  padding: 8px;
 }
 
-.mainMenu ul li a {
-  display: block;
-  list-style: none;
-  padding: 12px 24px;
-  color: #333;
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
+a{
   text-decoration: none;
-  font-weight: 600;
+  color: #000;
+}
+
+a:hover, a:focus{
+  color: red;
+  text-decoration: none;
+  outline: none;
+}
+.nav-link:hover,nav-link:focus{
+  color: red !important;
+  text-decoration: none !important;
+  outline: none !important;
+}
+.nav-link{
+  border-bottom: 5px solid ;
+}
+
+.nav-link.active{
+  color: red;
+  border-bottom: 5px solid red;
+}
+
+.btn-outline-dark{
+  margin-right: 5pt;
+  margin-left: 5pt;
+}
+
+.dropdown-item.active{
+  color: black ;
+  background-color: transparent;
+  border-bottom: 5px solid red;
+}
+.dropdown-item:active{
+  color: black ;
+  background-color: rgba(138, 138, 138, 0.44);
 
 }
 
-.mainMenu li a:hover {
-  background-color: #CFD8DC;
-  color: #0a58c9;
-}
 
-.mainMenu ul .submenu {
-  display: none;
-  /*flex-direction: column;*/
-  /*background: #ffb0b0;*/
-  position: absolute;
-  /*background: red;*/
-  left: 200pt;
-  margin-top: -40pt;
-  height: 300pt;
-}
-
-
-.mainMenu li:hover .submenu {
+.navbar-nav.flex{
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
-  /*background: rebeccapurple;*/
-  /*word-wrap: normal;*/
 }
 
-.submenu li a {
-  /*background: #ECEFF1;*/
-  margin: 0 0 5pt 5pt;
-  border-radius: 10pt;
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  text-decoration: none;
-  font-weight: 600;
-  min-width: 150pt;
-  border: 1pt solid #ccc;
-  background: rgba(236, 239, 241, 0.85);
-
+.carousel-item{
+  height: 300pt;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-item img{
+  margin-top: 20pt;
+  height: 250pt;
+  width: 200pt !important;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.3;
+}
+.carousel{
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
 }
 
-
-/* скрываем чекбокс */
-#menu__toggle {
-  opacity: 0;
+.carousel-item img:hover{
+  opacity: 0.8;
 }
 
-/* стилизуем кнопку */
-.menu__btn {
-  display: flex; /* используем flex для центрирования содержимого */
-  align-items: center; /* центрируем содержимое кнопки */
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 26px;
-  height: 26px;
-  cursor: pointer;
-  z-index: 1;
+.carousel-control-next{
+  background-color: rgba(0, 0, 0, 0.28);
+}
+.carousel-control-prev{
+  background-color: rgba(0, 0, 0, 0.28);
 }
 
-/* добавляем "гамбургер" */
-.menu__btn > span,
-.menu__btn > span::before,
-.menu__btn > span::after {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background-color: #616161;
+.carousel{
+  margin-top: 20pt !important;
+  margin-bottom: 20pt;
 }
-
-.menu__btn > span::before {
-  content: '';
-  top: -8px;
-}
-
-.menu__btn > span::after {
-  content: '';
-  top: 8px;
-}
-
-.menu__box {
-  display: block;
-  position: fixed;
-  visibility: hidden;
-  top: 0;
-  left: -100%;
-  width: 200pt;
-  height: 100%;
-  margin: 0;
-  padding: 80px 0;
-  list-style: none;
-  text-align: center;
-  background-color: #ECEFF1;
-  box-shadow: 1px 0px 6px rgba(0, 0, 0, .2);
-}
-
-/* элементы меню */
-.menu__item {
-  display: block;
-  padding: 10pt 20pt;
-  color: #333;
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.menu__item:hover {
-  background-color: #CFD8DC;
-  cursor: pointer;
-}
-
-#menu__toggle:checked ~ .menu__btn > span {
-  transform: rotate(45deg);
-}
-
-#menu__toggle:checked ~ .menu__btn > span::before {
-  top: 0;
-  transform: rotate(0);
-}
-
-#menu__toggle:checked ~ .menu__btn > span::after {
-  top: 0;
-  transform: rotate(90deg);
-}
-
-#menu__toggle:checked ~ .menu__box {
-  visibility: visible;
-  left: 0;
-}
-
-.menu__btn > span,
-.menu__btn > span::before,
-.menu__btn > span::after {
-  transition-duration: .25s;
-}
-
-.menu__box {
-  transition-duration: .25s;
-}
-
-.menu__item {
-  transition-duration: .25s;
-}
-
-
-
-
-

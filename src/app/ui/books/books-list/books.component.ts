@@ -27,7 +27,6 @@ export class BooksComponent implements OnInit {
       genreName: '123'
     }];
 
-
   getAllBook() {
     this.booksService.getAllBooks().subscribe({
       next: (value) => {
