@@ -17,13 +17,21 @@ export class ImageService {
   uploadImgToProfile(file:File):Observable<any>{
     const  uploadData = new FormData();
     uploadData.append('file',file);
-    return this.httpClient.post(IMAGE_API+'/upload',uploadData);
+    return this.httpClient.post(IMAGE_API+'user/',uploadData);
+  }
+
+  getProfileImg():Observable<any>{
+    return this.httpClient.get(IMAGE_API+'user/',{responseType:'blob'});
   }
 
   uploadImgToBook(file:File,id?:number):Observable<any>{
     const  uploadData = new FormData();
     uploadData.append('file',file);
     return this.httpClient.post(IMAGE_API+'book/'+id,uploadData);
+  }
+
+  getBookImg(bookId?:number):Observable<any>{
+    return this.httpClient.get(IMAGE_API+'book/'+bookId,{responseType:'blob'});
   }
 
 
@@ -37,8 +45,8 @@ export class ImageService {
     return this.httpClient.get(IMAGE_API+'/profileImage');
   }
 
-  getBookImg(bookId?:number):Observable<any>{
-    return this.httpClient.get(IMAGE_API+'book/'+bookId,{responseType:'blob'});
-  }
+
+
+
 
 }

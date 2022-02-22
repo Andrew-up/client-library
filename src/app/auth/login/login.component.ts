@@ -6,6 +6,7 @@ import {Token} from "../../models/Token";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/User";
 import {Router} from "@angular/router";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-login',
@@ -23,19 +24,15 @@ export class LoginComponent implements OnInit {
               private notificationService: NotificationService,
               private tokenStorageService: TokenStorageService,
               private userService: UserService,
-              private router: Router) {
-    // if (this.tokenStorageService.getUser()) {
-    //   this.router.navigate(['/']);
-    // }
+              private router:Router
+            ) {
   }
-
 
   refreshToken?: string = '';
   success?: boolean;
   token?: string = '';
   error?: string = '';
   eRole?: string = '';
-
 
   apiAuth(login: string, password: string): any {
     let o = {
@@ -47,18 +44,19 @@ export class LoginComponent implements OnInit {
     // console.log('Password: '+o.password);
     this.authService.login(o).subscribe({
       next: (v: Token) => {
-        this.pressTestShowBar();
+        // this.pressTestShowBar();
         this.refreshToken = v.refreshToken;
         this.success = v.success;
         this.token = v.accessToken;
         this.eRole = v.role;
         if (v.success) {
           this.tokenStorageService.saveToken(this.token + '', v.refreshToken + '');
-
-          // this.tokenStorageService.saveUser(v);
           this.tokenStorageService.saveRole(this.eRole + '');
-          this.pressTestShowBar('Успешно!');
-          // window.location.reload();
+          this.router.navigate(['/index']).then(() => {
+            this.notificationService.showSnackBar("Авторизация успешна!");
+            window.location.reload();
+          });
+
         }
       },
       error: (e) => {
@@ -73,24 +71,11 @@ export class LoginComponent implements OnInit {
           next: (v: User) => {
             this.tokenStorageService.saveUser(v);
             this.tokenStorageService.saveRole(v.role+'');
-            console.log("test");
+
           }
         })
     }
     });
-  }
-
-  saveRole() {
-    this.userService.getCurrentUser().subscribe({
-      next: (v: User) => {
-        this.tokenStorageService.saveRole(v.role + '');
-        console.log(v.role);
-      }
-    });
-  }
-
-  pressTestShowBar(message?: String) {
-    this.notificationService.showSnackBar('' + message);
   }
 
   checkToken() {

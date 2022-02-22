@@ -10,10 +10,11 @@ export class NotificationService {
   constructor(private snackBar:MatSnackBar) {
 
   }
-  public showSnackBar(message:string):void{
-    this.snackBar.open(message,void 0, {
-      duration: 2000,
+  public showSnackBar(message:string):void {
+    this.snackBar.open(message, "", {
+      duration: 5000,
       panelClass: ['snackbar'],
     });
   }
+
 }

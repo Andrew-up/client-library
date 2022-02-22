@@ -16,30 +16,37 @@ export class ErrorInterceptorService implements HttpInterceptor {
   constructor(private tokenService: TokenStorageService,
               private notificationService: NotificationService,
               private authService: AuthService,
-              private userService:UserService) {
+              private userService: UserService) {
   }
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(catchError(err => {
-      if (err.status == 401 && this.tokenService.getToken() != null) {
+      if (err.status == 401 &&
+          this.tokenService.getToken() != null &&
+          this.tokenService.getRefreshToken() != null &&
+          this.tokenService.getUser() != null &&
+          this.tokenService.getRole() != null) {
         this.authService.updateJwtToken().subscribe({
           next: (v: Token) => {
             this.tokenService.saveToken(v.accessToken + '', v.refreshToken + '');
-            // window.location.reload();
-            // window.location.reload();
-            // console.log(this.tokenService.getRefreshToken())
-            // console.log(v.refreshToken)
-            // console.log(v.accessToken)
           }
         });
+      }
+      console.log(this.tokenService.getRefreshToken());
+      console.log(this.tokenService.getUser());
+      console.log(this.tokenService.getRole());
+      console.log(this.tokenService.getToken());
+      if (err.status == 401 &&
+        this.tokenService.getRefreshToken() != null &&
+        this.tokenService.getToken() != null &&
+        this.tokenService.getUser() != null &&
+        this.tokenService.getRole() != null) {
+        // window.location.reload();
       }
       if (err.status == 403) {
         this.tokenService.logOut();
         window.location.reload();
-      }
-      if(err.status ==500){
-        this.userService.getCurrentUser();
       }
 
       // const error = JSON.stringify(err.error);

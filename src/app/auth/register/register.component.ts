@@ -3,6 +3,7 @@ import {AuthService} from "../../services/auth.service";
 import {FormBuilder} from "@angular/forms";
 import {NotificationService} from "../../services/notification.service";
 import {User} from "../../models/User";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -11,30 +12,21 @@ import {User} from "../../models/User";
 })
 export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService,
-              private notificationService: NotificationService,) {
+              private notificationService: NotificationService,
+              private router:Router) {
   }
-  email = '';
-  name = '';
-  surname = '';
-  password = '';
   message?: string;
 
-  apiRegister(email: string, name: string, surname: string, password: string): any {
-    let o = {
-      email: '',
-      name: '',
-      surname: '',
-      password: ''
-    }
-    o.email = email;
-    o.name = name;
-    o.surname = surname;
-    o.password = password;
+  obj:User={
+  }
 
-    this.authService.register(o).subscribe({
+  apiRegister(): any {
+    this.obj.password = btoa(this.obj.password+'');
+    this.authService.register(this.obj).subscribe({
       next: (value: User) => {
         this.message = JSON.stringify(value);
         this.notificationService.showSnackBar('Регистрация успешна');
+        this.router.navigate(['/login']);
       },
       error: (e) => {
         this.message = JSON.stringify(e.error);

@@ -1,1 +1,113 @@
-<p>profile works!</p>
+<div class="container">
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img *ngIf="getProfile" src="{{myProfile.imageProfile}}" alt="" class="rounded-circle" width="150" height="150">
+              <div class="mt-3">
+                <div *ngIf="editProfileBool" class="browse-wrap">
+                  <div class="title ">Выберите изображение для загрузки</div>
+                  <input type="file" name="upload" class="upload" title="Choose a file to upload" (change)="onFileSelected($event)">
+                </div>
+                <div *ngIf="url">
+                  <img *ngIf="selectedFile" src="{{url}}" alt="Admin" class="rounded-circle" width="150" height="150">
+                </div>
+                <span *ngIf="url" class="upload-path">
+                     <button *ngIf="selectedFile" class="btn btn-info mb-2" (click)="onUpload()">Обновить аватар</button>
+                     <p class="text-break" *ngIf="selectedFile" >{{selectedFile.name}}</p>
+                </span>
+                <h4>{{myProfile.firstname}} {{myProfile.lastname}}</h4>
+                <p class="text-secondary mb-1">{{myProfile.info}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Firstname</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <p *ngIf="!editProfileBool">{{myProfile.firstname}}</p>
+                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.firstname}}"[(ngModel)]="updateProfile.firstname">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Lastname</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <p *ngIf="!editProfileBool">{{myProfile.lastname}}</p>
+                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.lastname}}" [(ngModel)]="updateProfile.lastname">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <p>{{myProfile.username}}</p>
+<!--                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.username}}" [(ngModel)]="updateProfile.username">-->
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Phone</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <p *ngIf="!editProfileBool">{{myProfile.phone}}</p>
+                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.phone}}" [(ngModel)]="updateProfile.phone">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Address</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <p *ngIf="!editProfileBool">{{myProfile.address}}</p>
+                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.address}}" [(ngModel)]="updateProfile.address">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Date of Birth</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <p *ngIf="!editProfileBool">{{myProfile.dateOfBirth}}</p>
+                <input *ngIf="editProfileBool" type="date" class="form-control"  placeholder="{{myProfile.dateOfBirth}}" [(ngModel)]="updateProfile.dateOfBirth">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Info</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <p *ngIf="!editProfileBool">{{myProfile.info}}</p>
+                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.info}}" [(ngModel)]="updateProfile.info">
+              </div>
+            </div>
+            <hr>
+            <div class=" ">
+              <div class="d-flex justify-content-center">
+                <a *ngIf="!editProfileBool" (click)="editProfile()" class="btn btn-info " target="__blank">Редактировать</a>
+                <a *ngIf="editProfileBool"(click)="cancel()" class="btn btn-info " target="__blank">Отменить</a>
+                <a *ngIf="editProfileBool"(click)="saveUser()" class="btn btn-info ms-5" target="__blank">Сохранить</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

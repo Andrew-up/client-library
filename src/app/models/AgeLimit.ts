@@ -1,4 +1,5 @@
 export interface AgeLimit {
   ageLimitId?:number;
-  ageLimitName?:string;
+  coverCodeName?:string;
+
 }

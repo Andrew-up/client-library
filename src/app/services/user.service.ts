@@ -5,12 +5,21 @@ import {User} from "../models/User";
 
 
 const USER_API ='http://localhost:8099/api/user/';
+const USER_ROLE_ADMIN ='ROLE_ADMIN';
+const USER_ROLE_WORKER ='ROLE_WORKER';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  getRoleAdmin():string{
+    return USER_ROLE_ADMIN;
+  }
+  getRoleWorker():string{
+    return USER_ROLE_WORKER;
+  }
   constructor(private httpclient:HttpClient) {
   }
 
@@ -22,14 +31,11 @@ export class UserService {
     return this.httpclient.get(USER_API);
   }
 
-
   getUserBool(): Observable<any>{
     return this.httpclient.get(USER_API);
   }
 
-
-
-  updateUser(user:any): Observable<any>{
+  updateUser(user:any): Observable<User>{
     return this.httpclient.post(USER_API+'update',user);
   }
 

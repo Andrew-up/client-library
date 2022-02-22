@@ -12,7 +12,7 @@ import {NotificationService} from "../../../../services/notification.service";
 export class GenreListComponent implements OnInit {
 
   constructor(private genreService: GenreService,
-              private toast:NotificationService) {
+              private toast: NotificationService) {
   }
 
   genre: BookGenres[] = [{}]
@@ -20,15 +20,19 @@ export class GenreListComponent implements OnInit {
   enableEditIndex = null;
   enableEdit = false;
   errorCount = 5;
+  genreName = '';
+  response = '';
+  help = false;
+  errorDataBase = false;
 
   getAllGenre() {
     this.genreService.getAllGenres().subscribe({
-      next:(value)=>{
+      next: (value) => {
         this.genre = value;
-        this.errorCount =5;
+        this.errorCount = 5;
       },
-      error:(error)=>{
-        if (error.status==401 && this.errorCount!=0){
+      error: (error) => {
+        if (error.status == 401 && this.errorCount != 0) {
           this.errorCount--;
           this.getAllGenre();
           console.log(this.errorCount);
@@ -58,10 +62,15 @@ export class GenreListComponent implements OnInit {
         this.enableEditIndex = null;
         this.enableEdit = false;
         console.log(value)
-        this.errorCount =5;
+        this.errorCount = 5;
+        if(value.bookGenresId==-2000){
+          this.errorDataBase = false;
+          this.errorDataBase = true;
+          this.response ='Ответ: '+ value.genresName;
+        }
       },
       error: (err) => {
-        if (err.status==401 && this.errorCount!=0){
+        if (err.status == 401 && this.errorCount != 0) {
           this.errorCount--;
           this.saveEditGenre(id);
           console.log(this.errorCount);
@@ -81,11 +90,11 @@ export class GenreListComponent implements OnInit {
       next: (value) => {
         console.log('v: ' + value)
         this.getAllGenre();
-        this.errorCount =5;
+        this.errorCount = 5;
         this.toast.showSnackBar(value.message);
       },
       error: (error) => {
-        if (error.status==401 && this.errorCount!=0){
+        if (error.status == 401 && this.errorCount != 0) {
           this.errorCount--;
           this.deleteGenre(id);
           console.log(this.errorCount);
@@ -95,8 +104,6 @@ export class GenreListComponent implements OnInit {
     console.log('id:' + id);
   }
 
-  genreName = '';
-  response = '';
 
   addGenre() {
     let obj: BookGenres = {
@@ -105,15 +112,25 @@ export class GenreListComponent implements OnInit {
     this.genreService.createGenre(obj).subscribe({
       next: (res: BookGenres) => {
         console.log(res);
-        this.response = 'Ответ: ';
         if (this.genreName == res.genresName) {
           this.response = this.response + res.genresName + '  Успешно добавлен';
           this.getAllGenre();
           this.genreName = '';
+          this.help = false;
+        }
+        else {
+          this.help = true;
+          console.log("jhuhhh")
+          this.errorDataBase = false;
+          this.response ='Ответ: '+ res.genresName;
+        }
+        if(res.bookGenresId==-2000){
+          this.errorDataBase = true;
+          this.response ='Ответ: '+ res.genresName;
         }
       },
-      error:(err)=>{
-        if (err.status==401 && this.errorCount!=0){
+      error: (err) => {
+        if (err.status == 401 && this.errorCount != 0) {
           this.errorCount--;
           this.addGenre();
           console.log(this.errorCount);

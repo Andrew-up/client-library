@@ -21,6 +21,7 @@ import {GenreListComponent} from "./ui/books/genre/genre-list/genre-list.compone
 import {CommonGenreComponent} from "./ui/books/genre/common-genre/common-genre.component";
 import {CommonAgeLimitComponent} from "./ui/books/age-limit/common-age-limit/common-age-limit.component";
 import {AgeLimitListComponent} from "./ui/books/age-limit/age-limit-list/age-limit-list.component";
+import {ProfileComponent} from "./ui/users/profile/profile.component";
 
 const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -48,7 +49,8 @@ const routes: Routes = [
   children:[
     {path:'list',component: AgeLimitListComponent}
   ]
-  }
+  },
+  {path:'profile',component:ProfileComponent}
 
 ];
 

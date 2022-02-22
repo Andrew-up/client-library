@@ -49,7 +49,7 @@
 
     <select  [(ngModel)]="selectedAgeLimit">
       <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of ageLimit" [value]="item.ageLimitId">{{item.ageLimitName}}</option>
+      <option *ngFor="let item of ageLimit" [value]="item.ageLimitId">{{item.coverCodeName}}</option>
     </select>
     <p>{{ selectedAgeLimit }}</p>
 

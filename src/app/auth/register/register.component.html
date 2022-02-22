@@ -1,14 +1,13 @@
 <div>
 <div class="register_parent">
-  <input  class="form-input" type="text" placeholder="email" [(ngModel)]="email">
-  <input class="form-input" type="text" placeholder="name" [(ngModel)]="name">
-  <input class="form-input" type="text" placeholder="surname" [(ngModel)]="surname">
-  <input class="form-input" type="text" placeholder="password" [(ngModel)]="password">
-  <button (click)="apiRegister(email,name,surname,password)">Registration</button>
+  <input  class="form-input" type="text" placeholder="email" [(ngModel)]="obj.email">
+  <input class="form-input" type="text" placeholder="name" [(ngModel)]="obj.name">
+  <input class="form-input" type="text" placeholder="surname" [(ngModel)]="obj.surname">
+  <input class="form-input" type="password" placeholder="password" [(ngModel)]="obj.password">
+  <button (click)="apiRegister()">Registration</button>
   <br>
   <div>
     <p class="p">{{message}}</p>
   </div>
 </div>
-
 </div>

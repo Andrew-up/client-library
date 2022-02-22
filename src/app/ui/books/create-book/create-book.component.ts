@@ -11,7 +11,7 @@ import {Translation} from "../../../models/Translation";
 import {UserService} from "../../../services/user.service";
 import {from, fromEvent, map, Observable, Observer, of} from "rxjs";
 import {ImageUploadedFile} from "../../../models/ImageUploadedFile";
-import { concatMap, catchError, take } from 'rxjs/operators';
+import {concatMap, catchError, take} from 'rxjs/operators';
 import {ImageService} from "../../../services/image.service";
 
 
@@ -28,11 +28,9 @@ const INVALID_SIZE = ' Invalid Size.';
 export class CreateBookComponent implements OnInit {
 
 
-
   constructor(public booksService: BooksService,
               private userService: UserService,
-              private imageUploadService:ImageService) {
-
+              private imageUploadService: ImageService) {
 
 
   }
@@ -43,7 +41,7 @@ export class CreateBookComponent implements OnInit {
 
   ageLimit: AgeLimit[] = [{
     ageLimitId: 0,
-    ageLimitName: 'test'
+    coverCodeName: 'test'
   }]
 
   editionLanguage: EditionLanguage[] = [{
@@ -61,7 +59,7 @@ export class CreateBookComponent implements OnInit {
   }]
 
   coverCodeName: CoverCode[] = [{
-    coverCodeId: '1',
+    coverCodeId: 1,
     coverCodeName: 'test'
   }]
 
@@ -189,7 +187,7 @@ export class CreateBookComponent implements OnInit {
     return yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
   }
 
-  bookId?:number =0;
+  bookId?: number = 0;
 
   createBook() {
     let obj: Book = {
@@ -216,7 +214,7 @@ export class CreateBookComponent implements OnInit {
             this.response = 'Ответ: ';
             this.response = this.response + res.bookTitle + ' Успешно добавлен';
             this.bookId = res.bookId;
-            console.log( 'ID книги: '+this.bookId)
+            console.log('ID книги: ' + this.bookId)
             this.onUpload();
           }
         },
@@ -230,30 +228,29 @@ export class CreateBookComponent implements OnInit {
 
   }
 
-  selectedFile: any= null;
+  selectedFile: any = null;
 
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
   }
 
   onUpload() {
-    const idBook:number|undefined = this.bookId;
+    const idBook: number | undefined = this.bookId;
     const fd = new FormData();
     // https://developer.mozilla.org/ru/docs/Web/API/FormData/append
     fd.append('image', this.selectedFile, this.selectedFile.name);
     console.log(this.selectedFile)
-this.imageUploadService.uploadImgToBook(this.selectedFile,idBook).subscribe({
-  next:(value)=>{
-    console.log(value)
-    },
-  error:(err)=>{
-    console.log(err)
-  },
-  complete:()=>{
-      console.log('complete')
-    }
-})
-
+    this.imageUploadService.uploadImgToBook(this.selectedFile, idBook).subscribe({
+      next: (value) => {
+        console.log(value)
+      },
+      error: (err) => {
+        console.log(err)
+      },
+      complete: () => {
+        console.log('complete')
+      }
+    })
   }
 
 }

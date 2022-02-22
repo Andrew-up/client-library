@@ -1,5 +1,5 @@
 export interface CoverCode{
   //Обложка
-  coverCodeId?:string;
+  coverCodeId?:number;
   coverCodeName?:string;
 }

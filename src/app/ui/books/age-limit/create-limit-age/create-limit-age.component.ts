@@ -17,14 +17,14 @@ export class CreateLimitAgeComponent implements OnInit {
   response ='';
   createAgeLimit(){
     let obj:AgeLimit ={
-      ageLimitName:this.ageLimitName,
+      coverCodeName:this.ageLimitName,
     }
     this.ageLimitService.createAgeLimit(obj).subscribe({
       next:(res:AgeLimit)=>{
         console.log(res);
         this.response ='Ответ:  ';
-        if(this.ageLimitName==res.ageLimitName){
-          this.response = this.response+ res.ageLimitName+'  Успешно добавлен!';
+        if(this.ageLimitName==res.coverCodeName){
+          this.response = this.response+ res.coverCodeName+'  Успешно добавлен!';
         }
       }
     })

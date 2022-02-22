@@ -10,4 +10,9 @@ export interface User{
   role?:string;
   status?:string;
   Role?:string;
+  password?:string;
+  phone?:string;
+  address?:string;
+  dateOfBirth?:string;
+  imageProfile?:any;
 }
