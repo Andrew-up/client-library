@@ -41,7 +41,7 @@ export class CreateBookComponent implements OnInit {
 
   ageLimit: AgeLimit[] = [{
     ageLimitId: 0,
-    coverCodeName: 'test'
+    ageLimitName: 'test'
   }]
 
   editionLanguage: EditionLanguage[] = [{
@@ -49,7 +49,7 @@ export class CreateBookComponent implements OnInit {
     languageName: 'test'
   }]
   translation: Translation[] = [{
-    translationId: '1',
+    translationId: 0,
     translationName: 'test'
   }]
 
@@ -59,8 +59,8 @@ export class CreateBookComponent implements OnInit {
   }]
 
   coverCodeName: CoverCode[] = [{
-    coverCodeId: 1,
-    coverCodeName: 'test'
+    coverBookId: 1,
+    coverBookName: 'test'
   }]
 
   publisherName: Book[] = [{

@@ -81,7 +81,7 @@ export class AddRentToUserComponent implements OnInit {
   }
 
   getPrice() {
-    this.priceService.getAllPrice().subscribe({
+    this.priceService.getAllPriceRent().subscribe({
       next: (value) => {
         console.log(value)
         this.rent = value;

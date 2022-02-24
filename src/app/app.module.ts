@@ -19,8 +19,6 @@ import {EditBookComponent} from './ui/books/edit-book/edit-book.component';
 import {CreateAuthorsComponent} from './ui/books/create-authors/create-authors.component';
 import {EditAuthorsComponent} from './ui/books/edit-authors/edit-authors.component';
 import {CreateSeriesBookComponent} from './ui/books/create-series-book/create-series-book.component';
-import {CreateLimitAgeComponent} from './ui/books/age-limit/create-limit-age/create-limit-age.component';
-import {CreateTranslationBookComponent} from './ui/books/create-translation-book/create-translation-book.component';
 import {RentComponent} from './ui/books/rent-list/rent.component';
 import {CoverTypesComponent} from './ui/books/cover-types/cover-types.component';
 import {PublishingHouseComponent} from './ui/books/publishing-house/publishing-house.component';
@@ -32,11 +30,12 @@ import {authErrorInterceptorProviders} from "./helper/error-interceptor.service"
 import {IndexComponent} from './ui/index/index.component';
 import {EditionLanguageComponent} from './ui/books/edition-language/edition-language.component';
 import {AddRentToUserComponent} from './ui/books/add-rent-to-user/add-rent-to-user.component';
-import {CreatePriceComponent} from "./ui/books/create-price/create-price.component";
+import {PriceRentComponent} from "./ui/books/price-rent/price-rent.component";
 import {GenreListComponent} from './ui/books/genre/genre-list/genre-list.component';
 import {CommonGenreComponent} from './ui/books/genre/common-genre/common-genre.component';
 import {CommonAgeLimitComponent} from './ui/books/age-limit/common-age-limit/common-age-limit.component';
 import {AgeLimitListComponent} from './ui/books/age-limit/age-limit-list/age-limit-list.component';
+import {TranslationComponent} from './ui/books/translation/translation.component';
 
 
 @NgModule({
@@ -52,8 +51,6 @@ import {AgeLimitListComponent} from './ui/books/age-limit/age-limit-list/age-lim
     CreateAuthorsComponent,
     EditAuthorsComponent,
     CreateSeriesBookComponent,
-    CreateLimitAgeComponent,
-    CreateTranslationBookComponent,
     RentComponent,
     CoverTypesComponent,
     PublishingHouseComponent,
@@ -63,11 +60,12 @@ import {AgeLimitListComponent} from './ui/books/age-limit/age-limit-list/age-lim
     IndexComponent,
     EditionLanguageComponent,
     AddRentToUserComponent,
-    CreatePriceComponent,
+    PriceRentComponent,
     GenreListComponent,
     CommonGenreComponent,
     CommonAgeLimitComponent,
-    AgeLimitListComponent
+    AgeLimitListComponent,
+    TranslationComponent
   ],
   imports: [
     BrowserModule,

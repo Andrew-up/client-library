@@ -33,17 +33,17 @@ export class ErrorInterceptorService implements HttpInterceptor {
           }
         });
       }
-      console.log(this.tokenService.getRefreshToken());
-      console.log(this.tokenService.getUser());
-      console.log(this.tokenService.getRole());
-      console.log(this.tokenService.getToken());
-      if (err.status == 401 &&
-        this.tokenService.getRefreshToken() != null &&
-        this.tokenService.getToken() != null &&
-        this.tokenService.getUser() != null &&
-        this.tokenService.getRole() != null) {
-        // window.location.reload();
-      }
+      // console.log(this.tokenService.getRefreshToken());
+      // console.log(this.tokenService.getUser());
+      // console.log(this.tokenService.getRole());
+      // console.log(this.tokenService.getToken());
+      // if (err.status == 401 &&
+      //   this.tokenService.getRefreshToken() != null &&
+      //   this.tokenService.getToken() != null &&
+      //   this.tokenService.getUser() != null &&
+      //   this.tokenService.getRole() != null) {
+      //   // window.location.reload();
+      // }
       if (err.status == 403) {
         this.tokenService.logOut();
         window.location.reload();

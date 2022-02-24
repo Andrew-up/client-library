@@ -1,28 +1,36 @@
+<!--<div class="page">-->
+<!--  <div class="CommonParent">-->
+<!--    <p>Стоимость аренды</p>-->
+<!--    <input  class="form-input" type="text" placeholder="Стоимость аренды" [(ngModel)]="priceName">-->
+<!--    <button (click)="createPrice()"> Добавить</button>-->
+<!--  </div>-->
+<!--  <h4>{{response}}</h4>-->
+<!--</div>-->
 <div class="container">
   <div class="table-responsive">
     <table class="table table-striped table-bordered border-dark">
       <thead>
       <tr>
         <th scope="col">id</th>
-        <th scope="col">Тип обложки</th>
+        <th scope="col">Стоимость аренды</th>
         <th class="col-md-1" scope="col">Изменить</th>
         <th class="col-md-1" scope="col">Удалить</th>
       </tr>
       </thead>
       <tbody *ngFor="let item of allObject; index as i">
       <tr>
-        <th scope="row">{{item.coverBookId}}</th>
-        <td *ngIf="enableEditIndex!=i">{{item.coverBookName}}</td>
+        <th scope="row">{{item.id}}</th>
+        <td *ngIf="enableEditIndex!=i">{{item.priceName}}</td>
         <td *ngIf="enableEditIndex==i" class="active" contenteditable="true">
-          <input type="text" class="form-control" placeholder="{{item.coverBookName}}"
-                 [(ngModel)]="updateThisObject.coverBookName">
+          <input type="text" class="form-control" placeholder="{{item.priceName}}"
+                 [(ngModel)]="updateThisObject.priceName">
         </td>
         <td *ngIf="enableEditIndex!=i" class="col-md-1 edit" (click)="enableEditMethod($event, i)">Изменить</td>
         <td *ngIf="enableEditIndex==i" class="col-md-1 cancel" (click)="cancel()">Отменить</td>
-        <td (click)="rememberIdDelete(item.coverBookId)" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        <td (click)="rememberIdDelete(item.id)" data-bs-toggle="modal" data-bs-target="#exampleModal"
             *ngIf="enableEditIndex!=i" class="col-md-1 delete">Удалить
         </td>
-        <td *ngIf="enableEditIndex==i" class="col-md-1 save" (click)="updateObject(item.coverBookId)">Сохранить</td>
+        <td *ngIf="enableEditIndex==i" class="col-md-1 save" (click)="updateObject(item.id)">Сохранить</td>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -51,7 +59,7 @@
       <tr>
         <th>auto</th>
         <td>
-          <input type="text" class="form-control" placeholder="Название" [(ngModel)]="fieldNewName">
+          <input type="double" class="form-control" placeholder="Название" [(ngModel)]="fieldNewName">
         </td>
         <th colspan="2" class="col-md-1 save" (click)="addObject()">Добавить
           <span *ngIf="loadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

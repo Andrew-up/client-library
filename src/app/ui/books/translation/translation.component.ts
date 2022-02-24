@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {CoverTypeService} from "../../../services/cover-type.service";
+import { Component, OnInit } from '@angular/core';
 import {CoverCode} from "../../../models/CoverCode";
-import {AgeLimit} from "../../../models/AgeLimit";
+import {CoverTypeService} from "../../../services/cover-type.service";
 import {NotificationService} from "../../../services/notification.service";
+import {TranslationService} from "../../../services/translation.service";
+import {Translation} from "../../../models/Translation";
 
 @Component({
-  selector: 'app-cover-types',
-  templateUrl: './cover-types.component.html',
-  styleUrls: ['./cover-types.component.css', '../../common_styles.css']
+  selector: 'app-translation',
+  templateUrl: './translation.component.html',
+  styleUrls: ['./translation.component.css','../../common_styles.css']
 })
-export class CoverTypesComponent implements OnInit {
+export class TranslationComponent implements OnInit {
 
-  constructor(private coverTypeService: CoverTypeService,
+  constructor(private translationService: TranslationService,
               private toast: NotificationService) {
+
   }
 
-  allObject: CoverCode[] = [{}]
-  updateThisObject: CoverCode = {}
+  allObject: Translation[] = [{}]
+  updateThisObject: Translation = {}
   response = 'Ответ: ';
   enableEditIndex = null;
   fieldNewName = '';
@@ -33,7 +35,7 @@ export class CoverTypesComponent implements OnInit {
   enableEditMethod(e, i) {
     this.isFieldEdit = !this.isFieldEdit;
     this.enableEditIndex = i;
-    this.updateThisObject.coverBookName = '';
+    this.updateThisObject.translationName = '';
   }
 
   cancel() {
@@ -47,23 +49,23 @@ export class CoverTypesComponent implements OnInit {
 
   updateObject(id) {
     this.isErrorDataFormat = false;
-    this.updateThisObject.coverBookId = id;
+    this.updateThisObject.translationId = id;
     console.log(this.updateThisObject);
-    this.coverTypeService.updateCoverType(this.updateThisObject).subscribe({
+    this.translationService.updateTranslation(this.updateThisObject).subscribe({
       next: (value) => {
-        if (this.updateThisObject.coverBookName == value.coverBookName) {
-          this.response = 'Ответ: ' + value.coverBookName + ' успешно сохранено';
+        if (this.updateThisObject.translationName == value.translationName) {
+          this.response = 'Ответ: ' + value.translationName + ' успешно сохранено';
           this.getAllObject();
           this.enableEditIndex = null;
           this.isFieldEdit = false;
           this.errorCount = 0;
         } else {
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: ' + value.translationName;
           this.isErrorDataFormat = true;
         }
-        if (value.coverBookId == -2000) {
+        if (value.translationId == -2000) {
           this.isErrorDataFormat = false;
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: ' + value.translationName;
         }
       },
       error: (error) => {
@@ -78,7 +80,7 @@ export class CoverTypesComponent implements OnInit {
   deleteObject(id?: number) {
     this.isErrorDataFormat = false;
     console.log('delete:', this.idDelete)
-    this.coverTypeService.deleteCoverType(id).subscribe({
+    this.translationService.deleteTranslation(id).subscribe({
       next: (value) => {
         this.getAllObject();
         this.errorCount = 0;
@@ -96,25 +98,25 @@ export class CoverTypesComponent implements OnInit {
 
   addObject() {
     this.loadingInProgress = true;
-    let obj: CoverCode = {
-      coverBookName: this.fieldNewName,
+    let obj: Translation = {
+      translationName: this.fieldNewName,
     }
-    this.coverTypeService.createCoverType(obj).subscribe({
-      next: (value: CoverCode) => {
+    this.translationService.createTranslation(obj).subscribe({
+      next: (value: Translation) => {
         this.loadingInProgress = false;
-        if (this.fieldNewName == value.coverBookName) {
-          this.response = 'Ответ: ' + value.coverBookName + '  Успешно добавлен';
+        if (this.fieldNewName == value.translationName) {
+          this.response = 'Ответ: ' + value.translationName + '  Успешно добавлен';
           this.getAllObject();
           this.fieldNewName = '';
           this.errorCount = 0;
           this.isErrorDataFormat = false;
         } else {
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: ' + value.translationName;
           this.isErrorDataFormat = true;
         }
-        if (value.coverBookId == -2000) {
+        if (value.translationId == -2000) {
           this.isErrorDataFormat = false;
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: ' + value.translationName;
         }
       },
       error: (error) => {
@@ -128,7 +130,7 @@ export class CoverTypesComponent implements OnInit {
   }
 
   getAllObject() {
-    this.coverTypeService.getAllCoverType().subscribe({
+    this.translationService.getAllTranslation().subscribe({
       next: (value) => {
         this.allObject = value;
         this.errorCount = 0;

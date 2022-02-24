@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
       },
       error: (e) => {
         // this.pressTestShowBar(JSON.stringify(e.error));
-        this.notificationService.showSnackBar(e.error.error);
+        this.notificationService.showSnackBar(e.error.email +' '+ e.error.password);
         console.log(e);
         // this.error = e.error
         // this.token = e;

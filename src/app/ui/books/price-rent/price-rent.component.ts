@@ -1,25 +1,26 @@
 import {Component, OnInit} from '@angular/core';
+import {PriceRentService} from "../../../services/price-rent.service";
+import {Price} from "../../../models/Price";
 import {CoverTypeService} from "../../../services/cover-type.service";
-import {CoverCode} from "../../../models/CoverCode";
-import {AgeLimit} from "../../../models/AgeLimit";
 import {NotificationService} from "../../../services/notification.service";
+import {CoverCode} from "../../../models/CoverCode";
 
 @Component({
-  selector: 'app-cover-types',
-  templateUrl: './cover-types.component.html',
-  styleUrls: ['./cover-types.component.css', '../../common_styles.css']
+  selector: 'app-price-rent',
+  templateUrl: './price-rent.component.html',
+  styleUrls: ['./price-rent.component.css', '../../common_styles.css']
 })
-export class CoverTypesComponent implements OnInit {
+export class PriceRentComponent implements OnInit {
 
-  constructor(private coverTypeService: CoverTypeService,
+  constructor(private rentPriceService: PriceRentService,
               private toast: NotificationService) {
   }
 
-  allObject: CoverCode[] = [{}]
-  updateThisObject: CoverCode = {}
+  allObject: Price[] = [{}]
+  updateThisObject: Price = {}
   response = 'Ответ: ';
   enableEditIndex = null;
-  fieldNewName = '';
+  fieldNewName?:string;
   isFieldEdit = false;
   idDelete?: number;
   isErrorDataFormat = false;
@@ -33,7 +34,7 @@ export class CoverTypesComponent implements OnInit {
   enableEditMethod(e, i) {
     this.isFieldEdit = !this.isFieldEdit;
     this.enableEditIndex = i;
-    this.updateThisObject.coverBookName = '';
+    this.updateThisObject.priceName = '';
   }
 
   cancel() {
@@ -47,23 +48,23 @@ export class CoverTypesComponent implements OnInit {
 
   updateObject(id) {
     this.isErrorDataFormat = false;
-    this.updateThisObject.coverBookId = id;
+    this.updateThisObject.id = id;
     console.log(this.updateThisObject);
-    this.coverTypeService.updateCoverType(this.updateThisObject).subscribe({
+    this.rentPriceService.updatePriceRent(this.updateThisObject).subscribe({
       next: (value) => {
-        if (this.updateThisObject.coverBookName == value.coverBookName) {
-          this.response = 'Ответ: ' + value.coverBookName + ' успешно сохранено';
+        if (this.updateThisObject.priceName == value.priceName) {
+          this.response = 'Ответ: ' + value.priceName + ' успешно сохранено';
           this.getAllObject();
           this.enableEditIndex = null;
           this.isFieldEdit = false;
           this.errorCount = 0;
         } else {
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: ' + value.priceName;
           this.isErrorDataFormat = true;
         }
-        if (value.coverBookId == -2000) {
+        if (value.id == -2000) {
           this.isErrorDataFormat = false;
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: ' + value.priceName;
         }
       },
       error: (error) => {
@@ -78,7 +79,7 @@ export class CoverTypesComponent implements OnInit {
   deleteObject(id?: number) {
     this.isErrorDataFormat = false;
     console.log('delete:', this.idDelete)
-    this.coverTypeService.deleteCoverType(id).subscribe({
+    this.rentPriceService.deletePriceRent(id).subscribe({
       next: (value) => {
         this.getAllObject();
         this.errorCount = 0;
@@ -91,44 +92,47 @@ export class CoverTypesComponent implements OnInit {
         }
       }
     })
-
   }
 
   addObject() {
     this.loadingInProgress = true;
-    let obj: CoverCode = {
-      coverBookName: this.fieldNewName,
+    let obj: Price = {
+      priceName: this.fieldNewName,
     }
-    this.coverTypeService.createCoverType(obj).subscribe({
-      next: (value: CoverCode) => {
+    this.rentPriceService.createPriceRent(obj).subscribe({
+      next: (value) => {
         this.loadingInProgress = false;
-        if (this.fieldNewName == value.coverBookName) {
-          this.response = 'Ответ: ' + value.coverBookName + '  Успешно добавлен';
+        if (obj.priceName == value.message) {
+          this.response = 'Ответ: ' + value.message + ' Успешно добавлено';
           this.getAllObject();
           this.fieldNewName = '';
           this.errorCount = 0;
           this.isErrorDataFormat = false;
         } else {
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: ' + value.message;
           this.isErrorDataFormat = true;
         }
-        if (value.coverBookId == -2000) {
+        if (value.message == -2000) {
           this.isErrorDataFormat = false;
-          this.response = 'Ответ: ' + value.coverBookName;
+          this.response = 'Ответ: Ошибка при добавлении в базу данных, такая запись уже есть';
         }
       },
       error: (error) => {
         this.loadingInProgress = false;
         if (error.status == 401 && this.errorCount<5) {
+          console.log("count: "+this.errorCount);
           this.errorCount++;
           this.addObject();
         }
-      }
+      },
+      complete:()=>{
+
+    }
     })
   }
 
   getAllObject() {
-    this.coverTypeService.getAllCoverType().subscribe({
+    this.rentPriceService.getAllPriceRent().subscribe({
       next: (value) => {
         this.allObject = value;
         this.errorCount = 0;

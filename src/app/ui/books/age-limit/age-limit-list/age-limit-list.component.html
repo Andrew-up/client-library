@@ -12,10 +12,10 @@
       <tbody *ngFor="let item of ageLimit; index as i">
       <tr>
         <th scope="row">{{item.ageLimitId}}</th>
-        <td *ngIf="enableEditIndex!=i">{{item.coverCodeName}}</td>
+        <td *ngIf="enableEditIndex!=i">{{item.ageLimitName}}</td>
         <td *ngIf="enableEditIndex==i" class="active" contenteditable="true">
-          <input type="text" class="form-control" placeholder="{{item.coverCodeName}}"
-                 [(ngModel)]="updateAgeLimit.coverCodeName">
+          <input type="text" class="form-control" placeholder="{{item.ageLimitName}}"
+                 [(ngModel)]="updateAgeLimit.ageLimitName">
         </td>
         <td *ngIf="enableEditIndex!=i" class="col-md-1 edit" (click)="enableEditMethod($event, i)">Изменить</td>
         <td *ngIf="enableEditIndex==i" class="col-md-1 cancel" (click)="cancel()">Отменить</td>

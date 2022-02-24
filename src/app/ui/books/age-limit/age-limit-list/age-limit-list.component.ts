@@ -44,7 +44,7 @@ export class AgeLimitListComponent implements OnInit {
   enableEditMethod(e, i) {
     this.enableEdit = !this.enableEdit;
     this.enableEditIndex = i;
-    this.updateAgeLimit.coverCodeName = '';
+    this.updateAgeLimit.ageLimitName = '';
     console.log('enableEditMethod: ' + i);
     console.log()
   }
@@ -60,19 +60,19 @@ export class AgeLimitListComponent implements OnInit {
     console.log(this.updateAgeLimit);
     this.ageLimitService.updateAgeLimit(this.updateAgeLimit).subscribe({
       next: (value) => {
-        if (this.updateAgeLimit.coverCodeName == value.coverCodeName) {
-          this.response = 'Ответ: ' + value.coverCodeName + ' успешно сохранено';
+        if (this.updateAgeLimit.ageLimitName == value.ageLimitName) {
+          this.response = 'Ответ: ' + value.ageLimitName + ' успешно сохранено';
           this.getAllAgeLimit();
           this.enableEditIndex = null;
           this.enableEdit = false;
           this.errorCount = 5;
         } else {
-          this.response = 'Ответ: ' + value.coverCodeName;
+          this.response = 'Ответ: ' + value.ageLimitName;
           this.errorDataBase = true;
         }
         if (value.ageLimitId == -2000) {
           this.errorDataBase = false;
-          this.response = 'Ответ: ' + value.coverCodeName;
+          this.response = 'Ответ: ' + value.ageLimitName;
         }
       },
       error: (err) => {
@@ -112,24 +112,24 @@ export class AgeLimitListComponent implements OnInit {
 
   addAgeLimit() {
     let obj: AgeLimit = {
-      coverCodeName: this.ageLimitName,
+      ageLimitName: this.ageLimitName,
     }
 
     this.ageLimitService.createAgeLimit(obj).subscribe({
       next: (value: AgeLimit) => {
-        if (this.ageLimitName == value.coverCodeName) {
-          this.response = 'Ответ: ' + value.coverCodeName + '  Успешно добавлен';
+        if (this.ageLimitName == value.ageLimitName) {
+          this.response = 'Ответ: ' + value.ageLimitName + '  Успешно добавлен';
           this.getAllAgeLimit();
           this.ageLimitName = '';
           this.errorCount = 5;
           this.errorDataBase = false;
         } else {
-          this.response = 'Ответ: ' + value.coverCodeName;
+          this.response = 'Ответ: ' + value.ageLimitName;
           this.errorDataBase = true;
         }
         if (value.ageLimitId == -2000) {
           this.errorDataBase = false;
-          this.response = 'Ответ: ' + value.coverCodeName;
+          this.response = 'Ответ: ' + value.ageLimitName;
         }
 
       },

@@ -31,7 +31,7 @@
 
     <select  [(ngModel)]="selectedCoverCode">
       <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of coverCodeName" [value]="item.coverCodeId">{{item.coverCodeName}}</option>
+      <option *ngFor="let item of coverCodeName" [value]="item.coverBookId">{{item.coverBookName}}</option>
     </select>
     <p>{{ selectedCoverCode }}</p>
 
@@ -49,7 +49,7 @@
 
     <select  [(ngModel)]="selectedAgeLimit">
       <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of ageLimit" [value]="item.ageLimitId">{{item.coverCodeName}}</option>
+      <option *ngFor="let item of ageLimit" [value]="item.ageLimitId">{{item.ageLimitName}}</option>
     </select>
     <p>{{ selectedAgeLimit }}</p>
 

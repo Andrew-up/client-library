@@ -1,4 +1,4 @@
 export interface Translation{
-  translationId?:string;
+  translationId?:number;
   translationName?:string;
 }

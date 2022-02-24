@@ -1,4 +1,4 @@
 export interface Price{
   id?:number,
-  priceName?:string
+  priceName?:string;
 }
