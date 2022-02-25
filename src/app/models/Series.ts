@@ -1,5 +1,9 @@
+import {Author} from "./Author";
+
 export interface Series{
   //Обложка
-  seriesId?:string;
+  seriesId?:number;
   seriesName?:string;
+  authorsId?:number;
+  authors?:Author;
 }

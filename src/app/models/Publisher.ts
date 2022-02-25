@@ -1,4 +1,4 @@
 export interface Publisher{
-  publisherId?:string;
+  publisherId?:number;
   publisherName?:string;
 }

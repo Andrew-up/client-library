@@ -15,5 +15,8 @@ export class AuthorsService {
   public createAuthor(author:Author):Observable<any>{
     return this.httpClient.post(AUTHORS_API+'create',author);
   }
+  public getAllAuthor():Observable<any>{
+    return this.httpClient.get(AUTHORS_API+'all');
+  }
 
 }

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/User";
-import {UpdatePageService} from "../../../services/update-page.service";
 
 @Component({
   selector: 'app-list-users',
@@ -10,8 +9,7 @@ import {UpdatePageService} from "../../../services/update-page.service";
 })
 export class ListUsersComponent implements OnInit {
 
-  constructor(private userService: UserService,
-              private updatePage: UpdatePageService) {
+  constructor(private userService: UserService) {
   }
 
   errorCount: number = 0;

@@ -4,9 +4,9 @@
     <p>Название книги</p>
     <input  class="form-input" type="text" placeholder="Name Book" [(ngModel)]="selectedBookTitle">
 <p>Автор</p>
-    <select    [(ngModel)]="selectedAuthors">
+    <select   (click)="getAuthorsBySeriesId(selectedAuthors)" [(ngModel)]="selectedAuthors">
       <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
+      <option  *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
     </select>
     <p>{{ selectedAuthors }}</p>
 <p>Жанр</p>
@@ -37,9 +37,13 @@
 
     <p>Серия</p>
 
-    <select  [(ngModel)]="selectedSeries">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of series" [value]="item.seriesId">{{item.seriesName}}</option>
+    <select  *ngIf="isBookSeriesExist" [(ngModel)]="selectedSeries">
+        <option  [value]="null"><p>Не выбрано</p></option>
+        <option *ngFor="let item of series" [value]="item.seriesId">{{item.seriesName}}</option>
+    </select>
+
+    <select class="form-select" aria-label="Disabled select example" disabled  *ngIf="!isBookSeriesExist" [(ngModel)]="selectedSeries">
+      <option  [value]="null"><p>{{authorsFullName}}</p></option>
     </select>
     <p>{{ selectedSeries }}</p>
 

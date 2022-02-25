@@ -13,6 +13,7 @@ import {from, fromEvent, map, Observable, Observer, of} from "rxjs";
 import {ImageUploadedFile} from "../../../models/ImageUploadedFile";
 import {concatMap, catchError, take} from 'rxjs/operators';
 import {ImageService} from "../../../services/image.service";
+import {SeriesService} from "../../../services/series.service";
 
 
 const INVALID_FILE = ' Invalid file.';
@@ -30,7 +31,8 @@ export class CreateBookComponent implements OnInit {
 
   constructor(public booksService: BooksService,
               private userService: UserService,
-              private imageUploadService: ImageService) {
+              private imageUploadService: ImageService,
+              private seriesService:SeriesService) {
 
 
   }
@@ -38,6 +40,7 @@ export class CreateBookComponent implements OnInit {
   now = new Date();
   maxDate?: string;
   response = 'Ответ: ';
+  isBookSeriesExist = false;
 
   ageLimit: AgeLimit[] = [{
     ageLimitId: 0,
@@ -54,8 +57,6 @@ export class CreateBookComponent implements OnInit {
   }]
 
   series: Series[] = [{
-    seriesId: '1',
-    seriesName: 'test'
   }]
 
   coverCodeName: CoverCode[] = [{
@@ -74,13 +75,39 @@ export class CreateBookComponent implements OnInit {
   }]
 
   AuthorsName: Author[] = [{
-    authorsId: '1',
+    id: '1',
     firstname: 'ivan',
     lastname: 'ivanov',
     patronymic: 'ivanovich',
     dateOfBirth: '2000-01-01'
   }];
 
+  getAuthorsBySeriesId(idAuthors){
+    if(idAuthors=="null"){
+      console.log(idAuthors);
+      this.isBookSeriesExist = false;
+      this.authorsFullName ="Автор не выбран"
+      this.selectedSeries = null;
+    }
+    if(idAuthors!="null"){
+      this.seriesService.getAllAuthorsBySeriesId(idAuthors).subscribe({
+        next:(value)=>{
+          this.series = value;
+          console.log(value)
+          if(value.length ==0){
+            this.authorsFullName ="У автора нет серии книг"
+            this.isBookSeriesExist = false;
+            this.selectedSeries = null;
+          }
+          else  this.isBookSeriesExist = true;
+        },
+        error:(error)=>{
+          // console.log(error);
+        }
+      })
+    }
+
+  }
 
   getAllPublisher() {
     this.booksService.getAllPublisher().subscribe(res => {
@@ -112,11 +139,15 @@ export class CreateBookComponent implements OnInit {
     })
   }
 
-  getAllSeries() {
-    this.booksService.getAllSeries().subscribe(res => {
-      this.series = res;
-    })
+  showSeriesBookByAuthors(author):string{
+    return "test  " + author;
   }
+
+  // getAllSeries() {
+  //   this.booksService.getAllSeries().subscribe(res => {
+  //     this.series = res;
+  //   })
+  // }
 
   getAllEditionLanguage() {
     this.booksService.getAllEditionLanguage().subscribe(res => {
@@ -133,7 +164,7 @@ export class CreateBookComponent implements OnInit {
   public selectedBookTitle = 'default name book for the test';
   public selectedNumberPages = null;
   public selectedPublisherId = null;
-  public selectedAuthors = null;
+  public selectedAuthors = "null";
   public selectedCoverCode = null;
   public selectedAgeLimit = null;
   public selectedSeries = null;
@@ -142,9 +173,16 @@ export class CreateBookComponent implements OnInit {
   public selectedTranslation = null;
   public selectedISBN = null;
   public selectedReleaseDate = null;
+  public authorsFullName = "Автор не выбран";
 
 
   countError: number = 0;
+
+
+  tetsttyr(){
+    console.log("test")
+    this.isBookSeriesExist= false;
+  }
 
   getUser() {
     this.userService.getUserBool().subscribe({
@@ -162,7 +200,7 @@ export class CreateBookComponent implements OnInit {
         this.getAllPublisher();
         this.getAllCoverCode();
         this.getAllAgeLimit();
-        this.getAllSeries();
+        // this.getAllSeries();
         this.getAllGenres();
         this.getAllEditionLanguage();
         this.getAllTranslation();

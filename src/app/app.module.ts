@@ -18,7 +18,6 @@ import {CreateBookComponent} from './ui/books/create-book/create-book.component'
 import {EditBookComponent} from './ui/books/edit-book/edit-book.component';
 import {CreateAuthorsComponent} from './ui/books/create-authors/create-authors.component';
 import {EditAuthorsComponent} from './ui/books/edit-authors/edit-authors.component';
-import {CreateSeriesBookComponent} from './ui/books/create-series-book/create-series-book.component';
 import {RentComponent} from './ui/books/rent-list/rent.component';
 import {CoverTypesComponent} from './ui/books/cover-types/cover-types.component';
 import {PublishingHouseComponent} from './ui/books/publishing-house/publishing-house.component';
@@ -36,6 +35,7 @@ import {CommonGenreComponent} from './ui/books/genre/common-genre/common-genre.c
 import {CommonAgeLimitComponent} from './ui/books/age-limit/common-age-limit/common-age-limit.component';
 import {AgeLimitListComponent} from './ui/books/age-limit/age-limit-list/age-limit-list.component';
 import {TranslationComponent} from './ui/books/translation/translation.component';
+import { SeriesBookComponent } from './ui/books/series-book/series-book.component';
 
 
 @NgModule({
@@ -50,7 +50,6 @@ import {TranslationComponent} from './ui/books/translation/translation.component
     EditBookComponent,
     CreateAuthorsComponent,
     EditAuthorsComponent,
-    CreateSeriesBookComponent,
     RentComponent,
     CoverTypesComponent,
     PublishingHouseComponent,
@@ -65,7 +64,8 @@ import {TranslationComponent} from './ui/books/translation/translation.component
     CommonGenreComponent,
     CommonAgeLimitComponent,
     AgeLimitListComponent,
-    TranslationComponent
+    TranslationComponent,
+    SeriesBookComponent
   ],
   imports: [
     BrowserModule,

@@ -5,13 +5,15 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-image: url("https://i.pinimg.com/originals/1f/32/de/1f32de75ae0a1ac218a902f6f361a6d7.jpg");
 }
 
 .login-form {
   flex-direction: column;
   display: flex;
   min-width: 30%;
-  background-color: #f4f4ff;
+  background-color: rgba(140, 140, 166, 0.41);
+
 }
 
 .form-input {

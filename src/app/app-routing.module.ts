@@ -8,7 +8,7 @@ import {PromocodeComponent} from "./ui/users/promocode/promocode.component";
 import {CreateAuthorsComponent} from "./ui/books/create-authors/create-authors.component";
 import {IndexComponent} from "./ui/index/index.component";
 import {PublishingHouseComponent} from "./ui/books/publishing-house/publishing-house.component";
-import {CreateSeriesBookComponent} from "./ui/books/create-series-book/create-series-book.component";
+
 import {CoverTypesComponent} from "./ui/books/cover-types/cover-types.component";
 import {EditionLanguageComponent} from "./ui/books/edition-language/edition-language.component";
 import {ListUsersComponent} from "./ui/users/list-users/list-users.component";
@@ -21,6 +21,7 @@ import {CommonAgeLimitComponent} from "./ui/books/age-limit/common-age-limit/com
 import {AgeLimitListComponent} from "./ui/books/age-limit/age-limit-list/age-limit-list.component";
 import {ProfileComponent} from "./ui/users/profile/profile.component";
 import {TranslationComponent} from "./ui/books/translation/translation.component";
+import {SeriesBookComponent} from "./ui/books/series-book/series-book.component";
 
 const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -31,7 +32,7 @@ const routes: Routes = [
   {path:'create-authors',component:CreateAuthorsComponent},
   {path:'index',component:IndexComponent},
   {path:'book/publisher',component:PublishingHouseComponent},
-  {path:'book/series',component:CreateSeriesBookComponent},
+  {path:'book/series',component:SeriesBookComponent},
   {path:'book/cover-type',component:CoverTypesComponent},
   {path:'book/translation',component:TranslationComponent},
   {path:'book/edition-language',component:EditionLanguageComponent},

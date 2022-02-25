@@ -1,38 +1,49 @@
-<!--<div class="page">-->
-<!--  <div class="CommonParent">-->
-<!--    <p>Издательство</p>-->
-<!--    <input  class="form-input" type="text" placeholder="Имя издательства" [(ngModel)]="publisherName">-->
-<!--    <button (click)="createPublisher()"> Добавить</button>-->
-<!--  </div>-->
-<!--  <h4>{{response}}</h4>-->
-<!--</div>-->
-
-
 <div class="container">
   <div class="table-responsive">
     <table class="table table-striped table-bordered border-dark">
       <thead>
       <tr>
         <th scope="col">id</th>
-        <th scope="col">Издательство</th>
+        <th scope="col">Серия</th>
+        <th scope="col">Автор серии</th>
         <th class="col-md-1" scope="col">Изменить</th>
         <th class="col-md-1" scope="col">Удалить</th>
       </tr>
       </thead>
       <tbody *ngFor="let item of allObject; index as i">
       <tr>
-        <th scope="row">{{item.publisherId}}</th>
-        <td *ngIf="enableEditIndex!=i">{{item.publisherName}}</td>
+        <th scope="row">{{item.seriesId}}</th>
+        <td *ngIf="enableEditIndex!=i">{{item.seriesName}}</td>
+<!--        <li *ngFor="let contact of item.authors">{{ contact.firstname }}</li>-->
+<!--          <td *ngIf="enableEditIndex!=i">Автор серии</td>-->
+          <td *ngIf="enableEditIndex!=i">{{parseToJson(item.authors)}}</td>
+
         <td *ngIf="enableEditIndex==i" class="active" contenteditable="true">
-          <input type="text" class="form-control" placeholder="{{item.publisherName}}"
-                 [(ngModel)]="updateThisObject.publisherName">
+          <input type="text" class="form-control" placeholder="{{item.seriesName}}"
+                 [(ngModel)]="updateThisObject.seriesName">
         </td>
+
+<!--        <td *ngIf="enableEditIndex==i">Автор серии изменить</td>-->
+        <td *ngIf="enableEditIndex==i" style="vertical-align: middle">
+          <select class="selected22"  [(ngModel)]="selectedAuthorsUpdate" >
+            <option [value]="null">Не выбрано</option>
+            <option *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
+          </select>
+<!--          <p>{{ selectedAuthorsUpdate }}</p>  &lt;!&ndash;          не по центру изза него&ndash;&gt;-->
+        </td>
+
+<!--        <td *ngIf="enableEditIndex==i" style="vertical-align: middle">-->
+<!--          <select class="selected22" data-live-search="true"  [(ngModel)]="updateThisObject.authorsId" >-->
+<!--            <option [value]="null">Не выбрано</option>-->
+<!--            <option *ngFor="let item of AuthorsName" [value]="item.id">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>-->
+<!--          </select>-->
+<!--        </td>-->
         <td *ngIf="enableEditIndex!=i" class="col-md-1 edit" (click)="enableEditMethod($event, i)">Изменить</td>
         <td *ngIf="enableEditIndex==i" class="col-md-1 cancel" (click)="cancel()">Отменить</td>
-        <td (click)="rememberIdDelete(item.publisherId)" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        <td (click)="rememberIdDelete(item.seriesId)" data-bs-toggle="modal" data-bs-target="#exampleModal"
             *ngIf="enableEditIndex!=i" class="col-md-1 delete">Удалить
         </td>
-        <td *ngIf="enableEditIndex==i" class="col-md-1 save" (click)="updateObject(item.publisherId)">Сохранить</td>
+        <td *ngIf="enableEditIndex==i" class="col-md-1 save" (click)="updateObject(item.seriesId,selectedAuthorsUpdate)">Сохранить</td>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -57,13 +68,23 @@
           </div>
         </div>
       </tr>
-      <tbody>
+      <tbody >
       <tr>
         <th>auto</th>
         <td>
           <input type="text" class="form-control" placeholder="Название" [(ngModel)]="fieldNewName">
         </td>
-        <th colspan="2" class="col-md-1 save" (click)="addObject()">Добавить
+
+        <th style="vertical-align: middle">
+          <select class="selected22"  [(ngModel)]="selectedAuthors" >
+            <option [value]="null">Не выбрано</option>
+            <option *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
+          </select>
+<!--          <p>{{ selectedAuthors }}</p> &lt;!&ndash;          не по центру изза него&ndash;&gt;-->
+
+
+        </th>
+        <th colspan="3" class="col-md-1 save" (click)="addObject()">Добавить
           <span *ngIf="loadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         </th>
 
@@ -109,4 +130,5 @@
     </div>
   </div>
 </div>
+
 
