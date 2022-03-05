@@ -1,0 +1,70 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">LIBRARY</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!--      <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
+
+      <ul class="navbar-nav flex">
+        <!--      <ul class="navbar-nav mx-auto">-->
+
+        <li class="nav-item">
+          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/index">Главная</a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/books-list">Книги</a>
+        </li>
+        <li class="nav-item">
+          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/link">Авторы</a>
+        </li>
+        <li class="nav-item">
+          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/link">Контакты</a>
+        </li>
+        <li *ngIf="!getLoggedInStatus()" class="nav-item">
+          <a  routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/promo_code">Промокод</a>
+        </li>
+        <li *ngIf="token.getRole()+''==userService.getRoleWorker()||token.getRole()+''== userService.getRoleAdmin()"  class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Меню работника
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a routerLinkActive="active" routerLink="/create-book" class="dropdown-item" href="#">Добавить книгу</a></li>
+            <li><a routerLinkActive="active" routerLink="/create-authors" class="dropdown-item" href="#">Добавить автора</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/genre/list" class="dropdown-item" href="#">Жанры+</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/age-limit/list" class="dropdown-item" href="#">Возрастные ограничения +</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/translation" class="dropdown-item" href="#">Перевод книг + </a></li>
+            <li><a routerLinkActive="active" routerLink="/book/series" class="dropdown-item" href="#">Серия книг +</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/rent" class="dropdown-item" href="#">Список в аренде</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/rent-add" class="dropdown-item" href="#">Выдать в аренду</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/price-rent" class="dropdown-item" href="#">Стоимость аренды +-</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/cover-type" class="dropdown-item" href="#">Виды обложек+</a></li>
+            <li><a routerLinkActive="active" routerLink="/book/publisher" class="dropdown-item" href="#">Издательства + </a></li>
+            <li><a routerLinkActive="active" routerLink="/book/edition-language" class="dropdown-item" href="#">Язык издания + </a></li>
+          </ul>
+        </li>
+        <li  *ngIf="token.getRole()+''==userService.getRoleAdmin()" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Меню администратора
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+            <li><a routerLinkActive="active" routerLink="/user/user-list" class="dropdown-item" href="#">Список пользователей</a></li>
+            <li><a routerLinkActive="active" routerLink="#" class="dropdown-item" href="#">Изменение статуса пользователя</a></li>
+            <li><a routerLinkActive="active" routerLink="/#" class="dropdown-item" href="#">Изменение статуса пользователя</a></li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <form class="d-flex justify-content-center">
+    <!--    <div class="d-none p-2 bg-primary text-white"> <p>{{getLoggerInUserRole()}}</p></div>-->
+    <button routerLink="/profile" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Мой профиль </button>
+    <button (click)="token.logOut()" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Выход </button>
+    <button routerLink="/login" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Вход </button>
+    <button routerLink="/register" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Регистрация </button>
+  </form>
+</nav>

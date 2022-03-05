@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, PipeTransform} from '@angular/core';
 import {NotificationService} from "../../../services/notification.service";
 import {CoverCode} from "../../../models/CoverCode";
 import {SeriesService} from "../../../services/series.service";
 import {Series} from "../../../models/Series";
 import {Author} from "../../../models/Author";
 import {AuthorsService} from "../../../services/authors.service";
+import {keyframes} from "@angular/animations";
+
 
 @Component({
   selector: 'app-series-book',
@@ -18,6 +20,16 @@ export class SeriesBookComponent implements OnInit {
               private authorsService: AuthorsService) {
   }
 
+  searchedKeyword!: string;
+
+  logConsole(any) {
+    console.log(any);
+  }
+
+
+
+
+  addCarStatus = '';
   allObject: Series[] = [{}]
   authors: Author[] = [{}]
 
@@ -30,11 +42,16 @@ export class SeriesBookComponent implements OnInit {
   isErrorDataFormat = false;
   errorCount = 0;
   loadingInProgress = false;
-  public selectedAuthors:any = null;
-  public selectedAuthorsUpdate:any = null;
+  public selectedAuthors: any = null;
+  public selectedAuthorsUpdate: any = null;
+  public dataList = true;
 
   outputToJson(any: any) {
     console.log(JSON.stringify(any));
+  }
+
+  parseTo(any, any2) {
+    console.log('1:' + JSON.stringify(any) + '2:' + any2);
   }
 
   parseToJson(authors?: Author): string {
@@ -58,18 +75,17 @@ export class SeriesBookComponent implements OnInit {
     this.getAllAuthors();
   }
 
-  AuthorsName: Author[] = [{
-    authorsId: '1',
-    firstname: 'ivan',
-    lastname: 'ivanov',
-    patronymic: 'ivanovich',
-    dateOfBirth: '2000-01-01'
-  }];
-
   getAllAuthors() {
     this.authorsService.getAllAuthor().subscribe(res => {
-      this.AuthorsName = res;
-    })
+      this.authors = res;
+        this.errorCount = 0;
+    },
+      error => {
+        if (error.status == 401 && this.errorCount < 5) {
+          this.errorCount++;
+          this.getAllAuthors();
+        }
+      })
   }
 
   enableEditMethod(e, i) {
@@ -88,7 +104,7 @@ export class SeriesBookComponent implements OnInit {
     this.idDelete = id;
   }
 
-  updateObject(id,updateIdAuthor) {
+  updateObject(id, updateIdAuthor) {
     this.isErrorDataFormat = false;
     this.updateThisObject.seriesId = id;
     this.updateThisObject.authorsId = updateIdAuthor;
@@ -141,11 +157,13 @@ export class SeriesBookComponent implements OnInit {
 
   }
 
-  addObject() {
+  addObject(value: any) {
+
+    console.log(value);
     this.loadingInProgress = true;
     let obj: Series = {
       seriesName: this.fieldNewName,
-      authorsId: this.selectedAuthors
+      authorsId: value,
     }
     this.seriesService.createSeries(obj).subscribe({
       next: (value) => {
@@ -170,7 +188,7 @@ export class SeriesBookComponent implements OnInit {
         this.loadingInProgress = false;
         if (error.status == 401 && this.errorCount < 5) {
           this.errorCount++;
-          this.addObject();
+          this.addObject(value);
         }
       }
     })
@@ -181,7 +199,7 @@ export class SeriesBookComponent implements OnInit {
       next: (value) => {
         this.allObject = value;
         this.errorCount = 0;
-        console.log(value);
+        // console.log(value);
       },
       error: (error) => {
         if (error.status == 401 && this.errorCount < 5) {
@@ -191,5 +209,4 @@ export class SeriesBookComponent implements OnInit {
       }
     })
   }
-
 }

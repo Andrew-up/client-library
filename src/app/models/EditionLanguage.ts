@@ -1,4 +1,4 @@
 export interface EditionLanguage{
-  languageId?:string,
+  languageId?:number,
   languageName?:string
 }

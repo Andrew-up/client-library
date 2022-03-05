@@ -14,7 +14,19 @@ export class EditionLanguageService {
   constructor(private  httpClient:HttpClient) { }
 
 
-  public editionLanguageCreate(edition:EditionLanguage):Observable<any>{
+  public createEditionLanguage(edition:EditionLanguage):Observable<any>{
     return this.httpClient.post(EDITION_LANGUAGE_API+'create',edition);
+  }
+
+  public getAllEditionLanguage():Observable<EditionLanguage[]>{
+    return this.httpClient.get<EditionLanguage[]>(EDITION_LANGUAGE_API+'all');
+  }
+
+  public updateEditionLanguage(update:EditionLanguage):Observable<EditionLanguage>{
+    return this.httpClient.post(EDITION_LANGUAGE_API+'update',update)
+  }
+
+  public deleteEditionLanguage(update?:number):Observable<any>{
+    return this.httpClient.post(EDITION_LANGUAGE_API+'delete',update)
   }
 }

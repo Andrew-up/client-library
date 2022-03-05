@@ -14,36 +14,41 @@
       <tr>
         <th scope="row">{{item.seriesId}}</th>
         <td *ngIf="enableEditIndex!=i">{{item.seriesName}}</td>
-<!--        <li *ngFor="let contact of item.authors">{{ contact.firstname }}</li>-->
-<!--          <td *ngIf="enableEditIndex!=i">Автор серии</td>-->
-          <td *ngIf="enableEditIndex!=i">{{parseToJson(item.authors)}}</td>
+        <!--        <li *ngFor="let contact of item.authors">{{ contact.firstname }}</li>-->
+        <!--          <td *ngIf="enableEditIndex!=i">Автор серии</td>-->
+        <td *ngIf="enableEditIndex!=i">{{parseToJson(item.authors)}}</td>
 
         <td *ngIf="enableEditIndex==i" class="active" contenteditable="true">
           <input type="text" class="form-control" placeholder="{{item.seriesName}}"
                  [(ngModel)]="updateThisObject.seriesName">
         </td>
 
-<!--        <td *ngIf="enableEditIndex==i">Автор серии изменить</td>-->
+        <!--        <td *ngIf="enableEditIndex==i">Автор серии изменить</td>-->
         <td *ngIf="enableEditIndex==i" style="vertical-align: middle">
-          <select class="selected22"  [(ngModel)]="selectedAuthorsUpdate" >
+          <select class="selected22" [(ngModel)]="selectedAuthorsUpdate">
             <option [value]="null">Не выбрано</option>
-            <option *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
+            <option *ngFor="let item of authors"
+                    [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
           </select>
-<!--          <p>{{ selectedAuthorsUpdate }}</p>  &lt;!&ndash;          не по центру изза него&ndash;&gt;-->
+
+
+          <!--          <p>{{ selectedAuthorsUpdate }}</p>  &lt;!&ndash;          не по центру изза него&ndash;&gt;-->
         </td>
 
-<!--        <td *ngIf="enableEditIndex==i" style="vertical-align: middle">-->
-<!--          <select class="selected22" data-live-search="true"  [(ngModel)]="updateThisObject.authorsId" >-->
-<!--            <option [value]="null">Не выбрано</option>-->
-<!--            <option *ngFor="let item of AuthorsName" [value]="item.id">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>-->
-<!--          </select>-->
-<!--        </td>-->
+        <!--        <td *ngIf="enableEditIndex==i" style="vertical-align: middle">-->
+        <!--          <select class="selected22" data-live-search="true"  [(ngModel)]="updateThisObject.authorsId" >-->
+        <!--            <option [value]="null">Не выбрано</option>-->
+        <!--            <option *ngFor="let item of AuthorsName" [value]="item.id">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>-->
+        <!--          </select>-->
+        <!--        </td>-->
         <td *ngIf="enableEditIndex!=i" class="col-md-1 edit" (click)="enableEditMethod($event, i)">Изменить</td>
         <td *ngIf="enableEditIndex==i" class="col-md-1 cancel" (click)="cancel()">Отменить</td>
         <td (click)="rememberIdDelete(item.seriesId)" data-bs-toggle="modal" data-bs-target="#exampleModal"
             *ngIf="enableEditIndex!=i" class="col-md-1 delete">Удалить
         </td>
-        <td *ngIf="enableEditIndex==i" class="col-md-1 save" (click)="updateObject(item.seriesId,selectedAuthorsUpdate)">Сохранить</td>
+        <td *ngIf="enableEditIndex==i" class="col-md-1 save"
+            (click)="updateObject(item.seriesId,selectedAuthorsUpdate)">Сохранить
+        </td>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -68,34 +73,45 @@
           </div>
         </div>
       </tr>
-      <tbody >
+      <tbody>
       <tr>
         <th>auto</th>
         <td>
           <input type="text" class="form-control" placeholder="Название" [(ngModel)]="fieldNewName">
         </td>
 
-        <th style="vertical-align: middle">
-          <select class="selected22"  [(ngModel)]="selectedAuthors" >
-            <option [value]="null">Не выбрано</option>
-            <option *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
+        <th class="col-md-5">
+          <div class="input-group">
+          <input type="text" class="form-control"    placeholder="Поиск" [(ngModel)]="searchedKeyword">
+          <button *ngIf="searchedKeyword" type="button" class="btn btn-outline-primary" (click)="searchedKeyword=''">Очистить</button>
+          </div>
+          <select #Select size="3" class="form-select form-select-sm" multiple data-live-search="true" aria-label=".form-select-sm example">
+            <option *ngFor="let item of authors | filter:searchedKeyword" [value]="item.authorsId" (click)="parseTo(item,searchedKeyword)"> <p>{{item.firstname}} {{item.lastname}}  {{item.patronymic}} {{item.dateOfBirth}}</p></option>
+<!--            <p>{{Select.options}}</p>-->
+         <!-- Output: "bar" -->
+
           </select>
-<!--          <p>{{ selectedAuthors }}</p> &lt;!&ndash;          не по центру изза него&ndash;&gt;-->
-
 
         </th>
-        <th colspan="3" class="col-md-1 save" (click)="addObject()">Добавить
-          <span *ngIf="loadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </th>
 
+
+
+        <th colspan="3" class="col-md-1 save" (click)="addObject(Select.value)">Добавить
+          <span *ngIf="loadingInProgress" class="spinner-border spinner-border-sm" role="status"
+                aria-hidden="true"></span>
+        </th>
       </tr>
       </tbody>
     </table>
   </div>
 
+<!--  <p>{{ authors | filterBy: ['firstname', 'lastname','dateOfBirth']: searchedKeyword }}</p>-->
+
   <div *ngIf="response">
     {{response}}
-    <button *ngIf="isErrorDataFormat" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="btn btn-info"> Какой формат верный?</button>
+    <button *ngIf="isErrorDataFormat" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="btn btn-info"> Какой
+      формат верный?
+    </button>
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -106,19 +122,21 @@
           <div class="modal-body">
             <div class="alert alert-warning">
               <li>Возрастное ограничение может содержать только цифры</li>
-              <li>Если возрастное ограничение имеет диапазон чисел, допустим между цифрами дефис и каждое число из диапазона должно содержать не более двух цифр</li>
+              <li>Если возрастное ограничение имеет диапазон чисел, допустим между цифрами дефис и каждое число из
+                диапазона должно содержать не более двух цифр
+              </li>
               <li>Если число не имеет диапазона должен быть знак "+" после числа</li>
               <div class="alert alert-success"> Разрешено
-                <li> 16+ </li>
-                <li> 0-3 </li>
-                <li> 16-18 </li>
+                <li> 16+</li>
+                <li> 0-3</li>
+                <li> 16-18</li>
               </div>
               <div class="alert alert-danger"> Запрещено
-                <li> 12 </li>
-                <li> Десять </li>
-                <li> 16 18 </li>
-                <li> -9 </li>
-                <li> 100-150 </li>
+                <li> 12</li>
+                <li> Десять</li>
+                <li> 16 18</li>
+                <li> -9</li>
+                <li> 100-150</li>
               </div>
             </div>
           </div>
@@ -130,5 +148,3 @@
     </div>
   </div>
 </div>
-
-

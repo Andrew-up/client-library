@@ -1,9 +1,113 @@
-<div class="page">
-  <div class="CommonParent">
-    <p>Язык издания</p>
-    <input  class="form-input" type="text" placeholder="Язык издания" [(ngModel)]="editionLanguageName">
-    <button (click)="createEditionLanguage()"> Добавить</button>
+<!--<div class="page">-->
+<!--  <div class="CommonParent">-->
+<!--    <p>Язык издания</p>-->
+<!--    <input  class="form-input" type="text" placeholder="Язык издания" [(ngModel)]="editionLanguageName">-->
+<!--    <button (click)="createEditionLanguage()"> Добавить</button>-->
+<!--  </div>-->
+<!--  <h4>{{response}}</h4>-->
+<!--</div>-->
+
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered border-dark">
+      <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Язык издания</th>
+        <th class="col-md-1" scope="col">Изменить</th>
+        <th class="col-md-1" scope="col">Удалить</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let item of allObject; index as i">
+      <tr>
+        <th scope="row">{{item.languageId}}</th>
+        <td *ngIf="enableEditIndex!=i">{{item.languageName}}</td>
+        <td *ngIf="enableEditIndex==i" class="active" contenteditable="true">
+          <input type="text" class="form-control" placeholder="{{item.languageName}}"
+                 [(ngModel)]="updateThisObject.languageName">
+        </td>
+        <td *ngIf="enableEditIndex!=i" class="col-md-1 edit" (click)="enableEditMethod($event, i)">Изменить</td>
+        <td *ngIf="enableEditIndex==i" class="col-md-1 cancel" (click)="cancel()">Отменить</td>
+        <td (click)="rememberIdDelete(item.languageId)" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            *ngIf="enableEditIndex!=i" class="col-md-1 delete">Удалить
+        </td>
+        <td *ngIf="enableEditIndex==i" class="col-md-1 save" (click)="updateObject(item.languageId)">Сохранить</td>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Подтвердить удаление?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="alert alert-warning">
+                  <li>Невозможно книга если есть книга с текущей обложкой</li>
+                  <li>Удаленный тип обложки невозможно восстановить</li>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
+                <button *ngIf="enableEditIndex!=i" (click)="deleteObject(idDelete)" type="button"
+                        class="btn btn-danger" data-bs-dismiss="modal">Подтвердить удаление
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
+      <tbody>
+      <tr>
+        <th>auto</th>
+        <td>
+          <input type="text" class="form-control" placeholder="Название" [(ngModel)]="fieldNewName">
+        </td>
+        <th colspan="2" class="col-md-1 save" (click)="addObject()">Добавить
+          <span *ngIf="loadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </th>
+
+      </tr>
+      </tbody>
+    </table>
   </div>
-  <h4>{{response}}</h4>
+
+  <div *ngIf="response">
+    {{response}}
+    <button *ngIf="isErrorDataFormat" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="btn btn-info"> Какой формат верный?</button>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Информация</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-warning">
+              <li>Возрастное ограничение может содержать только цифры</li>
+              <li>Если возрастное ограничение имеет диапазон чисел, допустим между цифрами дефис и каждое число из диапазона должно содержать не более двух цифр</li>
+              <li>Если число не имеет диапазона должен быть знак "+" после числа</li>
+              <div class="alert alert-success"> Разрешено
+                <li> 16+ </li>
+                <li> 0-3 </li>
+                <li> 16-18 </li>
+              </div>
+              <div class="alert alert-danger"> Запрещено
+                <li> 12 </li>
+                <li> Десять </li>
+                <li> 16 18 </li>
+                <li> -9 </li>
+                <li> 100-150 </li>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Понятно</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 

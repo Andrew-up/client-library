@@ -7,6 +7,8 @@ import {AuthService} from "../services/auth.service";
 import {Token} from "../models/Token";
 import {User} from "../models/User";
 import {UserService} from "../services/user.service";
+import {Router} from "@angular/router";
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
   constructor(private tokenService: TokenStorageService,
               private notificationService: NotificationService,
               private authService: AuthService,
-              private userService: UserService) {
+              private userService: UserService,
+              private router:Router) {
   }
 
 
@@ -46,7 +49,9 @@ export class ErrorInterceptorService implements HttpInterceptor {
       // }
       if (err.status == 403) {
         this.tokenService.logOut();
+        this.router.navigate(['/login'])
         window.location.reload();
+
       }
 
       // const error = JSON.stringify(err.error);

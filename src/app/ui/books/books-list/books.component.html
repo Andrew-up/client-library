@@ -4,6 +4,7 @@
     <div class="container">
       <div class="row people">
         <div class="col-md-6 col-lg-4 item" *ngFor="let item of book">
+
           <div class="box"><img style="height: 150pt;width: 150pt;" src="{{item.imageSrcTemp}}">
             <h3 class="name">Ben Johnson</h3>
             <p>Название: {{item.bookTitle}}</p>
@@ -23,7 +24,13 @@
             <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i
               class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
           </div>
+
         </div>
+
+
+      </div>
+      <div *ngIf="isBooksNull">
+        Список пуст
       </div>
     </div>
   </div>

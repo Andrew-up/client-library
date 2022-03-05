@@ -24,7 +24,7 @@ import {MatDividerModule} from '@angular/material/divider';
     MatToolbarModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatDividerModule
+    MatDividerModule,
   ]
 
 })

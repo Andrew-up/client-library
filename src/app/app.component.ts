@@ -18,12 +18,7 @@ import {UserService} from "./services/user.service";
 export class AppComponent{
 
   title = 'client';
-  constructor(public token: TokenStorageService,
-              public userService:UserService,
-               ) {
-  }
+  constructor() {}
 
-  getLoggedInStatus() {
-    return this.token.getToken() == null;
-  }
+
 }

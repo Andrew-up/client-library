@@ -1,16 +1,14 @@
 <div class="back-login-form">
   <div class="login-form">
-
     <div class="form-floating mb-3 mt-5">
       <input type="email" class="form-control" id="floatingInput" placeholder="email" [(ngModel)]="email">
       <label for="floatingInput">Email address</label>
     </div>
-
     <div class="form-floating mb-3">
       <input type="email" class="form-control" id="floatingInput2" placeholder="password" [(ngModel)]="password">
       <label for="floatingInput2">Password</label>
     </div>
-    <button class="btn btn-success" (click)="apiAuth(email,password)">Sign in</button>
+    <button class="btn btn-success" (click)="apiAuth(email,password)" type="submit" >Sign in</button>
     <button class="form-input" (click)="checkToken()">check Token</button>
   </div>
   <div class="info_footer">

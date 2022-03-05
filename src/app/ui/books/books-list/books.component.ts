@@ -18,6 +18,8 @@ export class BooksComponent implements OnInit {
               private imageService: ImageService) {
   }
 
+  isBooksNull:boolean = true;
+
   book: Book[] =
     [{
       bookTitle: '123',
@@ -30,6 +32,13 @@ export class BooksComponent implements OnInit {
   getAllBook() {
     this.booksService.getAllBooks().subscribe({
       next: (value) => {
+        console.log()
+        if(value.length.valueOf()==0){
+          this.isBooksNull = true;
+        }
+        else {
+          this.isBooksNull = false;
+        }
         this.book = value;
       },
       error: (err) => {
@@ -43,6 +52,7 @@ export class BooksComponent implements OnInit {
               this.book[i].imageBlob = value;
               const reader = new FileReader();
               reader.readAsDataURL(value);
+
               reader.addEventListener("load", () => {
                 // console.log(reader.result)
                 this.book[i].imageSrcTemp = reader.result;

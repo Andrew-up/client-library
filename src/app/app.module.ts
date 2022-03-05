@@ -36,6 +36,10 @@ import {CommonAgeLimitComponent} from './ui/books/age-limit/common-age-limit/com
 import {AgeLimitListComponent} from './ui/books/age-limit/age-limit-list/age-limit-list.component';
 import {TranslationComponent} from './ui/books/translation/translation.component';
 import { SeriesBookComponent } from './ui/books/series-book/series-book.component';
+import { TopMenuComponent } from './ui/menu/top-menu/top-menu.component';
+import { FooterComponent } from './ui/menu/footer/footer.component';
+import {Ng2SearchPipeModule} from "ng2-search-filter";
+import {NgPipesModule} from "ngx-pipes";
 
 
 @NgModule({
@@ -65,19 +69,24 @@ import { SeriesBookComponent } from './ui/books/series-book/series-book.componen
     CommonAgeLimitComponent,
     AgeLimitListComponent,
     TranslationComponent,
-    SeriesBookComponent
+    SeriesBookComponent,
+    TopMenuComponent,
+    FooterComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSnackBarModule,
     CommonModule,
-    MatListModule
+    MatListModule,
+    Ng2SearchPipeModule,
+    FormsModule,
+    NgPipesModule
   ],
   exports: [AppComponent],
   providers: [authInterceptorProviders,

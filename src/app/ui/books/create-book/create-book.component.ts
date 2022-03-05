@@ -48,7 +48,7 @@ export class CreateBookComponent implements OnInit {
   }]
 
   editionLanguage: EditionLanguage[] = [{
-    languageId: '1',
+    languageId: 0,
     languageName: 'test'
   }]
   translation: Translation[] = [{
