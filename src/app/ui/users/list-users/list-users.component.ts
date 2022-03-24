@@ -12,7 +12,7 @@ export class ListUsersComponent implements OnInit {
   constructor(private userService: UserService) {
   }
 
-  errorCount: number = 0;
+
   users: User[] = [{
     id: 0,
   }]
@@ -21,13 +21,9 @@ export class ListUsersComponent implements OnInit {
     this.userService.getAllUsers().subscribe({
         next: (value) => {
           this.users = value;
-          this.errorCount = 0;
         },
         error: (err) => {
-          this.errorCount++;
-          if (this.errorCount >= 5 && err.status == 401) {
-            this.getAllUsers();
-          }
+
         }
       }
     )

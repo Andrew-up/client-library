@@ -73,6 +73,14 @@
     </select>
     <p>{{ selectedTranslation }}</p>
 
+    <p>Стоимость аренды</p>
+
+    <select  [(ngModel)]="selectedPrice">
+      <option [value]="null">Не выбрано</option>
+      <option *ngFor="let item of rent" [value]="item.id">{{item.priceName}}</option>
+    </select>
+    <p>{{ selectedPrice }}</p>
+
 <p>Изображение книги</p>
 <!--    <input  class="form-input" type="file" placeholder="ImageUploadedFile Book"  [(ngModel)]="selectedFile">-->
 

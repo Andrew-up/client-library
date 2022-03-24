@@ -15,6 +15,7 @@ export interface Book {
   translationId?: string;
   publisherName?: string;
   imageId?: string;
+  priceId?:string;
 
   //name
   genreName?: string;
@@ -32,4 +33,13 @@ export interface Book {
   test?:string;
 
   imageSrcTemp?:any;
+
+  giveOut?:boolean;
+  basketId?:string;
+
+  myBooksRent?:boolean;
+  dateRent?:string;
+  myBooksRequest?:boolean;
+  myBooksBasket?:boolean;
+
 }

@@ -24,7 +24,7 @@ export class PublishingHouseComponent implements OnInit {
   isFieldEdit = false;
   idDelete?: number;
   isErrorDataFormat = false;
-  errorCount = 0;
+
   loadingInProgress = false;
 
   ngOnInit(): void {
@@ -57,7 +57,7 @@ export class PublishingHouseComponent implements OnInit {
           this.getAllObject();
           this.enableEditIndex = null;
           this.isFieldEdit = false;
-          this.errorCount = 0;
+
         } else {
           this.response = 'Ответ: ' + value.publisherName;
           this.isErrorDataFormat = true;
@@ -68,10 +68,7 @@ export class PublishingHouseComponent implements OnInit {
         }
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount<5) {
-          this.errorCount++;
-          this.updateObject(id);
-        }
+
       }
     })
   }
@@ -82,14 +79,11 @@ export class PublishingHouseComponent implements OnInit {
     this.publisherHouseService.deletePublisher(id).subscribe({
       next: (value) => {
         this.getAllObject();
-        this.errorCount = 0;
+
         this.toast.showSnackBar(value.message);
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount<5) {
-          this.errorCount++;
-          this.deleteObject(id);
-        }
+
       }
     })
 
@@ -107,7 +101,7 @@ export class PublishingHouseComponent implements OnInit {
           this.response = 'Ответ: ' + value.publisherName + '  Успешно добавлен';
           this.getAllObject();
           this.fieldNewName = '';
-          this.errorCount = 0;
+
           this.isErrorDataFormat = false;
         } else {
           this.response = 'Ответ: ' + value.publisherName;
@@ -120,10 +114,6 @@ export class PublishingHouseComponent implements OnInit {
       },
       error: (error) => {
         this.loadingInProgress = false;
-        if (error.status == 401 && this.errorCount<5) {
-          this.errorCount++;
-          this.addObject();
-        }
       }
     })
   }
@@ -132,13 +122,9 @@ export class PublishingHouseComponent implements OnInit {
     this.publisherHouseService.getAllPublisher().subscribe({
       next: (value) => {
         this.allObject = value;
-        this.errorCount = 0;
+
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount<5) {
-          this.errorCount++;
-          this.getAllObject();
-        }
       }
     })
   }

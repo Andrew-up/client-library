@@ -40,7 +40,6 @@ export class SeriesBookComponent implements OnInit {
   isFieldEdit = false;
   idDelete?: number;
   isErrorDataFormat = false;
-  errorCount = 0;
   loadingInProgress = false;
   public selectedAuthors: any = null;
   public selectedAuthorsUpdate: any = null;
@@ -72,19 +71,14 @@ export class SeriesBookComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllObject();
-    this.getAllAuthors();
   }
 
   getAllAuthors() {
     this.authorsService.getAllAuthor().subscribe(res => {
       this.authors = res;
-        this.errorCount = 0;
     },
       error => {
-        if (error.status == 401 && this.errorCount < 5) {
-          this.errorCount++;
-          this.getAllAuthors();
-        }
+
       })
   }
 
@@ -116,7 +110,6 @@ export class SeriesBookComponent implements OnInit {
           this.getAllObject();
           this.enableEditIndex = null;
           this.isFieldEdit = false;
-          this.errorCount = 0;
           this.selectedAuthorsUpdate = null;
           console.log(this.updateThisObject)
         } else {
@@ -129,10 +122,7 @@ export class SeriesBookComponent implements OnInit {
         }
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount < 5) {
-          this.errorCount++;
-          this.updateObject(id, updateIdAuthor);
-        }
+
       }
     })
   }
@@ -143,15 +133,12 @@ export class SeriesBookComponent implements OnInit {
     this.seriesService.deleteSeries(id).subscribe({
       next: (value) => {
         this.getAllObject();
-        this.errorCount = 0;
+
         this.toast.showSnackBar(value.message);
         this.response = "";
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount < 5) {
-          this.errorCount++;
-          this.deleteObject(id);
-        }
+
       }
     })
 
@@ -172,7 +159,6 @@ export class SeriesBookComponent implements OnInit {
           this.response = 'Ответ: ' + value.seriesName + '  Успешно добавлен';
           this.getAllObject();
           this.fieldNewName = '';
-          this.errorCount = 0;
           this.isErrorDataFormat = false;
           this.selectedAuthors = null;
         } else {
@@ -186,10 +172,7 @@ export class SeriesBookComponent implements OnInit {
       },
       error: (error) => {
         this.loadingInProgress = false;
-        if (error.status == 401 && this.errorCount < 5) {
-          this.errorCount++;
-          this.addObject(value);
-        }
+
       }
     })
   }
@@ -198,14 +181,14 @@ export class SeriesBookComponent implements OnInit {
     this.seriesService.getAllSeries().subscribe({
       next: (value) => {
         this.allObject = value;
-        this.errorCount = 0;
+
         // console.log(value);
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount < 5) {
-          this.errorCount++;
-          this.getAllObject();
-        }
+
+      },
+      complete:()=>{
+        this.getAllAuthors();
       }
     })
   }

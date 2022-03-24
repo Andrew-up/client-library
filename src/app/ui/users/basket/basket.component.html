@@ -1,0 +1,60 @@
+<!--<div *ngFor="let item of basketUser">-->
+
+<!--<p>{{item.basketId}} {{item.booksName}}</p>-->
+
+
+<!--</div>-->
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered border-dark">
+      <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Название книги</th>
+        <th class="col-md-1" scope="col">Удалить</th>
+        <th class="col-md-1" scope="col">Заявка</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let item of basketUser; index as i">
+      <tr>
+        <th scope="row">{{item.basketId}}</th>
+        <td>{{item.bookTitle}}</td>
+
+        <td (click)="rememberIdDelete(item.basketId)" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            class="col-md-2 delete">Удалить
+        </td>
+        <td (click)="createBookRequest(item.basketId)" class="col-md-2 save">Создать заявку
+        </td>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Подтвердить удаление?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="alert alert-warning">
+                  <li>Невозможно книга если есть книга с текущей обложкой</li>
+                  <li>Удаленный тип обложки невозможно восстановить</li>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
+                <button (click)="deleteObject(idDelete)" type="button"
+                        class="btn btn-danger" data-bs-dismiss="modal">Подтвердить удаление
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
+    </table>
+    <div style="align-items: center; display: flex">
+      <button class="mx-md-auto btn btn-primary" (click)="createAllBookRequest(basketUser)">Создать заявку на все книги</button>
+    </div>
+
+  </div>
+
+</div>
+
+

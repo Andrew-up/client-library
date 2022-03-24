@@ -29,42 +29,74 @@ export class BooksService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public CreateBook(book:any):Observable<Book>{
+  public CreateBook(book: any): Observable<Book> {
     // console.log('crete book thhp: '+JSON.stringify(book));
-    return this.httpClient.post(BOOKS_API+'create',book);
+    return this.httpClient.post(BOOKS_API + 'create', book);
+  }
 
+  public getBookById(id): Observable<Book> {
+    return this.httpClient.get<Book>(BOOKS_API + 'book/' + id);
   }
 
   public getAllBooks(): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(BOOKS_API + 'all');
+    return this.httpClient.get<Book[]>(BOOKS_API + 'all/');
   }
 
-  public getAllPublisher():Observable<Book[]>{
-    return this.httpClient.get<Book[]>(BOOKS_API+'publisher/all');
+  public getAllBooksByNumberPage(page, size): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(BOOKS_API + 'AllBookByPage', {
+      params: {
+        page: page,
+        size: size,
+      }
+    });
   }
-  public getAllAuthors():Observable<Author[]>{
-    return this.httpClient.get<Author[]>(AUTHORS_API+'all');
+
+  public getAllBooksById(id): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(BOOKS_API + 'getAllById/' + id);
   }
-  public getAllCoverCode():Observable<CoverCode[]>{
-    return this.httpClient.get<CoverCode[]>(COVER_CODE_API+'all');
+
+
+  public getAllPublisher(): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(BOOKS_API + 'publisher/all');
   }
-  public getAllAgeLimit():Observable<AgeLimit[]>{
-    return this.httpClient.get<AgeLimit[]>(AGE_LIMIT_API+'all');
+
+  public getAllAuthors(): Observable<Author[]> {
+    return this.httpClient.get<Author[]>(AUTHORS_API + 'all');
   }
-  public getAllSeries():Observable<Series[]>{
-    return this.httpClient.get<Series[]>(SERIES_API+'all');
+
+  public getAllCoverCode(): Observable<CoverCode[]> {
+    return this.httpClient.get<CoverCode[]>(COVER_CODE_API + 'all');
   }
-  public getAllGenres():Observable<BookGenres[]>{
-    return this.httpClient.get<BookGenres[]>(GENRES_API+'all');
+
+  public getAllAgeLimit(): Observable<AgeLimit[]> {
+    return this.httpClient.get<AgeLimit[]>(AGE_LIMIT_API + 'all');
   }
-  public getAllEditionLanguage():Observable<EditionLanguage[]>{
-    return this.httpClient.get<EditionLanguage[]>(EDITION_LANGUAGE_API+'all');
+
+  public getAllSeries(): Observable<Series[]> {
+    return this.httpClient.get<Series[]>(SERIES_API + 'all');
   }
-  public getAllTranslation():Observable<Translation[]>{
-    return this.httpClient.get<Translation[]>(TRANSLATION_API+'all');
+
+  public getAllGenres(): Observable<BookGenres[]> {
+    return this.httpClient.get<BookGenres[]>(GENRES_API + 'all');
   }
-  public sendPromoCode(promoCode:any):Observable<any>{
+
+  public getAllEditionLanguage(): Observable<EditionLanguage[]> {
+    return this.httpClient.get<EditionLanguage[]>(EDITION_LANGUAGE_API + 'all');
+  }
+
+  public getAllTranslation(): Observable<Translation[]> {
+    return this.httpClient.get<Translation[]>(TRANSLATION_API + 'all');
+  }
+
+  public sendPromoCode(promoCode: any): Observable<any> {
     return this.httpClient.post(PROMOCODE_API, promoCode);
+  }
+
+  public searchBook(searchInput?:string,typeSearch?:string):Observable<any>{
+    return this.httpClient.post(BOOKS_API+'search',{
+      search:searchInput,
+      typeSearch:typeSearch
+    });
   }
 
 }

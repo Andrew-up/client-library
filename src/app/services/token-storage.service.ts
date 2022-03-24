@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {User} from "../models/User";
 import {Router} from "@angular/router";
+import {Token} from "../models/Token";
 
 const KEY_TOKEN = 'auth-token';
 const KEY_REFRESH_TOKEN = 'auth-token-refresh';
@@ -13,23 +14,39 @@ const USER_ROLE = 'user-role'
 })
 export class TokenStorageService {
 
+  private readonly JWT_TOKEN = 'auth-token';
+
   constructor(private router:Router) {
   }
 
-  public saveToken(token: string, refresh_token: string): void {
-    // window.sessionStorage.removeItem(KEY_TOKEN);
-    // window.sessionStorage.removeItem(KEY_REFRESH_TOKEN);
-    // window.sessionStorage.setItem(KEY_TOKEN, token);
-    // window.sessionStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
+  public saveToken(token: string): void {
     window.localStorage.removeItem(KEY_TOKEN);
-    window.localStorage.removeItem(KEY_REFRESH_TOKEN);
     window.localStorage.setItem(KEY_TOKEN, token);
-    window.localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
+    // const user = this.getUser();
+    // if (user.id) {
+    //   this.saveUser({ ...user, accessToken: token });
+    // }
+  }
+  public saveRefreshToken(token: string): void {
+    window.localStorage.removeItem(KEY_REFRESH_TOKEN);
+    window.localStorage.setItem(KEY_REFRESH_TOKEN, token);
   }
 
+  signOut(): void {
+    window.localStorage.clear();
+  }
+  // public saveToken(token: string, refresh_token: string): void {
+  //   // window.sessionStorage.removeItem(KEY_TOKEN);
+  //   // window.sessionStorage.removeItem(KEY_REFRESH_TOKEN);
+  //   // window.sessionStorage.setItem(KEY_TOKEN, token);
+  //   // window.sessionStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
+  //   window.localStorage.removeItem(KEY_TOKEN);
+  //   window.localStorage.removeItem(KEY_REFRESH_TOKEN);
+  //   window.localStorage.setItem(KEY_TOKEN, token);
+  //   window.localStorage.setItem(KEY_REFRESH_TOKEN, refresh_token);
+  // }
+
   public saveRole(role: string): void {
-    // window.sessionStorage.removeItem(USER_ROLE);
-    // window.sessionStorage.setItem(USER_ROLE, role);
     window.localStorage.removeItem(USER_ROLE);
     window.localStorage.setItem(USER_ROLE, role);
   }
@@ -38,11 +55,15 @@ export class TokenStorageService {
     return localStorage.getItem(USER_ROLE);
   }
 
+  getJwtToken() {
+    return localStorage.getItem(KEY_TOKEN);
+  }
+
   public getToken(): string | null {
     return localStorage.getItem(KEY_TOKEN);
   }
 
-  public getRefreshToken(): string | null {
+  public getRefreshToken(): string | null  {
     return localStorage.getItem(KEY_REFRESH_TOKEN);
   }
 

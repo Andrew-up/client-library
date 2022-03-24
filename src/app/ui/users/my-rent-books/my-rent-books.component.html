@@ -1,0 +1,45 @@
+<div class="mt-5 mb-5">
+  <h3 class="container ">Выданные книги</h3>
+  <table class="table table-striped ">
+    <thead>
+    <tr>
+      <th scope="col">Id книги</th>
+      <th scope="col">Название</th>
+      <th scope="col">Дата выдачи</th>
+      <th scope="col">Дата возврата</th>
+      <th scope="col">Сумма аренды</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of myBooksRent"  >
+      <th scope="row">{{item.bookId}}</th>
+      <td>{{item.bookName}}</td>
+      <td>{{item.dateIssue}}</td>
+      <td>{{item.dateReturn}}</td>
+      <td>{{item.priceName}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <h3 class="container mt-2">Заявки на аренду</h3>
+  <table class="table table-striped ">
+    <thead>
+    <tr>
+      <th scope="col">Id заявки</th>
+      <th scope="col">Название</th>
+      <th scope="col">Отменить</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of myRequestRent"  >
+      <th scope="row">{{item.basketId}}</th>
+      <td>{{item.bookTitle}}</td>
+      <td>
+        <button (click)="cancelRentRequestUser(item.basketId)" class="btn btn-warning">Вернуть в корзину</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

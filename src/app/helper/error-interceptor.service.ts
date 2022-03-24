@@ -1,14 +1,22 @@
 import {Injectable} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {
+  HTTP_INTERCEPTORS,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
+} from "@angular/common/http";
+import {BehaviorSubject, catchError, delay, filter, Observable, switchMap, throwError} from "rxjs";
 import {TokenStorageService} from "../services/token-storage.service";
 import {NotificationService} from "../services/notification.service";
 import {AuthService} from "../services/auth.service";
-import {Token} from "../models/Token";
-import {User} from "../models/User";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
+import {Token} from "../models/Token";
+import {take} from "rxjs/operators";
 
+const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable({
   providedIn: 'root'
@@ -19,46 +27,60 @@ export class ErrorInterceptorService implements HttpInterceptor {
               private notificationService: NotificationService,
               private authService: AuthService,
               private userService: UserService,
-              private router:Router) {
+              private router: Router,
+  ) {
+  }
+
+  public isRefreshing = false;
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
+  private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    // console.log(this.refreshTokenSubject);
+    // console.log(this.isRefreshing);
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      this.refreshTokenSubject.next(null);
+      // console.log('request22');
+      return this.authService.refreshToken().pipe(
+        switchMap((token: any) => {
+          this.isRefreshing = false;
+          this.refreshTokenSubject.next(token.jwt);
+          return next.handle(this.addToken(request, this.tokenService.getToken()+''));
+        }));
+    } else {
+      // console.log('request');
+      let jj = this.refreshTokenSubject.pipe(
+        filter(token => token != null),
+        take(1),
+        switchMap(jwt => {
+          return next.handle(this.addToken(request, jwt));
+        }));
+      console.log(jj)
+      return jj;
+    }
   }
 
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(catchError(err => {
-      if (err.status == 401 &&
-          this.tokenService.getToken() != null &&
-          this.tokenService.getRefreshToken() != null &&
-          this.tokenService.getUser() != null &&
-          this.tokenService.getRole() != null) {
-        this.authService.updateJwtToken().subscribe({
-          next: (v: Token) => {
-            this.tokenService.saveToken(v.accessToken + '', v.refreshToken + '');
-          }
-        });
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.tokenService.getJwtToken()) {
+      request = this.addToken(request, this.tokenService.getJwtToken()+'');
+    }
+    return next.handle(request).pipe(catchError(error => {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        // console.log(request,next);
+        return this.handle401Error(request, next);
+      } else {
+        return throwError(error);
       }
-      // console.log(this.tokenService.getRefreshToken());
-      // console.log(this.tokenService.getUser());
-      // console.log(this.tokenService.getRole());
-      // console.log(this.tokenService.getToken());
-      // if (err.status == 401 &&
-      //   this.tokenService.getRefreshToken() != null &&
-      //   this.tokenService.getToken() != null &&
-      //   this.tokenService.getUser() != null &&
-      //   this.tokenService.getRole() != null) {
-      //   // window.location.reload();
-      // }
-      if (err.status == 403) {
-        this.tokenService.logOut();
-        this.router.navigate(['/login'])
-        window.location.reload();
-
-      }
-
-      // const error = JSON.stringify(err.error);
-      // this.notificationService.showSnackBar(err);
-      return throwError(err);
     }));
+  }
 
+  private addToken(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      setHeaders: {
+        'Authorization': `${token}`
+      }
+    });
   }
 }
 

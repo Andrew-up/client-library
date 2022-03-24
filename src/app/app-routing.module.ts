@@ -22,34 +22,66 @@ import {AgeLimitListComponent} from "./ui/books/age-limit/age-limit-list/age-lim
 import {ProfileComponent} from "./ui/users/profile/profile.component";
 import {TranslationComponent} from "./ui/books/translation/translation.component";
 import {SeriesBookComponent} from "./ui/books/series-book/series-book.component";
+import {BasketComponent} from "./ui/users/basket/basket.component";
+import {RentalRequestUsersComponent} from "./ui/books/rental-request-users/rental-request-users.component";
+import {MyRentBooksComponent} from "./ui/users/my-rent-books/my-rent-books.component";
+import {AuthenticationGuard} from "./guards/authentication.guard";
+import {Error404Component} from "./ui/common/error404/error404.component";
+import {WorkerGuard} from "./guards/worker.guard";
+import {AdminGuard} from "./guards/admin.guard";
+import {AuthorsComponent} from "./ui/books/authors/authors.component";
 
 const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'books-list',component:BooksComponent},
-  {path:'create-book',component:CreateBookComponent},
+  {path:'create-book',component:CreateBookComponent,
+    canActivate:[WorkerGuard]},
   {path:'promo_code',component:PromocodeComponent},
-  {path:'create-authors',component:CreateAuthorsComponent},
+  {path:'create-authors',component:CreateAuthorsComponent,
+    canActivate:[WorkerGuard]},
   {path:'index',component:IndexComponent},
-  {path:'book/publisher',component:PublishingHouseComponent},
-  {path:'book/series',component:SeriesBookComponent},
-  {path:'book/cover-type',component:CoverTypesComponent},
-  {path:'book/translation',component:TranslationComponent},
-  {path:'book/edition-language',component:EditionLanguageComponent},
-  {path:'user/user-list',component:ListUsersComponent},
-  {path:'book/rent',component:RentComponent},
-  {path:'book/rent-add',component:AddRentToUserComponent},
-  {path:'book/price-rent',component:PriceRentComponent},
+  {path:'book/publisher',component:PublishingHouseComponent,
+    canActivate:[WorkerGuard]},
+  {path:'book/series',component:SeriesBookComponent,
+    canActivate:[WorkerGuard]},
+  {path:'book/cover-type',component:CoverTypesComponent,
+    canActivate:[WorkerGuard]},
+  {path:'book/translation',component:TranslationComponent,
+    canActivate:[WorkerGuard]},
+
+  {path:'book/edition-language',component:EditionLanguageComponent,
+                                canActivate:[WorkerGuard]},
+  {path:'user/user-list',component:ListUsersComponent,
+                         canActivate:[AdminGuard]},
+  {path:'book/rent',component:RentComponent,
+    canActivate:[WorkerGuard]},
+  {path:'book/rent-add',component:AddRentToUserComponent,
+    canActivate:[WorkerGuard]},
+  {path:'book/price-rent',component:PriceRentComponent,
+    canActivate:[WorkerGuard]},
   {path:'book/genre',component:CommonGenreComponent,
   children:[
     {path:'list',component:GenreListComponent}
-  ]},
+  ],canActivate:[WorkerGuard]},
   {path:'book/age-limit',component:CommonAgeLimitComponent,
   children:[
     {path:'list',component: AgeLimitListComponent}
   ]
   },
-  {path:'profile',component:ProfileComponent}
+  {path:'profile',component:ProfileComponent,
+                  canActivate: [AuthenticationGuard]},
+  {path:'basket',component:BasketComponent,
+                  canActivate: [AuthenticationGuard]},
+  {path:'book/rental-request-users',component:RentalRequestUsersComponent,
+                  canActivate: [AuthenticationGuard]},
+  {path:'my-rent-books',component:MyRentBooksComponent,
+                  canActivate: [AuthenticationGuard]},
+  {path:'authors',component:AuthorsComponent},
+  {path:'404',component:Error404Component},
+  {path:'',component:IndexComponent},
+  {path:'**',component:Error404Component},
+
 
 ];
 

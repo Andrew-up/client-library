@@ -19,7 +19,6 @@ export class AgeLimitListComponent implements OnInit {
   updateAgeLimit: AgeLimit = {}
   enableEditIndex = null;
   enableEdit = false;
-  errorCount = 5;
   errorDataBase = false;
   ageLimitName = '';
   response = '';
@@ -29,14 +28,10 @@ export class AgeLimitListComponent implements OnInit {
     this.ageLimitService.getAllAgeLimit().subscribe({
       next: (value) => {
         this.ageLimit = value;
-        this.errorCount = 5;
+
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount != 0) {
-          this.errorCount--;
-          this.getAllAgeLimit();
-          // console.log(this.errorCount);
-        }
+
       }
     })
   }
@@ -65,7 +60,7 @@ export class AgeLimitListComponent implements OnInit {
           this.getAllAgeLimit();
           this.enableEditIndex = null;
           this.enableEdit = false;
-          this.errorCount = 5;
+
         } else {
           this.response = 'Ответ: ' + value.ageLimitName;
           this.errorDataBase = true;
@@ -76,10 +71,7 @@ export class AgeLimitListComponent implements OnInit {
         }
       },
       error: (err) => {
-        if (err.status == 401 && this.errorCount != 0) {
-          this.errorCount--;
-          this.saveAgeLimit(id);
-        }
+
       }
     })
   }
@@ -96,14 +88,11 @@ export class AgeLimitListComponent implements OnInit {
     this.ageLimitService.deleteAgeLimit(id).subscribe({
       next: (value) => {
         this.getAllAgeLimit();
-        this.errorCount = 5;
+
         this.toast.showSnackBar(value.message);
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount != 0) {
-          this.errorCount--;
-          this.deleteAgeLimit(id);
-        }
+
       }
     })
 
@@ -121,7 +110,7 @@ export class AgeLimitListComponent implements OnInit {
           this.response = 'Ответ: ' + value.ageLimitName + '  Успешно добавлен';
           this.getAllAgeLimit();
           this.ageLimitName = '';
-          this.errorCount = 5;
+
           this.errorDataBase = false;
         } else {
           this.response = 'Ответ: ' + value.ageLimitName;
@@ -134,10 +123,7 @@ export class AgeLimitListComponent implements OnInit {
 
       },
       error: (error) => {
-        if (error.status == 401 && this.errorCount != 0) {
-          this.errorCount++;
-          this.addAgeLimit();
-        }
+
       }
     })
   }

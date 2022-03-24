@@ -14,6 +14,8 @@ import {ImageUploadedFile} from "../../../models/ImageUploadedFile";
 import {concatMap, catchError, take} from 'rxjs/operators';
 import {ImageService} from "../../../services/image.service";
 import {SeriesService} from "../../../services/series.service";
+import {RentBook} from "../../../models/RentBook";
+import {PriceRentService} from "../../../services/price-rent.service";
 
 
 const INVALID_FILE = ' Invalid file.';
@@ -32,7 +34,8 @@ export class CreateBookComponent implements OnInit {
   constructor(public booksService: BooksService,
               private userService: UserService,
               private imageUploadService: ImageService,
-              private seriesService:SeriesService) {
+              private seriesService: SeriesService,
+              private priceService: PriceRentService) {
 
 
   }
@@ -56,8 +59,7 @@ export class CreateBookComponent implements OnInit {
     translationName: 'test'
   }]
 
-  series: Series[] = [{
-  }]
+  series: Series[] = [{}]
 
   coverCodeName: CoverCode[] = [{
     coverBookId: 1,
@@ -82,26 +84,27 @@ export class CreateBookComponent implements OnInit {
     dateOfBirth: '2000-01-01'
   }];
 
-  getAuthorsBySeriesId(idAuthors){
-    if(idAuthors=="null"){
+  rent: RentBook[] = [{}];
+
+  getAuthorsBySeriesId(idAuthors) {
+    if (idAuthors == "null") {
       console.log(idAuthors);
       this.isBookSeriesExist = false;
-      this.authorsFullName ="Автор не выбран"
+      this.authorsFullName = "Автор не выбран"
       this.selectedSeries = null;
     }
-    if(idAuthors!="null"){
+    if (idAuthors != "null") {
       this.seriesService.getAllAuthorsBySeriesId(idAuthors).subscribe({
-        next:(value)=>{
+        next: (value) => {
           this.series = value;
           console.log(value)
-          if(value.length ==0){
-            this.authorsFullName ="У автора нет серии книг"
+          if (value.length == 0) {
+            this.authorsFullName = "У автора нет серии книг"
             this.isBookSeriesExist = false;
             this.selectedSeries = null;
-          }
-          else  this.isBookSeriesExist = true;
+          } else this.isBookSeriesExist = true;
         },
-        error:(error)=>{
+        error: (error) => {
           // console.log(error);
         }
       })
@@ -139,7 +142,7 @@ export class CreateBookComponent implements OnInit {
     })
   }
 
-  showSeriesBookByAuthors(author):string{
+  showSeriesBookByAuthors(author): string {
     return "test  " + author;
   }
 
@@ -161,6 +164,18 @@ export class CreateBookComponent implements OnInit {
     })
   }
 
+  getPrice() {
+    this.priceService.getAllPriceRent().subscribe({
+      next: (value) => {
+        console.log(value)
+        this.rent = value;
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+
   public selectedBookTitle = 'default name book for the test';
   public selectedNumberPages = null;
   public selectedPublisherId = null;
@@ -171,6 +186,7 @@ export class CreateBookComponent implements OnInit {
   public selectedGenres = null;
   public selectedEditionLanguage = null;
   public selectedTranslation = null;
+  public selectedPrice = "null";
   public selectedISBN = null;
   public selectedReleaseDate = null;
   public authorsFullName = "Автор не выбран";
@@ -178,11 +194,6 @@ export class CreateBookComponent implements OnInit {
 
   countError: number = 0;
 
-
-  tetsttyr(){
-    console.log("test")
-    this.isBookSeriesExist= false;
-  }
 
   getUser() {
     this.userService.getUserBool().subscribe({
@@ -204,6 +215,7 @@ export class CreateBookComponent implements OnInit {
         this.getAllGenres();
         this.getAllEditionLanguage();
         this.getAllTranslation();
+        this.getPrice();
       }
     })
 
@@ -241,6 +253,7 @@ export class CreateBookComponent implements OnInit {
       ageLimitCode: this.selectedAgeLimit + '',
       languageId: this.selectedEditionLanguage + '',
       translationId: this.selectedTranslation + '',
+      priceId: this.selectedPrice + '',
       // imageId: this.selectedFile + '',
     }
     console.log(JSON.stringify(obj));

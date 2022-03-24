@@ -11,7 +11,7 @@ import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BooksComponent} from './ui/books/books-list/books.component';
-import {CommonModule} from "@angular/common";
+import {CommonModule, DatePipe} from "@angular/common";
 import {ProfileComponent} from './ui/users/profile/profile.component';
 import {ListUsersComponent} from './ui/users/list-users/list-users.component';
 import {CreateBookComponent} from './ui/books/create-book/create-book.component';
@@ -40,6 +40,13 @@ import { TopMenuComponent } from './ui/menu/top-menu/top-menu.component';
 import { FooterComponent } from './ui/menu/footer/footer.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {NgPipesModule} from "ngx-pipes";
+import { BasketComponent } from './ui/users/basket/basket.component';
+import { RentalRequestUsersComponent } from './ui/books/rental-request-users/rental-request-users.component';
+import { MyRentBooksComponent } from './ui/users/my-rent-books/my-rent-books.component';
+import {MatRadioModule} from "@angular/material/radio";
+import { Error404Component } from './ui/common/error404/error404.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { AuthorsComponent } from './ui/books/authors/authors.component';
 
 
 @NgModule({
@@ -72,6 +79,11 @@ import {NgPipesModule} from "ngx-pipes";
     SeriesBookComponent,
     TopMenuComponent,
     FooterComponent,
+    BasketComponent,
+    RentalRequestUsersComponent,
+    MyRentBooksComponent,
+    Error404Component,
+    AuthorsComponent,
 
   ],
   imports: [
@@ -86,11 +98,15 @@ import {NgPipesModule} from "ngx-pipes";
     MatListModule,
     Ng2SearchPipeModule,
     FormsModule,
-    NgPipesModule
+    NgPipesModule,
+    MatRadioModule,
+    MatPaginatorModule,
+
   ],
   exports: [AppComponent],
   providers: [authInterceptorProviders,
-              authErrorInterceptorProviders],
+              authErrorInterceptorProviders,
+              DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

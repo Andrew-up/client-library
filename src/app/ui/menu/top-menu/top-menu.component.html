@@ -18,10 +18,10 @@
           <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/books-list">Книги</a>
         </li>
         <li class="nav-item">
-          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/link">Авторы</a>
+          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/authors">Авторы</a>
         </li>
         <li class="nav-item">
-          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/link">Контакты</a>
+          <a routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/contact">Контакты</a>
         </li>
         <li *ngIf="!getLoggedInStatus()" class="nav-item">
           <a  routerLinkActive="active" class="nav-link" aria-current="page" routerLink="/promo_code">Промокод</a>
@@ -43,6 +43,7 @@
             <li><a routerLinkActive="active" routerLink="/book/cover-type" class="dropdown-item" href="#">Виды обложек+</a></li>
             <li><a routerLinkActive="active" routerLink="/book/publisher" class="dropdown-item" href="#">Издательства + </a></li>
             <li><a routerLinkActive="active" routerLink="/book/edition-language" class="dropdown-item" href="#">Язык издания + </a></li>
+            <li><a routerLinkActive="active" routerLink="/book/rental-request-users" class="dropdown-item" href="#">Заявки на аренду </a></li>
           </ul>
         </li>
         <li  *ngIf="token.getRole()+''==userService.getRoleAdmin()" class="nav-item dropdown">
@@ -50,7 +51,7 @@
             Меню администратора
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-            <li><a routerLinkActive="active" routerLink="/user/user-list" class="dropdown-item" href="#">Список пользователей</a></li>
+            <li><a routerLinkActive="active" routerLink="/user/user-list" class="dropdown-item">Список пользователей</a></li>
             <li><a routerLinkActive="active" routerLink="#" class="dropdown-item" href="#">Изменение статуса пользователя</a></li>
             <li><a routerLinkActive="active" routerLink="/#" class="dropdown-item" href="#">Изменение статуса пользователя</a></li>
           </ul>
@@ -59,12 +60,33 @@
 
     </div>
   </div>
+<ul class="navbar-nav flex">
+  <li *ngIf="!getLoggedInStatus()" class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown222" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{userName}}
+    </a>
+    <ul  class="dropdown-menu" aria-labelledby="navbarDropdown222">
+      <li><a routerLink="/basket" *ngIf="!getLoggedInStatus()" class="dropdown-item">Корзина</a></li>
+      <li><a routerLink="/my-rent-books" *ngIf="!getLoggedInStatus()" class="dropdown-item">Моя аренда</a></li>
+      <li><a routerLink="/profile" *ngIf="!getLoggedInStatus()" class="dropdown-item">Мой профиль</a></li>
+      <li><a (click)="token.logOut()" *ngIf="!getLoggedInStatus()" class="dropdown-item">Выход</a></li>
+    </ul>
+  </li>
+<div class="d-flex justify-content-center" style="flex-wrap: nowrap">
 
-  <form class="d-flex justify-content-center">
-    <!--    <div class="d-none p-2 bg-primary text-white"> <p>{{getLoggerInUserRole()}}</p></div>-->
-    <button routerLink="/profile" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Мой профиль </button>
-    <button (click)="token.logOut()" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Выход </button>
-    <button routerLink="/login" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Вход </button>
-    <button routerLink="/register" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Регистрация </button>
-  </form>
+
+  <button routerLink="/login" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Вход </button>
+  <button routerLink="/register" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Регистрация </button>
+</div>
+</ul>
+<!--  <form class="d-flex justify-content-center" style="flex-wrap: nowrap">-->
+<!--      <button routerLink="/basket" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Корзина </button>-->
+<!--      <button routerLink="/my-rent-books" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Моя аренда </button>-->
+<!--      <button routerLink="/profile" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Мой профиль </button>-->
+<!--    <button (click)="token.logOut()" *ngIf="!getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Выход </button>-->
+<!--    <button routerLink="/login" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Вход </button>-->
+<!--    <button routerLink="/register" *ngIf="getLoggedInStatus()" type="button" class="btn btn-outline-dark"> Регистрация </button>-->
+<!--    &lt;!&ndash;    <div class="d-none p-2 bg-primary text-white"> <p>{{getLoggerInUserRole()}}</p></div>&ndash;&gt;-->
+
+<!--  </form>-->
 </nav>

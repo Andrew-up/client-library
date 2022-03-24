@@ -13,11 +13,15 @@ export class TopMenuComponent implements OnInit {
               public userService:UserService,
   ) {
   }
+  userName:string ='';
 
   ngOnInit(): void {
+   this.userName = this.token.getUser().firstname+ ' '+ this.token.getUser().lastname +'';
   }
 
   getLoggedInStatus() {
     return this.token.getToken() == null;
   }
+
+
 }

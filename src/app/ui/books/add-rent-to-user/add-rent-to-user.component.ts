@@ -15,7 +15,7 @@ import {PriceRentService} from "../../../services/price-rent.service";
 })
 export class AddRentToUserComponent implements OnInit {
 
-  public selectedBookTitle = null;
+  public selectedBookTitle = 0;
   public selectedDateIssue = null;
   public selectedDateReturn = null;
   public selectedEmployee: any;
@@ -59,6 +59,10 @@ export class AddRentToUserComponent implements OnInit {
   getAllBook() {
     this.bookService.getAllBooks().subscribe(res => {
       this.book = res;
+      this.getEmployee();
+      this.getUser();
+      this.getPrice();
+      this.getEmployeeId();
     })
   }
 
@@ -127,10 +131,6 @@ export class AddRentToUserComponent implements OnInit {
   ngOnInit(): void {
     this.maxDate = this.convertDate(this.now).toString();
     this.getAllBook();
-    this.getEmployee();
-    this.getUser();
-    this.getPrice();
-    this.getEmployeeId();
   }
 
 }

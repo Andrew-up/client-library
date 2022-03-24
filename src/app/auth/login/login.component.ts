@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {NotificationService} from "../../services/notification.service";
 import {TokenStorageService} from "../../services/token-storage.service";
@@ -7,6 +7,7 @@ import {UserService} from "../../services/user.service";
 import {User} from "../../models/User";
 import {Router} from "@angular/router";
 import {AppComponent} from "../../app.component";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -18,14 +19,17 @@ export class LoginComponent implements OnInit {
 
   email = 'ivanov10@mail.ru';
   password = 'test123';
-
+  textOrPass ='password';
 
   constructor(private authService: AuthService,
               private notificationService: NotificationService,
               private tokenStorageService: TokenStorageService,
               private userService: UserService,
-              private router:Router
-            ) {
+              private router: Router
+  ) {
+    if(this.tokenStorageService.getUser()!=null){
+      this.router.navigate(['/index'])
+    }
   }
 
   refreshToken?: string = '';
@@ -34,25 +38,27 @@ export class LoginComponent implements OnInit {
   error?: string = '';
   eRole?: string = '';
 
-  apiAuth(login: string, password: string): any {
+  submitForm(form:NgForm){
     let o = {
       email: '',
       password: ''
     }
-    o.email = login;
-    o.password = btoa(password);
-    // console.log('Password: '+o.password);
+    o.email = form.value.email;
+    o.password = btoa(form.value.password);
     this.authService.login(o).subscribe({
       next: (v: Token) => {
-        // this.pressTestShowBar();
         this.refreshToken = v.refreshToken;
         this.success = v.success;
         this.token = v.accessToken;
         this.eRole = v.role;
         if (v.success) {
-          this.tokenStorageService.saveToken(this.token + '', v.refreshToken + '');
+          console.log(v.refreshToken);
+          console.log(this.refreshToken);
+          this.tokenStorageService.saveToken(this.token + '');
+          this.tokenStorageService.saveRefreshToken(this.refreshToken + '');
           this.tokenStorageService.saveRole(this.eRole + '');
           this.router.navigate(['/index']).then(() => {
+            console.log('test');
             this.notificationService.showSnackBar("Авторизация успешна!");
             window.location.reload();
           });
@@ -60,39 +66,24 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (e) => {
-        // this.pressTestShowBar(JSON.stringify(e.error));
-        this.notificationService.showSnackBar(e.error.email +' '+ e.error.password);
-        console.log(e);
-        // this.error = e.error
-        // this.token = e;
+        this.notificationService.showSnackBar(e.error.email + ' ' + e.error.password);
       },
-      complete:()=>{
+      complete: () => {
         this.userService.getCurrentUser().subscribe({
           next: (v: User) => {
             this.tokenStorageService.saveUser(v);
-            this.tokenStorageService.saveRole(v.role+'');
+            this.tokenStorageService.saveRole(v.role + '');
 
           }
         })
-    }
+      }
     });
   }
 
-  checkToken() {
-    this.token = this.tokenStorageService.getToken() + '';
-    this.refreshToken = this.tokenStorageService.getRefreshToken() + '';
-    // console.log('getCurrentUser: '+this.tokenStorageService.getUser());
-    console.log('getCurrentUser: ' + this.userService.getCurrentUser().subscribe({
-      next: (v: User) => {
-        console.log('id: ' + v.id);
-        console.log('email: ' + v.username);
-        console.log('firstname: ' + v.firstname);
-        console.log('lastname: ' + v.lastname);
-      }
-    }));
-    // this.userService.getCurrentUser().subscribe();
-  }
+  defaultEmail ='ivanov10@mail.ru';
+  defaultPassword ='test123';
 
   ngOnInit() {
+
   }
 }

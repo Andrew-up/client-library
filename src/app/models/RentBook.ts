@@ -2,7 +2,7 @@ export interface RentBook {
   id?: number;
   dateIssue?: any;
   dateReturn?:any;
-  bookId?:any;
+  bookId?:number;
   employeeId?:number;
   priceId?:any;
   userId?:any;

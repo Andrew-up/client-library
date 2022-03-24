@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   selectedFile: any = null;
   getProfile = false;
   url: any;
-  errorCount: number = 0;
+
 
   editProfile() {
     this.editProfileBool = !this.editProfileBool;
@@ -34,13 +34,11 @@ export class ProfileComponent implements OnInit {
       next: (v: User) => {
         this.myProfile = v;
         this.getImageProfile();
-        this.errorCount = 0;
+
+        console.log(v);
       },
       error: (err) => {
-        this.errorCount++
-        if (err.status == 401 && this.errorCount < 5) {
-          this.getMyProfile();
-        }
+
       }
     });
   }
@@ -50,13 +48,10 @@ export class ProfileComponent implements OnInit {
       next: (value) => {
         this.getMyProfile();
         this.editProfileBool = false;
-        this.errorCount = 0;
+
       },
       error: (err) => {
-        this.errorCount++
-        if (err.status == 401 && this.errorCount < 5) {
-          this.saveUser();
-        }
+
       }
     })
   }
@@ -116,13 +111,9 @@ export class ProfileComponent implements OnInit {
         this.getImageProfile();
         console.log(value)
         this.selectedFile = null;
-        this.errorCount = 0;
+
       },
       error: (err) => {
-        this.errorCount++;
-        if (err.status == 401 && this.errorCount < 5) {
-          this.onUpload();
-        }
       },
       complete: () => {
         console.log('complete')

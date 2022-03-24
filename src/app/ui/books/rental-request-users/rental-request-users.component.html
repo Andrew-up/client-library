@@ -1,0 +1,34 @@
+<table class="table table-striped table-hover mt-5  mb-5">
+  <thead>
+  <tr>
+    <th scope="col">id</th>
+    <th scope="col">Имя фамилия</th>
+    <th scope="col">Список книг</th>
+    <th scope="col">Выдать все</th>
+    <th scope="col">Отказать</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of users">
+    <td>{{item.id}}</td>
+    <td>{{item.firstname}} {{item.lastname}} {{item.surname}}</td>
+    <td class="col-md-6">
+      <form>
+        <div *ngFor="let item2 of item.bookRental">
+          <input type="checkbox" [checked]="item2.giveOut"
+                 (change)="item2.giveOut = !item2.giveOut"> {{item2.bookTitle}}
+        </div>
+      </form>
+    </td>
+    <td class="">
+      <button (click)="test(item)" class="btn btn-primary">Выдать</button>
+    </td>
+    <td>
+      <button class="btn btn-danger">Отказать</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<input #test21 type="checkbox" [(ngModel)]="pbooosdf"> {{pbooosdf}}

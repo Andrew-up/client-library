@@ -1,23 +1,42 @@
-<div class="back-login-form">
-  <div class="login-form">
-    <div class="form-floating mb-3 mt-5">
-      <input type="email" class="form-control" id="floatingInput" placeholder="email" [(ngModel)]="email">
-      <label for="floatingInput">Email address</label>
+<div class="login-form">
+<div class="container mt-auto mb-auto">
+<form (ngSubmit)="submitForm(formElement)" #formElement="ngForm" >
+    <div class="form-floating">
+    <input
+      type="email"
+      class="form-control"
+      [ngClass]="{'is-invalid': emailElement.invalid && emailElement.touched,'is-valid': !emailElement.invalid  && emailElement.touched}"
+      ngModel name="email"
+      required
+      email
+      [ngModel]="defaultEmail"
+      #emailElement = "ngModel"
+      id="floatingInput233"
+      placeholder="email">
+      <label for="floatingInput233">Эл. почта</label>
     </div>
-    <div class="form-floating mb-3">
-      <input type="email" class="form-control" id="floatingInput2" placeholder="password" [(ngModel)]="password">
-      <label for="floatingInput2">Password</label>
-    </div>
-    <button class="btn btn-success" (click)="apiAuth(email,password)" type="submit" >Sign in</button>
-    <button class="form-input" (click)="checkToken()">check Token</button>
+    <p *ngIf="emailElement.invalid && emailElement.touched">Email не корректен</p>
+  <div class="form-group form-floating">
+    <input
+      [type]="textOrPass"
+      class="form-control"
+      [ngClass]="{'is-invalid': passValid.invalid && passValid.touched,'is-valid': !passValid.invalid && passValid.touched}"
+      ngModel name="password"
+      required
+      [ngModel]="defaultPassword"
+      #passValid = "ngModel"
+      id="floatingInput233222222222"
+      placeholder="password">
+    <label for="floatingInput233222222222">Пароль</label>
   </div>
-  <div class="info_footer">
-    <p>token: {{token}}</p>
-    <p>refreshToken: {{refreshToken}}</p>
+  <p *ngIf="passValid.invalid && passValid.touched">Пароль не корректен</p>
+  <div class=" d-grid gap-2 col-4 mx-auto mb-5 p-1">
+  <button
+    class="btn btn-success mt-5"
+    type="submit"
+    [disabled]="!formElement.valid"
+  >Войти</button>
   </div>
+</form>
 </div>
-<div class="login">
-  <div class="spacer">
-  </div>
 </div>
-

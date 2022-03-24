@@ -15,9 +15,16 @@ export class RentService {
   public getAllRent():Observable<RentBook[]>{
     return this.httpClient.get<RentBook[]>(RENT_API+'/all');
   }
-
-  public addRent(rent:RentBook):Observable<any>{
-    return this.httpClient.post(RENT_API+'/create',rent);
+  public getAllRentByUser():Observable<RentBook[]>{
+    return this.httpClient.get<RentBook[]>(RENT_API+'/myBooksRentAll');
   }
+  public getAllRentRequestByUser():Observable<RentBook[]>{
+    return this.httpClient.get<RentBook[]>(RENT_API+'/getBooksRentRequestAll');
+  }
+
+  public addRent(rent:RentBook, idBasked?:string):Observable<any>{
+    return this.httpClient.post(RENT_API+'/create/'+idBasked, rent);
+  }
+
 
 }

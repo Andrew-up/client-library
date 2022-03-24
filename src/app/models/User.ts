@@ -1,3 +1,5 @@
+import {Book} from "./Book";
+
 export interface User{
   id?:number;
   username?:string;
@@ -15,4 +17,5 @@ export interface User{
   address?:string;
   dateOfBirth?:string;
   imageProfile?:any;
+  bookRental?:Book[];
 }
