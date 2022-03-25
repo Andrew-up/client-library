@@ -1,69 +1,59 @@
-<form class="input-group search" #formSearch="ngForm" (ngSubmit)="submitForm(formSearch)">
-  <div>
-    <!--      <label> Область поиска</label>-->
-    <select class="form-control"
-            name="typeSearch"
-            [(ngModel)]="defaultSearch">
-      <option value="bookTitle">По умолчанию</option>
-      <option value="authors">Авторы</option>
-      <option value="genres">Жанры</option>
-      <option value="publisher">Издательства</option>
-      <option value="series">Серия</option>
-    </select>
-  </div>
-  <input ngModel name="inputSearch" style="min-width: 100pt" [(ngModel)]="inputSearch" type="search"
-         class="form-control rounded" placeholder="Введите что-нибудь..."
-         aria-label="Search" aria-describedby="search-addon"/>
-  <button type="submit" class="btn btn-outline-primary">Поиск</button>
-</form>
+
 <div class="books_parent" xmlns="http://www.w3.org/1999/html">
-  <div class="team-boxed">
-    <div class="container">
-      <div class="row people">
-        <div class="col-md-6 col-lg-4 item" *ngFor="let item of book">
-          <div style="min-width: 300px" class="box">
-            <img style="height: 150pt;width: 150pt;" src="{{item.imageSrcTemp}}">
-            <h3 class="name">{{item.bookTitle}}</h3>
-            <p>id: {{item.bookId}}</p>
-            <p>Автор :{{item.authorsFullName}}</p>
-            <p>Жанр: {{item.genreName}}</p>
-            <p>Дата выхода: {{item.bookReleaseDate}}</p>
-            <p>Издательство: {{item.publisherName}}</p>
-            <p>Тип обложки: {{item.coverName}}</p>
-            <p>Серия: {{item.seriesName}}</p>
-            <p>ISBN: {{item.nameISBN}}</p>
-            <p>Возрастное ограничение: {{item.ageLimitName}}</p>
-            <p>Язык издания: {{item.languageName}}</p>
-            <p>Перевод: {{item.translationName}}</p>
-            <p>Страниц: {{item.numberPages}}</p>
-            <!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque nam non omnis quis sed? Ab commodi dolores provident sed sit.</p>-->
-            <button *ngIf="!item.myBooksRent && !item.myBooksBasket && !item.myBooksRequest &&isDataLoaded"
-                    class="btn btn-primary $gray-300" (click)="addBasketToUser(item)">Добавить в корзину
-            </button>
-            <!--                        <button class="btn btn-primary $gray-300" (click)="GYFYTFYEDFTVJHG(item)">Список</button>-->
-            <button *ngIf="item.myBooksRequest &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Заявка на
-              книгу создана
-            </button>
-            <!--            <button *ngIf="item.myBooksBasket && isDataLoaded" class="btn btn-primary $gray-300" disabled>Книга в корзине</button>-->
-            <button *ngIf="item.myBooksBasket &&isDataLoaded" class="btn btn-warning $gray-300"
-                    (click)="deleteBasketToUser(item.basketId,item.bookId)">Убрать из корзины
-            </button>
-            <button *ngIf="item.myBooksRent &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Книга в аренде
-              c {{item.dateRent}}</button>
-            <div class="social"><a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i
-              class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
-          </div>
+  <form class="input-group search" #formSearch="ngForm" (ngSubmit)="submitFormSearch(formSearch)">
+    <div>
+      <!--      <label> Область поиска</label>-->
+      <select class="form-control"
+              name="typeSearch"
+              [(ngModel)]="defaultSearch">
+        <option value="bookTitle">По умолчанию</option>
+        <option value="authors">Авторы</option>
+        <option value="genres">Жанры</option>
+        <option value="publisher">Издательства</option>
+        <option value="series">Серия</option>
+      </select>
+    </div>
+    <input ngModel name="inputSearch" style="min-width: 100pt" [(ngModel)]="inputSearch" type="search"
+           class="form-control rounded" placeholder="Введите что-нибудь..."
+           aria-label="Search" aria-describedby="search-addon"/>
+    <button type="submit" class="btn btn-outline-primary">Поиск</button>
+  </form>
+
+    <div class="card-customGroup">
+      <div *ngFor="let item of book" class="card">
+        <img src="{{item.imageSrcTemp}}"
+             style=" padding:5pt; height: 13rem; width: auto" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">
+            <p style="height: 2rem"> {{item.bookTitle}}</p>
+          </h5>
+          <p class="card-text">{{item.authorsFullName}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Жанр: {{item.genreName}}</li>
+          <li class="list-group-item">Страниц: {{item.numberPages}}</li>
+          <li class="list-group-item">Издательство: {{item.publisherName}}</li>
+          <li class="list-group-item">Стоимость аренды: {{item.priceName}}</li>
+        </ul>
+        <div class="card-body" style="margin-left: 10%; margin-right: 10%;">
+          <button *ngIf="!item.myBooksRent && !item.myBooksBasket && !item.myBooksRequest &&isDataLoaded"
+                  class="btn btn-primary $gray-300" (click)="addBasketToUser(item)">Добавить в корзину</button>
+          <button *ngIf="item.myBooksRequest &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Заявка на книгу создана</button>
+          <button *ngIf="item.myBooksBasket &&isDataLoaded" class="btn btn-warning $gray-300"
+                  (click)="deleteBasketToUser(item.basketId,item.bookId)">Убрать из корзины</button>
+          <button *ngIf="item.myBooksRent &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Книга в аренде c {{item.dateRent}}</button>
+          <button class="btn btn-secondary button-info">Подробнее</button>
         </div>
       </div>
-      <div *ngIf="isBooksNull">
-        Список пуст
-      </div>
-
-
     </div>
+  <div *ngIf="isBooksNull">
+    Список пуст или проблемы соеденения с сервером
+  </div>
+  <div *ngIf="isSearchData">
+   Ничего не нашлось =(
   </div>
 
-  <div class="numberPages" *ngIf="!isWorkSearch()">
+    <div class="numberPages" *ngIf="!isWorkSearch()">
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center ">
         <li class="page-item" [ngClass]="{'disabled': indexPage<=0}">
@@ -82,12 +72,10 @@
             {{sizeElement}}
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" (click)="editSizeElement(3)">3</a></li>
-            <li><a class="dropdown-item" (click)="editSizeElement(6)">6</a></li>
-            <li><a class="dropdown-item" (click)="editSizeElement(9)">9</a></li>
-            <li><a class="dropdown-item" (click)="editSizeElement(12)">12</a></li>
+            <li><a class="dropdown-item" (click)="editSizeElement(5)">5</a></li>
+            <li><a class="dropdown-item" (click)="editSizeElement(10)">10</a></li>
+            <li><a class="dropdown-item" (click)="editSizeElement(20)">20</a></li>
             <li><a class="dropdown-item" (click)="editSizeElement(50)">50</a></li>
-            <li><a class="dropdown-item" (click)="editSizeElement(100)">100</a></li>
           </ul>
         </div>
       </ul>

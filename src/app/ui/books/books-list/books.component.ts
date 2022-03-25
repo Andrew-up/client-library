@@ -23,10 +23,11 @@ export class BooksComponent implements OnInit {
               private rentService: RentService) {
   }
 
-  isBooksNull: boolean = true;
+  isBooksNull: boolean = false;
   isDataLoaded = false;
   inputSearch?: string='';
   defaultSearch ='bookTitle';
+  isSearchData = false;
   isWorkSearch():boolean{
     if(this.inputSearch!=''){
       return true;
@@ -34,11 +35,18 @@ export class BooksComponent implements OnInit {
     else return false;
   }
 
-  submitForm(form: NgForm) {
+  submitFormSearch(form: NgForm) {
     console.log(form);
     this.booksService.searchBook(form.value.inputSearch,form.value.typeSearch).subscribe({
       next: (value) => {
         this.book = value;
+        if (value.length==0){
+          this.isSearchData =  true
+        }
+        else {
+          this.isSearchData = false;
+        }
+        console.log(value);
       },
       complete: () => {
         this.viewButtons();
@@ -159,7 +167,7 @@ export class BooksComponent implements OnInit {
   }
 
   indexPage: number = 0;
-  sizeElement: number = 3;
+  sizeElement: number = 5;
   maxIndex: number = 5;
 
   editSizeElement(size: number) {

@@ -1,3 +1,39 @@
-<div>
+<div class="addBookRoot">
+  <div class="addBookForm">
+    <form #formAddBook="ngForm" #formElement="ngForm" (ngSubmit)="submitFormCreateBoot(formAddBook)">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{'is-invalid': bookTitle.invalid && bookTitle.touched,'is-valid': !bookTitle.invalid  && bookTitle.touched}"
+          ngModel name="bookTitle"
+          required
+          #bookTitle="ngModel"
+          id="bookTitle"
+          placeholder="Название книги">
+        <label for="bookTitle">Название книги</label>
+      </div>
+
+      <div  id="datalist" [ngClass]="{'active':isClick}">
+        <input [(ngModel)]="inputText"
+               name="authors"
+               #authors="ngModel"
+               id="datalist-input"
+               type="text"
+               required
+               (click)="inputClickEvent($event)"
+               class="form-control"
+               [ngClass]="{'is-invalid': authors.invalid && authors.touched,'is-valid': !authors.invalid  && authors.touched}"
+               (input)="inputTextModel(authors);"
+               placeholder="Выберите автора">
+        <ul id="datalist-ul">
+          <div *ngFor="let item of filterObj">
+            <li (click)="testObj(item.text);" id="{{item.value}}">{{item.text}}</li>
+          </div>
+        </ul>
+      </div>
+      <button  class="btn btn-primary" type="submit">Добавить книгу</button>
+    </form>
+  </div>
 
 </div>

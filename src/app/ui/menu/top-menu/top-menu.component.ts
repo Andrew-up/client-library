@@ -16,7 +16,9 @@ export class TopMenuComponent implements OnInit {
   userName:string ='';
 
   ngOnInit(): void {
-   this.userName = this.token.getUser().firstname+ ' '+ this.token.getUser().lastname +'';
+    if(this.token.getUser()!=null){
+      this.userName = this.token.getUser().firstname+ ' '+ this.token.getUser().lastname +'';
+    }
   }
 
   getLoggedInStatus() {

@@ -26,6 +26,7 @@ export interface Book {
   languageName?:string;
   coverName?:string;
   ageLimitName?:string;
+  priceName?:string;
 
   //Image
   imageBlob?:Blob;
