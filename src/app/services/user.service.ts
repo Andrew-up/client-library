@@ -35,11 +35,14 @@ export class UserService {
     return this.httpclient.get(USER_API);
   }
 
-  updateUser(user:any): Observable<User>{
-    return this.httpclient.post(USER_API+'update',user);
+  updateUser(user:User): Observable<User>{
+    return this.httpclient.post<User>(USER_API+'update',user);
   }
 
   public getAllUsers():Observable<User[]>{
    return this.httpclient.get<User[]>(USER_API+'all')
+  }
+  public getAllUsersRequestCreated():Observable<User[]>{
+   return this.httpclient.get<User[]>(USER_API+'allRequestCreatedToUser')
   }
 }

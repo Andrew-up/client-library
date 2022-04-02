@@ -7,6 +7,7 @@ import {User} from "../../../models/User";
 import {RentService} from "../../../services/rent.service";
 import {RentBook} from "../../../models/RentBook";
 import {PriceRentService} from "../../../services/price-rent.service";
+import {Price} from "../../../models/Price";
 
 @Component({
   selector: 'app-add-rent-to-user',
@@ -38,9 +39,10 @@ export class AddRentToUserComponent implements OnInit {
 
   users: User[] = [{
     id: 0,
+    bookRental:[{}]
   }]
 
-  rent: RentBook[] = [{}]
+  rent: Price[] = [{}]
 
   convertDate(date: Date) {
     let yyyy = date.getFullYear().toString();

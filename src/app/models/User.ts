@@ -1,4 +1,5 @@
 import {Book} from "./Book";
+import {Basket} from "./Basket";
 
 export interface User{
   id?:number;
@@ -17,5 +18,6 @@ export interface User{
   address?:string;
   dateOfBirth?:string;
   imageProfile?:any;
-  bookRental?:Book[];
+  bookRental:Book[];
+  isRequestCreated?:boolean;
 }

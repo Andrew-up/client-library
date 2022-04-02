@@ -23,6 +23,7 @@
       <div *ngFor="let item of book" class="card">
         <img src="{{item.imageSrcTemp}}"
              style=" padding:5pt; height: 13rem; width: auto" class="card-img-top" alt="...">
+        <p title="Осталось всего: {{item.countBooks}} шт" *ngIf="item.countBooks!=null && !item.myBooksRent" class="countBooks">{{item.countBooks}}</p>
         <div class="card-body">
           <h5 class="card-title">
             <p style="height: 2rem"> {{item.bookTitle}}</p>
@@ -36,13 +37,17 @@
           <li class="list-group-item">Стоимость аренды: {{item.priceName}}</li>
         </ul>
         <div class="card-body" style="margin-left: 10%; margin-right: 10%;">
-          <button *ngIf="!item.myBooksRent && !item.myBooksBasket && !item.myBooksRequest &&isDataLoaded"
+          <button *ngIf="!item.myBooksRent && !item.myBooksBasket && !item.myBooksRequest &&isDataLoaded && item.countBooks!=null"
                   class="btn btn-primary $gray-300" (click)="addBasketToUser(item)">Добавить в корзину</button>
+          <button disabled *ngIf="item.countBooks==null || item.countBooks<=0" class="btn btn-secondary button-info">Нет в наличии</button>
           <button *ngIf="item.myBooksRequest &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Заявка на книгу создана</button>
           <button *ngIf="item.myBooksBasket &&isDataLoaded" class="btn btn-warning $gray-300"
                   (click)="deleteBasketToUser(item.basketId,item.bookId)">Убрать из корзины</button>
           <button *ngIf="item.myBooksRent &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Книга в аренде c {{item.dateRent}}</button>
           <button class="btn btn-secondary button-info">Подробнее</button>
+
+
+<!--          <h5>{{item.countBooks}}</h5>-->
         </div>
       </div>
     </div>

@@ -24,6 +24,25 @@
   width: 15rem;
 }
 
+.countBooks{
+  position	: absolute;
+  font-size: 20pt;
+  border-radius: 20pt;
+  min-width: 30pt;
+  width: auto;
+  height: 30pt;
+  text-align: center;
+  margin-left: 5pt;
+  margin-top: 5pt;
+  background-color: red;
+  color: white;
+  opacity: 0.5;
+}
+.countBooks:hover{
+  cursor: help;
+  opacity: 1;
+}
+
 .card-customGroup {
   padding-top: 20pt;
 

@@ -2,29 +2,31 @@
 
 
 
-  <div class="bordered">
+  <div *ngIf="isDataLoaded" class="bordered">
     <thead>
     <tr>
       <th>id</th>
       <th>Дата выдачи</th>
-      <th>Дата возврата</th>
+
       <th>Выдано:</th>
       <th>Книга: </th>
       <th>Плата: </th>
+      <th>Стоимость на сегодня</th>
       <th>Кому выдана: </th>
+      <th>Вернуть в библиотеку</th>
     </tr>
     </thead>
     <tbody *ngFor="let item of rent">
     <tr>
       <td>{{item.id}}</td>
       <td>{{item.dateIssue}}</td>
-      <td>{{item.dateReturn}}</td>
+
       <td>{{item.employeeName}}</td>
       <td>{{item.bookName}}</td>
       <td>{{item.priceName}}</td>
+      <td>{{summaPriceToday(item.dateIssue,item.priceName)}}</td>
       <td>{{item.userName}}</td>
-      <td><button>Изменить</button></td>
-      <td><button>Удалить</button></td>
+      <td><button (click)="deleteRent(item.id)">Вернуть</button></td>
 
     </tr>
 

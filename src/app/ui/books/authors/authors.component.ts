@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl, NgForm, NgModel} from "@angular/forms";
-import {invalid} from "@angular/compiler/src/render3/view/util";
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from "@angular/forms";
+import {AuthorsService} from "../../../services/authors.service";
+import {Author} from "../../../models/Author";
 
 @Component({
   selector: 'app-authors',
@@ -9,77 +10,33 @@ import {invalid} from "@angular/compiler/src/render3/view/util";
 })
 export class AuthorsComponent implements OnInit {
 
-
-  @ViewChild('authors') form: NgForm | undefined;
-
-  submitFormCreateBoot(form: NgForm) {
-    console.log(this.form);
-
-    // console.log(form);
+  constructor(private authorsService: AuthorsService) {
   }
 
+
+  response:string=' ';
+
+  submitForm(form: NgForm) {
+    let obj: Author = {
+      firstname: form.value.firstname,
+      lastname: form.value.lastname,
+      patronymic: form.value.patronymic,
+      dateOfBirth: form.value.dateOfBirth,
+    }
+    console.log(form);
+    this.authorsService.createAuthor(obj).subscribe({
+      next:(res:Author)=>{
+        console.log(res);
+        this.response ='Ответ:  ';
+        if(form.value.firstname==res.firstname){
+          this.response = this.response+ res.firstname+'  Успешно добавлен!';
+        }
+      }
+    })
+  }
 
   ngOnInit(): void {
-    this.filterObj = this.obj;
-
   }
-  constructor() {
-
-  }
-
-  isClick = false;
-  inputText?: string;
-
-  inputTextModel(any: NgModel) {
-    this.filter(any.viewModel);
-    // console.log(any);
-  }
-
-  inputClickEvent(any: Event) {
-    this.isClick = !this.isClick;
-  }
-
-  invalid(any) {
-    console.log(any)
-    return true;
-  }
-
-  filter(filter) {
-    let filterOption = this.obj.filter(x => filter === "" || x.text.includes(filter));
-    this.filterObj = filterOption;
-    if (filterOption.length === 0) {
-      this.isClick = false;
-    } else {
-      this.isClick = true;
-    }
-  }
-
-
-
-  filterObj = [
-    {value: "1", text: "111 - 111"},
-  ];
-
-  obj = [
-    {value: "1", text: "111 - 111"},
-    {value: "2", text: "222 - 222"},
-    {value: "3", text: "333 - 333"},
-    {value: "4", text: "444 - 444"},
-    {value: "5", text: "555 - 555"},
-    {value: "6", text: "666 - 666"},
-    {value: "7", text: "777 - 777"},
-    {value: "8", text: "888 - 888"}
-  ];
-
-
-  testObj(test) {
-    this.inputText = test;
-    this.filter(test);
-    this.isClick = false;
-  }
-
-
-
 
 
 }

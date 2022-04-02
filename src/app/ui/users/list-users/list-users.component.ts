@@ -15,6 +15,7 @@ export class ListUsersComponent implements OnInit {
 
   users: User[] = [{
     id: 0,
+    bookRental:[]
   }]
 
   getAllUsers() {

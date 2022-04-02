@@ -6,8 +6,9 @@
       <th scope="col">Id книги</th>
       <th scope="col">Название</th>
       <th scope="col">Дата выдачи</th>
-      <th scope="col">Дата возврата</th>
-      <th scope="col">Сумма аренды</th>
+      <th scope="col">Сумма аренды за 30 дн</th>
+      <th scope="col">Сумма аренды на сегодня</th>
+
     </tr>
     </thead>
     <tbody>
@@ -15,8 +16,8 @@
       <th scope="row">{{item.bookId}}</th>
       <td>{{item.bookName}}</td>
       <td>{{item.dateIssue}}</td>
-      <td>{{item.dateReturn}}</td>
       <td>{{item.priceName}}</td>
+      <td>{{summaPriceToday(item.dateIssue,item.priceName)}}</td>
     </tr>
     </tbody>
   </table>

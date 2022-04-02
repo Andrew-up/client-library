@@ -1,0 +1,147 @@
+.addBookRoot {
+  background-color: #F8F9FA;
+}
+
+.addBookForm {
+  width: 50%;
+  padding-top: 20pt;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20pt;
+}
+
+
+.datalist {
+  position: relative;
+  width: 100%;
+  color: #000;
+}
+
+.form-floating {
+  margin: 20pt auto;
+}
+
+.datalist.active .datalist-ul {
+  display: block;
+}
+
+.datalist-input {
+  padding-left: 1em;
+  width: 100%;
+  height: 54px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  box-shadow: none;
+  border: 1px solid #ccc;
+  outline: 0;
+}
+
+.datalist-input:focus {
+  border: 1px solid #AA0000;
+  outline: 0;
+}
+
+.datalist-ul {
+  display: none;
+  position: absolute;
+  margin: 5px 0 0 0;
+  padding: 0;
+  width: 100%;
+  max-height: 200px;
+  top: 100%;
+  left: 0;
+  list-style: none;
+  border-radius: 2px;
+  background: #fff;
+  overflow: hidden;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.datalist-ul li {
+  display: block;
+  text-align: left;
+  padding: 0.8em 1em 0.8em 1em;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.datalist-ul li:hover {
+  background: rgba(108, 117, 125, 0.1);
+  opacity: 1;
+}
+
+.imageButton {
+  margin-top: 10pt;
+  margin-bottom: 10pt;
+  width: 150pt;
+  height: 150pt;
+  border-radius: 10pt;
+  box-shadow: 0 0 10pt rgba(0,0,0,0.5);;
+}
+
+.browse-wrap {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: 20pt;
+}
+
+.upload {
+
+}
+
+
+.example-2 .btn-tertiary {
+  color: #555;
+  padding: 0;
+  line-height: 40px;
+  width: 300px;
+  margin: auto;
+  display: block;
+  border: 2px solid #555
+}
+
+.example-2 .btn-tertiary:hover, .example-2 .btn-tertiary:focus {
+  color: #888;
+  border-color: #888
+}
+
+.example-2 .input-file {
+  width: .1px;
+  height: .1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1
+}
+
+.example-2 .input-file + .js-labelFile {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 10px;
+  cursor: pointer
+}
+
+.example-2 .input-file + .js-labelFile .icon:before {
+  content: "\f093"
+}
+
+.example-2 .input-file + .js-labelFile.has-file .icon:before {
+  content: "\f00c";
+  color: #5AAC7B
+}
+
+.example-2{
+  margin-bottom: 20pt;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flexContainerCenter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

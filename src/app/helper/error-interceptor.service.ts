@@ -69,7 +69,12 @@ export class ErrorInterceptorService implements HttpInterceptor {
       if (error instanceof HttpErrorResponse && error.status === 401) {
         // console.log(request,next);
         return this.handle401Error(request, next);
-      } else {
+      }
+      if (error instanceof HttpErrorResponse && error.status === 403) {
+        this.tokenService.logOut();
+        return this.handle401Error(request, next);
+      }
+      else {
         return throwError(error);
       }
     }));

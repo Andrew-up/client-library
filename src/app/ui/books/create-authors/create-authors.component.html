@@ -1,14 +1,71 @@
-<div class="page">
-  <div class="CommonParent">
-    <p>Имя </p>
-    <input  class="form-input" type="text" placeholder="Имя" [(ngModel)]="firstname">
-    <p>Фамилия </p>
-    <input  class="form-input" type="text" placeholder="Фамилия" [(ngModel)]="lastname">
-    <p>Отчество </p>
-    <input  class="form-input" type="text" placeholder="Отчество" [(ngModel)]="patronymic">
-    <p>Дата рождения</p>
-    <input  class="form-input" type="date" placeholder="Имя" value="1980-01-01" [(ngModel)]="dateOfBirth">
-    <button (click)="createAuthor()"> Отправить</button>
+
+<div class="authors">
+
+  <div class="container mt-auto mb-auto">
+
+    <form (ngSubmit)="submitForm(formElement)" #formElement="ngForm" >
+      <div class="flexContainerCenter" >
+       <h4 style="text-align: center; padding-bottom: 15pt">Добавление автора</h4>
+      </div>
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{'is-invalid': firstname.invalid && firstname.touched,'is-valid': !firstname.invalid  && firstname.touched}"
+          ngModel name="firstname"
+          required
+          pattern="[a-zA-Zа-яА-Я]*"
+          #firstname = "ngModel"
+          id="firstname"
+          placeholder="Имя">
+        <label for="firstname">Имя</label>
+      </div>
+      <div class="form-group form-floating">
+        <input
+          class="form-control"
+          [ngClass]="{'is-invalid': lastname.invalid && lastname.touched,'is-valid': !lastname.invalid && lastname.touched}"
+          ngModel
+          name="lastname"
+          required
+          pattern="[a-zA-Zа-яА-Я]*"
+          #lastname = "ngModel"
+          id="lastname"
+          placeholder="Фамилия">
+        <label for="lastname">Фамилия</label>
+      </div>
+      <div class="form-group form-floating">
+        <input
+          class="form-control"
+          [ngClass]="{'is-invalid': patronymic.invalid && patronymic.touched,'is-valid': !patronymic.invalid && patronymic.touched}"
+          ngModel name="patronymic"
+          required
+          pattern="[a-zA-Zа-яА-Я]*"
+          #patronymic = "ngModel"
+          id="patronymic"
+          placeholder="Отчество">
+        <label for="patronymic">Отчество</label>
+      </div>    <div class="form-group form-floating">
+      <input
+        class="form-control"
+        [ngClass]="{'is-invalid': dateOfBirth.invalid && dateOfBirth.touched,'is-valid': !dateOfBirth.invalid && dateOfBirth.touched}"
+        ngModel name="dateOfBirth"
+        required
+        type="date"
+        #dateOfBirth = "ngModel"
+        id="dateOfBirth"
+        placeholder="Дата рождения">
+      <label for="dateOfBirth">Дата рождения</label>
+    </div>
+      <div class=" d-grid gap-2 col-4 mx-auto mb-5 p-1">
+        <button
+          class="btn btn-success mt-5"
+          type="submit"
+          [disabled]="!formElement.valid"
+        >Добавить автора</button>
+      </div>
+    </form>
+    <div class="flexContainerCenter" style=" margin-top: 20pt">
+      <p style="white-space: pre-wrap; text-align: center; font-size: large">{{response}}
+    </div>
   </div>
-  <h4>{{response}}</h4>
 </div>

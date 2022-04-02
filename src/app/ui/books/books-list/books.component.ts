@@ -28,6 +28,7 @@ export class BooksComponent implements OnInit {
   inputSearch?: string='';
   defaultSearch ='bookTitle';
   isSearchData = false;
+
   isWorkSearch():boolean{
     if(this.inputSearch!=''){
       return true;

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorsService} from "../../../services/authors.service";
 import {Author} from "../../../models/Author";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-create-authors',
@@ -12,33 +13,29 @@ export class CreateAuthorsComponent implements OnInit {
   constructor(private authorsService: AuthorsService) {
   }
 
-  ngOnInit(): void {
-  }
 
-  firstname = '';
-  lastname = '';
-  patronymic = '';
-  dateOfBirth = '';
+  response:string=' ';
 
-  response ='';
-
-  createAuthor() {
+  submitForm(form: NgForm) {
     let obj: Author = {
-      firstname: this.firstname,
-      lastname: this.lastname,
-      patronymic: this.patronymic,
-      dateOfBirth: this.dateOfBirth,
+      firstname: form.value.firstname,
+      lastname: form.value.lastname,
+      patronymic: form.value.patronymic,
+      dateOfBirth: form.value.dateOfBirth,
     }
+    console.log(form);
     this.authorsService.createAuthor(obj).subscribe({
       next:(res:Author)=>{
         console.log(res);
         this.response ='Ответ:  ';
-        this.response = this.response+ res.firstname;
-        if(this.firstname==res.firstname){
+        if(form.value.firstname==res.firstname){
           this.response = this.response+ res.firstname+'  Успешно добавлен!';
         }
       }
     })
+  }
+
+  ngOnInit(): void {
   }
 
 }

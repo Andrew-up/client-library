@@ -5,7 +5,7 @@
   min-width: 30%;
   min-height: 500pt;
   /*background-color: rgba(140, 140, 166, 0.41);*/
-  background-image: url("https://thehill.com/sites/default/files/ca_librarybooks_istock.jpg");
+  background-image: url(src/app/image/auth/background.jpg);
 }
 
 .form-floating {

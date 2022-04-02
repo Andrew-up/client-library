@@ -3,6 +3,7 @@ import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/User";
 import {ImageService} from "../../../services/image.service";
 import {NotificationService} from "../../../services/notification.service";
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +14,12 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService,
               private imageUploadService: ImageService,
-              private novificationService:NotificationService) {
+              private novificationService: NotificationService,
+              private token: TokenStorageService) {
   }
 
-  myProfile: User = {}
-  updateProfile: User = {}
+  myProfile: User = {bookRental: []}
+  updateProfile: User = {bookRental: []}
   editProfileBool = false;
   selectedFile: any = null;
   getProfile = false;
@@ -48,7 +50,7 @@ export class ProfileComponent implements OnInit {
       next: (value) => {
         this.getMyProfile();
         this.editProfileBool = false;
-
+        this.token.saveUser(value);
       },
       error: (err) => {
 
@@ -58,7 +60,7 @@ export class ProfileComponent implements OnInit {
 
 
   onFileSelected(event) {
-    let listError: Array<String> =[];
+    let listError: Array<String> = [];
     this.selectedFile = <File>event.target.files[0];
     const reader = new FileReader();
     console.log(this.selectedFile.type)
@@ -70,7 +72,7 @@ export class ProfileComponent implements OnInit {
       listError.push("Размер слишком большой")
     }
     console.log(listError);
-    if (listError.length==0) {
+    if (listError.length == 0) {
       reader.onload = (event: any) => {
         this.url = event.target.result;
       };

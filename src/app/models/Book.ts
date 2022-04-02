@@ -16,6 +16,7 @@ export interface Book {
   publisherName?: string;
   imageId?: string;
   priceId?:string;
+  countBooks?:number;
 
   //name
   genreName?: string;

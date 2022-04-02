@@ -1,100 +1,328 @@
-<div class="page">
-  <div class="CommonParent">
-
-    <p>Название книги</p>
-    <input  class="form-input" type="text" placeholder="Name Book" [(ngModel)]="selectedBookTitle">
-<p>Автор</p>
-    <select   (click)="getAuthorsBySeriesId(selectedAuthors)" [(ngModel)]="selectedAuthors">
-      <option [value]="null">Не выбрано</option>
-      <option  *ngFor="let item of AuthorsName" [value]="item.authorsId">{{item.firstname}} {{item.lastname}} {{item.patronymic}} {{item.dateOfBirth}}</option>
-    </select>
-    <p>{{ selectedAuthors }}</p>
-<p>Жанр</p>
-    <select    [(ngModel)]="selectedGenres">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of bookGenresName" [value]="item.bookGenresId">{{item.genresName}}</option>
-    </select>
-    <p>{{ selectedGenres }}</p>
-<p>Дата релиза</p>
-    <input  class="form-input" type="date" placeholder="Release Date" value="1980-01-01" [max]="maxDate" [(ngModel)]="selectedReleaseDate">
-<p>Издательство</p>
-    <select  [(ngModel)]="selectedPublisherId">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of publisherName" [value]="item.publisherId">{{item.publisherName}}</option>
-    </select>
-    <p>{{ selectedPublisherId }}</p>
-
-
-<p>Кол-во страниц</p>
-    <input  class="form-input" type="text" placeholder="Number pages" [(ngModel)]="selectedNumberPages">
-<p>Тип обложки</p>
-
-    <select  [(ngModel)]="selectedCoverCode">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of coverCodeName" [value]="item.coverBookId">{{item.coverBookName}}</option>
-    </select>
-    <p>{{ selectedCoverCode }}</p>
-
-    <p>Серия</p>
-
-    <select  *ngIf="isBookSeriesExist" [(ngModel)]="selectedSeries">
-        <option  [value]="null"><p>Не выбрано</p></option>
-        <option *ngFor="let item of series" [value]="item.seriesId">{{item.seriesName}}</option>
-    </select>
-
-    <select class="form-select" aria-label="Disabled select example" disabled  *ngIf="!isBookSeriesExist" [(ngModel)]="selectedSeries">
-      <option  [value]="null"><p>{{authorsFullName}}</p></option>
-    </select>
-    <p>{{ selectedSeries }}</p>
-
-<p>ISBN</p>
-    <input  class="form-input" type="text" placeholder="ISBN" [(ngModel)]="selectedISBN">
-<p>Возрастное ограничение</p>
-
-    <select  [(ngModel)]="selectedAgeLimit">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of ageLimit" [value]="item.ageLimitId">{{item.ageLimitName}}</option>
-    </select>
-    <p>{{ selectedAgeLimit }}</p>
-
-<p>Язык издания</p>
-
-    <select  [(ngModel)]="selectedEditionLanguage">
-      <option [value]="null">Не выбрано</option>
-      <option  *ngFor="let item of editionLanguage" [value]="item.languageId">{{item.languageName}}</option>
-    </select>
-    <p>{{ selectedEditionLanguage }}</p>
-
-    <p>Автор перевода</p>
-
-    <select  [(ngModel)]="selectedTranslation">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of translation" [value]="item.translationId">{{item.translationName}}</option>
-    </select>
-    <p>{{ selectedTranslation }}</p>
-
-    <p>Стоимость аренды</p>
-
-    <select  [(ngModel)]="selectedPrice">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of rent" [value]="item.id">{{item.priceName}}</option>
-    </select>
-    <p>{{ selectedPrice }}</p>
-
-<p>Изображение книги</p>
-<!--    <input  class="form-input" type="file" placeholder="ImageUploadedFile Book"  [(ngModel)]="selectedFile">-->
-
-    <input
-      type="file" (change)="onFileSelected($event)" >
-<!--    <button type="button" (click)="fileInput.click()">Pick File</button>-->
-
-    <br>
-    <div class="buttonCreateBook">
-      <div>
-        <button (click)="createBook()">Добавить книгу</button>
+<div (click)="event($event)" class="addBookRoot">
+  <div class="addBookForm">
+    <form #formElement="ngForm" (ngSubmit)="submitForm(formElement)">
+      <div class="flexContainerCenter" >
+        <h4 style="text-align: center; padding-bottom: 15pt">Добавление книги</h4>
       </div>
-    </div>
-    <p>{{response}}</p>
+      <div class="form-floating">
+        <input
+          [(ngModel)]="inputTextBookTitle"
+          type="text"
+          class="form-control"
+          [ngClass]="{'is-invalid': bookTitle.invalid && bookTitle.touched,'is-valid': !bookTitle.invalid  && bookTitle.touched}"
+          name="bookTitle"
+          required
+          #bookTitle="ngModel"
+          id="bookTitle"
+          placeholder="Название книги">
+        <label for="bookTitle">Название книги</label>
+      </div>
+
+      <div
+        class="form-floating datalist"
+        (click)="setClickAuthorsInput(clickAuthorsInput)"
+        [ngClass]="{'active':clickAuthorsInput}">
+        <input
+          [(ngModel)]="inputTextAuthor"
+          name="authors"
+          #authorsModel="ngModel"
+          class="form-control datalist-input"
+          type="text"
+          required
+          id="authors"
+          [ngClass]="{'is-invalid': (authorsModel.invalid)  && authorsModel.touched ,'is-valid': !authorsModel.invalid  && authorsModel.touched}"
+          (input)="valueAuthorsOptionOrInputFilter(authorsModel,inputTextAuthor,authors)"
+          placeholder="Выберите автора">
+        <label for="authors">Выберите автора</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterObjAuthors">
+            <li [textContent]="item.firstname +' ' + item.lastname +' '+ item.patronymic"
+                #optionItem
+                (click)="valueAuthorsOptionOrInputFilter(authorsModel,optionItem.textContent,filterObjAuthors,item);"
+                id="{{item.authorsId}}">
+            </li>
+          </div>
+        </ul>
+      </div>
+
+      <div
+        class="form-floating datalist"
+        (click)="setClickGenreInput()"
+        [ngClass]="{'active':clickGenreInput}">
+        <input [(ngModel)]="inputTextGenre"
+               name="genre"
+               #genreModel="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="genre"
+               [ngClass]="{'is-invalid': (genreModel.invalid)  && genreModel.touched ,'is-valid': !genreModel.invalid  && genreModel.touched}"
+               (input)="valueGenreOptionOrInputFilter(genreModel,inputTextGenre,genre)"
+               placeholder="Выберите жанр">
+        <label for="genre">Выберите жанр</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterObjGenre">
+            <li
+              #optionItem
+              [textContent]="item.genresName"
+              (click)="valueGenreOptionOrInputFilter(genreModel,optionItem.textContent,filterObjGenre,item)"
+              id="{{item.bookGenresId}}">
+            </li>
+          </div>
+        </ul>
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="date"
+          class="form-control"
+          [ngClass]="{'is-invalid': dateRelease.invalid && dateRelease.touched,'is-valid': !dateRelease.invalid  && dateRelease.touched}"
+          [(ngModel)]="inputTextReleaseDate"
+          name="dateRelease"
+          required
+          #dateRelease="ngModel"
+          id="dateRelease"
+          placeholder="Дата выхода">
+        <label for="dateRelease">Дата выхода</label>
+      </div>
+
+      <div class="form-floating datalist"
+           (click)="setClickRentPublisher(!clickPublisher)"
+           [ngClass]="{'active':clickPublisher}">
+        <input [(ngModel)]="inputTextPublisher"
+               name="publisher"
+               #publisherModel="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="publisher"
+               [ngClass]="{'is-invalid': (publisherModel.invalid)  && publisherModel.touched ,'is-valid': !publisherModel.invalid  && publisherModel.touched}"
+               (input)="valuePublisherOptionOrInputFilter(publisherModel,inputTextPublisher,publisher)"
+               placeholder="Издательство">
+        <label for="publisher">Издательство</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterPublisher">
+            <li #optionItem
+                [textContent]="item.publisherName"
+                (click)="valuePublisherOptionOrInputFilter(publisherModel,optionItem.textContent,filterCoverType,item)"
+                id="{{item.publisherId}}"></li>
+          </div>
+        </ul>
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="number"
+          class="form-control"
+          [ngClass]="{'is-invalid': numberBookCount.invalid && numberBookCount.touched,'is-valid': !numberBookCount.invalid  && numberBookCount.touched}"
+          [(ngModel)]="inputTextNumberPages"
+          name="numberBookCount"
+          required
+          min="1"
+          max="9999"
+          #numberBookCount="ngModel"
+          id="numberBookCount"
+          placeholder="Количество страниц">
+        <label for="numberBookCount">Количество страниц</label>
+      </div>
+
+      <div class="form-floating datalist"
+           (click)="setClickTypeCover(!clickTypeCover)"
+           [ngClass]="{'active':clickTypeCover}">
+        <input [(ngModel)]="inputTextTypeCover"
+               name="coverType"
+               #coverTypeModel="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="coverType"
+               [ngClass]="{'is-invalid': (coverTypeModel.invalid)  && coverTypeModel.touched ,'is-valid': !coverTypeModel.invalid  && coverTypeModel.touched}"
+               (input)="valueCoverTypeOptionOrInputFilter(coverTypeModel,inputTextTypeCover,coverType)"
+               placeholder="Выберите тип обложки">
+        <label for="coverType">Тип обложки</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterCoverType">
+            <li #optionItem
+                [textContent]="item.coverBookName"
+                (click)="valueCoverTypeOptionOrInputFilter(coverTypeModel,optionItem.textContent,filterCoverType,item)"
+                id="{{item.coverBookId}}"></li>
+          </div>
+        </ul>
+      </div>
+      <div class="form-floating datalist"
+           (click)="setClickBookSeries(!clickBookSeries)"
+           [ngClass]="{'active':clickBookSeries}">
+        <input
+          [disabled]="!isDataAuthorsLoad"
+          [(ngModel)]="inputTextBookSeries"
+          name="bookSeries"
+          #bookSeriesModel="ngModel"
+          class="form-control datalist-input"
+          type="text"
+          required
+          id="bookSeries"
+          [ngClass]="{'is-invalid': (bookSeriesModel.invalid || !isDataAuthorsLoad )  && bookSeriesModel.touched ,'is-valid': !bookSeriesModel.invalid  && bookSeriesModel.touched}"
+          (input)="valueBookSeriesOptionOrInputFilter(bookSeriesModel,inputTextBookSeries,bookSeries)"
+          placeholder="Выберите тип обложки">
+        <label for="bookSeries">Серия книг</label>
+        <ul *ngIf="isDataAuthorsLoad"
+            class="datalist-ul">
+          <div *ngFor="let item of filterBookSeries">
+            <li #optionItem
+                [textContent]="item.seriesName"
+                (click)="valueBookSeriesOptionOrInputFilter(bookSeriesModel,optionItem.textContent,filterBookSeries,item)"
+                id="{{item.seriesId}}"></li>
+          </div>
+        </ul>
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{'is-invalid': ISBN.invalid && ISBN.touched,'is-valid': !ISBN.invalid  && ISBN.touched}"
+          [(ngModel)]="inputTextISBN" name="ISBN"
+          required
+          #ISBN="ngModel"
+          id="ISBN"
+          placeholder="ISBN">
+        <label for="ISBN">ISBN</label>
+      </div>
+
+      <div class="form-floating datalist"
+           (click)="setClickAgeLimit(!clickAgeLimit)"
+           [ngClass]="{'active':clickAgeLimit}">
+        <input [(ngModel)]="inputTextAgeLimit"
+               name="ageLimit"
+               #ageLimitModel="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="ageLimit"
+               [ngClass]="{'is-invalid': (ageLimitModel.invalid)  && ageLimitModel.touched ,'is-valid': !ageLimitModel.invalid  && ageLimitModel.touched}"
+               (input)="valueAgeLimitOptionOrInputFilter(ageLimitModel,inputTextAgeLimit,ageLimit)"
+               placeholder="Возрастное ограничение">
+        <label for="ageLimit">Возрастное ограничение</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterAgeLimit">
+            <li #optionItem
+                [textContent]="item.ageLimitName"
+                (click)="valueAgeLimitOptionOrInputFilter(ageLimitModel,optionItem.textContent,filterAgeLimit,item)"
+                id="{{item.ageLimitId}}"></li>
+          </div>
+        </ul>
+      </div>
+      <div class="form-floating datalist"
+           (click)="setClickEditionLanguage(!clickEditionLanguage)"
+           [ngClass]="{'active':clickEditionLanguage}">
+        <input [(ngModel)]="inputTextEditionLanguage"
+               name="editionLanguage"
+               #editionLanguageModel="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="editionLanguage"
+               [ngClass]="{'is-invalid': (editionLanguageModel.invalid)  && editionLanguageModel.touched ,'is-valid': !editionLanguageModel.invalid  && editionLanguageModel.touched}"
+               (input)="valueEditionLanguageOptionOrInputFilter(editionLanguageModel,inputTextEditionLanguage,editionLanguage)"
+               placeholder="Язык издания">
+        <label for="editionLanguage">Язык издания</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterEditionLanguage">
+            <li #optionItem
+                [textContent]="item.languageName"
+                (click)="valueEditionLanguageOptionOrInputFilter(editionLanguageModel,optionItem.textContent,filterEditionLanguage,item)"
+                id="{{item.languageId}}"></li>
+          </div>
+        </ul>
+      </div>
+
+      <div class="form-floating datalist"
+           (click)="setClickTranslation(!clickTranslation)"
+           [ngClass]="{'active':clickTranslation}">
+        <input [(ngModel)]="inputTextTranslation"
+               name="translation"
+               #translationModel="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="translation"
+               [ngClass]="{'is-invalid': (translationModel.invalid)  && translationModel.touched ,'is-valid': !translationModel.invalid  && translationModel.touched}"
+               (input)="valueTranslationOptionOrInputFilter(translationModel,inputTextTranslation,translation)"
+               placeholder="Автор перевода">
+        <label for="editionLanguage">Автор перевода</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterTranslation">
+            <li #optionItem
+                [textContent]="item.translationName"
+                (click)="valueTranslationOptionOrInputFilter(translationModel,optionItem.textContent,filterTranslation,item)"
+                id="{{item.translationId}}"></li>
+          </div>
+        </ul>
+      </div>
+      <div class="form-floating datalist"
+           (click)="setClickRentPrice(!clickRentPrice)"
+           [ngClass]="{'active':clickRentPrice}">
+        <input [(ngModel)]="inputTextRentPrice"
+               name="rentPrice"
+               #rentPriceModel="ngModel"
+               class="form-control datalist-input"
+               type="number"
+               required
+               id="rentPrice"
+               [ngClass]="{'is-invalid': (rentPriceModel.invalid)  && rentPriceModel.touched ,'is-valid': !rentPriceModel.invalid  && rentPriceModel.touched}"
+               (input)="valueRentPriceModelOptionOrInputFilter(rentPriceModel,inputTextRentPrice,rentPrice)"
+               placeholder="Стоимость аренды">
+        <label for="rentPrice">Стоимость аренды</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterRentPrice">
+            <li #optionItem
+                [textContent]="item.priceName"
+                (click)="valueRentPriceModelOptionOrInputFilter(rentPriceModel,optionItem.textContent,filterRentPrice,item)"
+                id="{{item.id}}"></li>
+          </div>
+        </ul>
+      </div>
+
+      <div class="form-floating">
+        <input
+          [(ngModel)]="inputTextCountNumber"
+          type="number"
+          class="form-control"
+          [ngClass]="{'is-invalid': countBook.invalid && countBook.touched,'is-valid': !countBook.invalid  && countBook.touched}"
+          name="countBook"
+          required
+          #countBook="ngModel"
+          id="countBook"
+          placeholder="Количество книг">
+        <label for="bookTitle">Количество книг</label>
+      </div>
+
+
+      <div class="example-2">
+        <div class="form-group">
+          <input
+            (change)="onFileSelected($event)"
+            type="file" name="file" id="file" class="input-file">
+          <label for="file" class="btn btn-tertiary js-labelFile">
+            <mat-icon style="font-size: medium">add_a_photo</mat-icon>
+            <span class="js-fileName">Добавить изображение</span>
+          </label>
+
+        </div>
+        <div class="flexContainerCenter" *ngIf="url">
+          <img *ngIf="selectedFile" src="{{url}}" alt="image" class="imageButton">
+        </div>
+      </div>
+
+      <div class="flexContainerCenter">
+        <button style="width: 40%" class="btn btn-primary" [disabled]="!formElement.valid" type="submit">Добавить книгу</button>
+      </div>
+
+      <div class="flexContainerCenter" style=" margin-top: 20pt">
+        <p style="white-space: pre-wrap; text-align: center; font-size: large">{{response}}
+      </div>
+    </form>
   </div>
 
 </div>
+

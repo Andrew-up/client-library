@@ -4,6 +4,7 @@ import {RentBook} from "../../../models/RentBook";
 import {BasketService} from "../../../services/basket.service";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {Basket} from "../../../models/Basket";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-my-rent-books',
@@ -14,7 +15,8 @@ export class MyRentBooksComponent implements OnInit {
 
   constructor(private rentService: RentService,
               private baskedService: BasketService,
-              private tokenService: TokenStorageService) {
+              private tokenService: TokenStorageService,
+              private datePipe: DatePipe) {
   }
 
   myBooksRent?: RentBook[];
@@ -53,6 +55,22 @@ export class MyRentBooksComponent implements OnInit {
         this.getAllRentRequestUser();
       }
     })
+  }
+
+
+  summaPriceToday(item,price):number{
+
+    let dateToday = this.datePipe.transform(Date.now(), 'YYYY-MM-dd');
+    let dateIssue = this.datePipe.transform(item,'MM-dd-YYYY')?.toString();
+
+    var date1 = new Date();
+    var date2
+    if(dateIssue!=undefined){
+      date2 = new Date(dateIssue);
+    }
+    var daysLag = Math.ceil(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)-1);
+    let  zzz = Math.round(price/30 *daysLag) ;
+    return zzz;
   }
 
 }

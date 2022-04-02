@@ -9,10 +9,11 @@
   </tr>
   </thead>
   <tbody>
+
   <tr *ngFor="let item of users">
     <td>{{item.id}}</td>
     <td>{{item.firstname}} {{item.lastname}} {{item.surname}}</td>
-    <td class="col-md-6">
+    <td  class="col-md-6">
       <form>
         <div *ngFor="let item2 of item.bookRental">
           <input type="checkbox" [checked]="item2.giveOut"
@@ -20,15 +21,17 @@
         </div>
       </form>
     </td>
-    <td class="">
-      <button (click)="test(item)" class="btn btn-primary">Выдать</button>
+    <td  class="">
+      <button [disabled]="!viewButton(item?.bookRental?.length)" (click)="test(item)" class="btn btn-primary">Выдать</button>
     </td>
     <td>
-      <button class="btn btn-danger">Отказать</button>
+      <button  [disabled]="!viewButton(item?.bookRental?.length)" class="btn btn-danger">Отказать </button>
+<!--      <p>{{item?.bookRental?.length}}</p>-->
     </td>
+
   </tr>
+
+
   </tbody>
 </table>
 
-
-<input #test21 type="checkbox" [(ngModel)]="pbooosdf"> {{pbooosdf}}

@@ -9,6 +9,7 @@ import {Series} from "../models/Series";
 import {BookGenres} from "../models/BookGenres";
 import {EditionLanguage} from "../models/EditionLanguage";
 import {Translation} from "../models/Translation";
+import {Publisher} from "../models/Publisher";
 
 const BOOKS_API = 'http://localhost:8099/api/books/';
 const AUTHORS_API = 'http://localhost:8099/api/authors/';
@@ -56,8 +57,8 @@ export class BooksService {
   }
 
 
-  public getAllPublisher(): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(BOOKS_API + 'publisher/all');
+  public getAllPublisher(): Observable<Publisher[]> {
+    return this.httpClient.get<Publisher[]>(BOOKS_API + 'publisher/all');
   }
 
   public getAllAuthors(): Observable<Author[]> {

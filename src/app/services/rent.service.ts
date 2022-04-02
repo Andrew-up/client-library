@@ -26,5 +26,11 @@ export class RentService {
     return this.httpClient.post(RENT_API+'/create/'+idBasked, rent);
   }
 
+  public deleteRent(idRent):Observable<any>{
+    return this.httpClient.get(RENT_API+'/delete/'+idRent);
+  }
+
+
+
 
 }

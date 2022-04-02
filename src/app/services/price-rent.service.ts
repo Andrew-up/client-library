@@ -14,8 +14,8 @@ export class PriceRentService {
 
   constructor(private httpClient:HttpClient) { }
 
-  public getAllPriceRent():Observable<any>{
-    return this.httpClient.get(PRICE_API+'all');
+  public getAllPriceRent():Observable<Price[]>{
+    return this.httpClient.get<Price[]>(PRICE_API+'all');
   }
 
   public createPriceRent(priceRent:Price):Observable<any>{
