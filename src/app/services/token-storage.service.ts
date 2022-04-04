@@ -2,9 +2,11 @@ import {Injectable} from '@angular/core';
 import {User} from "../models/User";
 import {Router} from "@angular/router";
 import {Token} from "../models/Token";
+import {RefreshToken} from "../models/RefreshToken";
 
 const KEY_TOKEN = 'auth-token';
 const KEY_REFRESH_TOKEN = 'auth-token-refresh';
+const KEY_REFRESH_TOKEN_DATE = 'auth-token-refresh-date';
 const KEY_USER = 'auth-user';
 
 const USER_ROLE = 'user-role'
@@ -27,9 +29,11 @@ export class TokenStorageService {
     //   this.saveUser({ ...user, accessToken: token });
     // }
   }
-  public saveRefreshToken(token: string): void {
+  public saveRefreshToken(token: RefreshToken): void {
     window.localStorage.removeItem(KEY_REFRESH_TOKEN);
-    window.localStorage.setItem(KEY_REFRESH_TOKEN, token);
+    window.localStorage.removeItem(KEY_REFRESH_TOKEN_DATE);
+    window.localStorage.setItem(KEY_REFRESH_TOKEN, token.token+'');
+    window.localStorage.setItem(KEY_REFRESH_TOKEN_DATE, token.expiryDateToken+'');
   }
 
   signOut(): void {
@@ -65,6 +69,9 @@ export class TokenStorageService {
 
   public getRefreshToken(): string | null  {
     return localStorage.getItem(KEY_REFRESH_TOKEN);
+  }
+  public getRefreshTokenDate(): string | null  {
+    return localStorage.getItem(KEY_REFRESH_TOKEN_DATE);
   }
 
   public updateToken(): string | null {

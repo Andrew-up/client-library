@@ -86,7 +86,7 @@
           <button *ngIf="searchedKeyword" type="button" class="btn btn-outline-primary" (click)="searchedKeyword=''">Очистить</button>
           </div>
           <select #Select size="3" class="form-select form-select-sm" multiple data-live-search="true" aria-label=".form-select-sm example">
-            <option *ngFor="let item of authors | filter:searchedKeyword" [value]="item.authorsId" (click)="parseTo(item,searchedKeyword)"> <p>{{item.firstname}} {{item.lastname}}  {{item.patronymic}} {{item.dateOfBirth}}</p></option>
+            <option *ngFor="let item of authors" [value]="item.authorsId" (click)="parseTo(item,searchedKeyword)"> <p>{{item.firstname}} {{item.lastname}}  {{item.patronymic}} {{item.dateOfBirth}}</p></option>
 <!--            <p>{{Select.options}}</p>-->
          <!-- Output: "bar" -->
 

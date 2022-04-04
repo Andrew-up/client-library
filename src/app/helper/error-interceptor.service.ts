@@ -15,6 +15,7 @@ import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
 import {Token} from "../models/Token";
 import {take} from "rxjs/operators";
+import {DatePipe} from "@angular/common";
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
@@ -28,6 +29,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
               private authService: AuthService,
               private userService: UserService,
               private router: Router,
+              private datePipe: DatePipe
   ) {
   }
 
@@ -37,6 +39,9 @@ export class ErrorInterceptorService implements HttpInterceptor {
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     // console.log(this.refreshTokenSubject);
     // console.log(this.isRefreshing);
+    console.log(request);
+    console.log(next);
+    console.log(this.refreshTokenSubject);
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
@@ -45,36 +50,46 @@ export class ErrorInterceptorService implements HttpInterceptor {
         switchMap((token: any) => {
           this.isRefreshing = false;
           this.refreshTokenSubject.next(token.jwt);
-          return next.handle(this.addToken(request, this.tokenService.getToken()+''));
+          return next.handle(this.addToken(request, this.tokenService.getToken() + ''));
         }));
+
     } else {
       // console.log('request');
-      let jj = this.refreshTokenSubject.pipe(
+      return this.refreshTokenSubject.pipe(
         filter(token => token != null),
         take(1),
         switchMap(jwt => {
           return next.handle(this.addToken(request, jwt));
+
         }));
-      console.log(jj)
-      return jj;
+
     }
   }
 
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.tokenService.getJwtToken()) {
-      request = this.addToken(request, this.tokenService.getJwtToken()+'');
+      request = this.addToken(request, this.tokenService.getJwtToken() + '');
     }
     return next.handle(request).pipe(catchError(error => {
+
+      if (error.status === 403) {
+        let dateNow = new Date();
+        let dateRefreshToken = this.datePipe.transform(this.tokenService.getRefreshTokenDate(), 'long')
+        let dateToday = this.datePipe.transform(dateNow, 'long')
+        if (dateToday && dateRefreshToken != null) {
+          if (dateToday > dateRefreshToken) {
+            this.tokenService.logOut();
+          } else {
+            this.notificationService.showSnackBar("Нет доступа");
+          }
+        }
+
+      }
       if (error instanceof HttpErrorResponse && error.status === 401) {
         // console.log(request,next);
         return this.handle401Error(request, next);
-      }
-      if (error instanceof HttpErrorResponse && error.status === 403) {
-        this.tokenService.logOut();
-        return this.handle401Error(request, next);
-      }
-      else {
+      } else {
         return throwError(error);
       }
     }));

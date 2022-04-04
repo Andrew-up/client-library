@@ -8,6 +8,7 @@ import {User} from "../../models/User";
 import {Router} from "@angular/router";
 import {AppComponent} from "../../app.component";
 import {NgForm} from "@angular/forms";
+import {RefreshToken} from "../../models/RefreshToken";
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  refreshToken?: string = '';
+  refreshToken!: RefreshToken;
   success?: boolean;
   token?: string = '';
   error?: string = '';
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
     o.password = btoa(form.value.password);
     this.authService.login(o).subscribe({
       next: (v: Token) => {
-        this.refreshToken = v.refreshToken;
+        this.refreshToken = v.refreshToken!;
         this.success = v.success;
         this.token = v.accessToken;
         this.eRole = v.role;
@@ -55,13 +56,9 @@ export class LoginComponent implements OnInit {
           console.log(v.refreshToken);
           console.log(this.refreshToken);
           this.tokenStorageService.saveToken(this.token + '');
-          this.tokenStorageService.saveRefreshToken(this.refreshToken + '');
+          this.tokenStorageService.saveRefreshToken(this.refreshToken);
           this.tokenStorageService.saveRole(this.eRole + '');
-          this.router.navigate(['/index']).then(() => {
-            console.log('test');
-            this.notificationService.showSnackBar("Авторизация успешна!");
-            window.location.reload();
-          });
+
 
         }
       },
@@ -73,7 +70,13 @@ export class LoginComponent implements OnInit {
           next: (v: User) => {
             this.tokenStorageService.saveUser(v);
             this.tokenStorageService.saveRole(v.role + '');
-
+          },
+          complete:()=>{
+            this.router.navigate(['/index']).then(() => {
+              console.log('test');
+              this.notificationService.showSnackBar("Авторизация успешна!");
+              window.location.reload();
+            });
           }
         })
       }
