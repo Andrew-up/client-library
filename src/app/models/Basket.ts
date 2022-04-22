@@ -3,7 +3,12 @@ export interface Basket {
   booksName?:string;
   bookTitle?:string;
   usersName?:string;
-  bookId?:string;
+  bookId?:number;
   priceId?:string;
   userId?:string;
+  isRequestCreated?:boolean;
+  isTheBasket?:boolean;
+  isIssued?:boolean;
+  giveOut?:boolean;
+  dateIssue?:string;
 }

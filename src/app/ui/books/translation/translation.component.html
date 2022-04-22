@@ -33,7 +33,7 @@
               </div>
               <div class="modal-body">
                 <div class="alert alert-warning">
-                  <li>Невозможно книга если есть книга с текущей обложкой</li>
+                  <li>Невозможно удалить если есть книга с текущей обложкой</li>
                   <li>Удаленный тип обложки невозможно восстановить</li>
                 </div>
               </div>
@@ -51,7 +51,7 @@
       <tr>
         <th>auto</th>
         <td>
-          <input type="text" class="form-control" placeholder="Название" [(ngModel)]="fieldNewName">
+          <input type="text" class="form-control" placeholder="Имя Фамилия Отчество" [(ngModel)]="fieldNewName">
         </td>
         <th colspan="2" class="col-md-1 save" (click)="addObject()">Добавить
           <span *ngIf="loadingInProgress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

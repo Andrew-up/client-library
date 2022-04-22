@@ -45,7 +45,9 @@ export class RegisterComponent implements OnInit {
       },
       error: (e) => {
         this.message = JSON.stringify(e.error);
+        this.notificationService.showSnackBar("Такой email уже занят")
         console.log(e)
+        console.log("12312312312")
       }
     })
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BooksService} from "../../../services/books.service";
 import {UserService} from "../../../services/user.service";
 import {Book} from "../../../models/Book";
@@ -8,109 +8,113 @@ import {RentService} from "../../../services/rent.service";
 import {RentBook} from "../../../models/RentBook";
 import {PriceRentService} from "../../../services/price-rent.service";
 import {Price} from "../../../models/Price";
+import {NgForm} from "@angular/forms";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-add-rent-to-user',
   templateUrl: './add-rent-to-user.component.html',
-  styleUrls: ['./add-rent-to-user.component.css', '../../common_styles.css']
+  styleUrls: ['./add-rent-to-user.component.css']
 })
 export class AddRentToUserComponent implements OnInit {
 
-  public selectedBookTitle = 0;
-  public selectedDateIssue = null;
-  public selectedDateReturn = null;
-  public selectedEmployee: any;
-  public selectedEmployeeId: any;
-  public selectedPriceRent = null;
-  public selectedUser = null;
-  now = new Date();
-  maxDate?: string;
-  response = 'Ответ: ';
+  get selectedDateIssue(): string {
+    return this._selectedDateIssue+'';
+  }
 
-  responseBool= false;
+  set selectedDateIssue(value: string) {
+    this._selectedDateIssue = value;
+  }
+  get inputTextUsers(): string {
+    return this._inputTextUsers +'';
+  }
 
-  constructor(private bookService: BooksService,
-              private userService: UserService,
+  set inputTextUsers(value: string) {
+    this._inputTextUsers = value;
+  }
+
+  get selectedUser(): User {
+    return this._selectedUser;
+  }
+
+  set selectedUser(value: User) {
+    this._selectedUser = value;
+  }
+  get clickSelectUser(): boolean {
+    return this._clickSelectUser;
+  }
+
+  setClickSelectUser(value: boolean) {
+    this._clickSelectUser = !value;
+  }
+  get inputTextBookTitle(): string {
+    return this._inputTextBookTitle+'';
+  }
+
+  set inputTextBookTitle(value: string) {
+    this._inputTextBookTitle = value;
+  }
+
+  @ViewChild('formElement', {static: false}) public form!: NgForm;
+
+  get selectedBook(): Book {
+    return this._selectedBook;
+  }
+
+  set selectedBook(value: Book) {
+    this._selectedBook = value;
+  }
+
+  get clickBook(): boolean {
+    return this._clickBook;
+  }
+
+  setClickBook(value: boolean) {
+
+    this._clickBook = !value;
+  }
+
+  constructor(private bookService:BooksService,
+              private userService:UserService,
               private tokenService: TokenStorageService,
-              private priceService: PriceRentService,
+              private datePipe:DatePipe,
               private rentService:RentService) {
   }
 
+  private _clickBook = false;
+  private _clickSelectUser = false;
+  private _inputTextBookTitle?: string = '';
+  private _inputTextUsers?: string = '';
+  private _selectedDateIssue?: string = '';
+  private _selectedBook: Book = {bookId: 0};
+  private _selectedUser: User = {bookRental: [], id: 0};
+  public employee?:User;
+  now = new Date();
+  maxDate?: string;
 
-  users: User[] = [{
-    id: 0,
-    bookRental:[{}]
-  }]
-
-  rent: Price[] = [{}]
-
-  convertDate(date: Date) {
-    let yyyy = date.getFullYear().toString();
-    let mm = (date.getMonth() + 1).toString();
-    let dd = date.getDate().toString();
-    let mmChars = mm.split('');
-    let ddChars = dd.split('');
-    return yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
-  }
-
-  book: Book[] = [{
-    bookId: 0,
-    bookTitle: 'test'
+  filterBooks: any[] = [{
+    filterString: '',
   }];
+  filterUsers: any[] = [{
+    filterString: '',
+  }];
+  books: Book[] = [{}];
+  users: User[] = [];
+  response:string=' ';
 
-  getAllBook() {
-    this.bookService.getAllBooks().subscribe(res => {
-      this.book = res;
-      this.getEmployee();
-      this.getUser();
-      this.getPrice();
-      this.getEmployeeId();
-    })
-  }
-
-  getEmployee() {
-    this.selectedEmployee = this.tokenService.getUser().username;
-  }
-  getEmployeeId(){
-    this.selectedEmployeeId = this.tokenService.getUser().id;
-  }
-
-  getUser() {
-    this.userService.getAllUsers().subscribe({
-      next: (value) => {
-        this.users = value;
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  getPrice() {
-    this.priceService.getAllPriceRent().subscribe({
-      next: (value) => {
-        console.log(value)
-        this.rent = value;
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  addRent() {
+  submitForm(form: NgForm) {
+    console.log(form)
     let obj: RentBook = {
-      bookId: this.selectedBookTitle,
-      priceId: this.selectedPriceRent,
-      userId: this.selectedUser,
-      employeeId: this.selectedEmployeeId,
-      dateIssue: this.selectedDateIssue,
-      dateReturn: this.selectedDateReturn,
+      bookId: this.selectedBook?.bookId,
+      priceId: this.selectedBook?.priceId,
+      userId: this.selectedUser.id,
+      employeeId: this.employee?.id,
+      dateIssue: this.selectedDateIssue
     }
-    this.responseBool = true;
-    this.rentService.addRent(obj).subscribe({
-      next:(value:RentBook)=>{
 
+    this.rentService.addRent(obj,'').subscribe({
+      next:(value:RentBook)=>{
+        console.log(value);
         this.response = 'Ответ: ';
         this.response += value.dateIssue + ' ';
         if(this.selectedDateIssue == value.dateIssue){
@@ -125,14 +129,79 @@ export class AddRentToUserComponent implements OnInit {
 
       },
       complete:()=>{
-        this.responseBool = false;
       }
     })
   }
 
   ngOnInit(): void {
-    this.maxDate = this.convertDate(this.now).toString();
-    this.getAllBook();
+    this.bookService.getAllBooks().subscribe(value => {
+      this.filterBooks =value;
+      this.books =value;
+      for (let i = 0; i < value.length; i++) {
+        this.filterBooks[i].filterString = value[i].bookTitle;
+      }
+    })
+    this.userService.getAllUsers().subscribe(value => {
+      this.users= value;
+      this.filterUsers = value;
+      for (let i = 0; i < value.length; i++) {
+        this.filterUsers[i].filterString = value[i].firstname +' '+ value[i].lastname+ ' '+ value[i].username;
+      }
+    })
+    this.employee = this.tokenService.getUser();
+    this.maxDate = this.datePipe.transform(this.now,'yyyy-MM-dd')+'';
+  }
+
+  valueBooksOptionOrInputFilter(objNgModel, inputOrOption, objFilter, item?) {
+    this.inputTextBookTitle = inputOrOption;
+    if (item != null) {
+      this.selectedBook.bookId = item.bookId;
+      this.selectedBook.bookTitle = item.bookTitle;
+      this.selectedBook.priceId = item.priceId;
+      this.filterBooks = this.filterInputByObject(inputOrOption, objFilter, objNgModel.name, true);
+    } else {
+      this.filterBooks = this.filterInputByObject(inputOrOption, objFilter, objNgModel.name, false);
+    }
+  }
+  valueUsersOptionOrInputFilter(objNgModel, inputOrOption, objFilter, item?) {
+    this.inputTextUsers = inputOrOption;
+    if (item != null) {
+      this.selectedUser.id = item.id;
+      this.selectedUser.username = item.username;
+      this.selectedUser.email = item.email;
+      this.filterUsers = this.filterInputByObject(inputOrOption, objFilter, objNgModel.name, true);
+    } else {
+      this.filterUsers = this.filterInputByObject(inputOrOption, objFilter, objNgModel.name, false);
+    }
+  }
+
+  filterInputByObject(filterInput: string, objFilter: any, controls: string, click: boolean): any {
+    let errorArray: Array<string> = [];
+    filterInput = filterInput.toLowerCase();
+    let filterOption = objFilter.filter(x => filterInput === "" || x.filterString?.toLowerCase().includes(filterInput));
+    if (filterOption.length == 0) {
+      errorArray.push('not found length == 0');
+    }
+    if (!click) {
+      errorArray.push('no click Value Option');
+    }
+    if (click) {
+      errorArray.length = 0;
+      this.form.controls[controls].setErrors(null);
+      console.log('error clear')
+    }
+    if (errorArray.length > 0) {
+      this.form.controls[controls].setErrors({warn: errorArray});
+    }
+
+    return filterOption;
+  }
+
+  event(event) {
+    if (!event.target.form) {
+      this._clickBook = false;
+      this._clickSelectUser = false;
+    }
   }
 
 }

@@ -1,34 +1,87 @@
-.carousel-item{
-  height: 300pt;
+.books_parent {
+  background: #F8F9FA;
+}
+.page-link {
+  cursor: pointer;
+}
+
+.numberPages {
+  height: auto;
+  width: 100%;
+}
+
+
+.search {
+  display: flex;
+  width: 50%;
+  margin-right: 10pt;
+  margin-top: 10pt;
+}
+
+
+.card {
+  margin: 5pt;
+  width: 15rem;
+}
+
+.countBooks{
+  position	: absolute;
+  font-size: 20pt;
+  border-radius: 20pt;
+  min-width: 30pt;
+  width: auto;
+  height: 30pt;
+  text-align: center;
+  margin-left: 5pt;
+  margin-top: 5pt;
+  background-color: red;
+  color: white;
+  opacity: 0.5;
+}
+
+
+.newBookIcon{
+  position	: absolute;
+  font-size: 20pt;
+  min-width: 30pt;
+  height: 30pt;
+  text-align: center;
+  margin-left: 30pt;
+  margin-top: 10pt;
+  color: #ff0000;
+}
+.countBooks:hover{
+  cursor: help;
+  opacity: 1;
+}
+
+.card-customGroup {
+  padding-top: 20pt;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+
+}
+
+.button-info {
+  margin-top: 10pt;
+  width: 100%;
+  margin-bottom: 10pt;
+}
+
+.flexContainerCenter{
+  min-width: 200pt;
+  display: flex;
   align-items: center;
   justify-content: center;
-}
-.carousel-item img{
-  margin-top: 20pt;
-  height: 250pt;
-  width: 200pt !important;
+  border: solid rgba(255, 0, 0, 0.62);
+  border-radius: 25pt;
+  width: 30%;
   margin-left: auto;
   margin-right: auto;
-  opacity: 0.3;
-}
-.carousel{
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
+  background-color: rgba(255, 255, 255, 0.24);
 }
 
-.carousel-item img:hover{
-  opacity: 0.8;
-}
 
-.carousel-control-next{
-  background-color: rgba(0, 0, 0, 0.28);
-}
-.carousel-control-prev{
-  background-color: rgba(0, 0, 0, 0.28);
-}
-
-.carousel{
-  margin-top: 20pt !important;
-  margin-bottom: 20pt;
-}

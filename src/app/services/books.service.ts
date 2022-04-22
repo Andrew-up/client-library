@@ -11,7 +11,7 @@ import {EditionLanguage} from "../models/EditionLanguage";
 import {Translation} from "../models/Translation";
 import {Publisher} from "../models/Publisher";
 
-const BOOKS_API = 'http://localhost:8099/api/books/';
+const BOOKS_API = 'http://localhost:8099/api/';
 const AUTHORS_API = 'http://localhost:8099/api/authors/';
 const COVER_CODE_API = 'http://localhost:8099/api/books/cover-code/';
 const AGE_LIMIT_API = 'http://localhost:8099/api/books/age-limit/';
@@ -32,7 +32,7 @@ export class BooksService {
 
   public CreateBook(book: any): Observable<Book> {
     // console.log('crete book thhp: '+JSON.stringify(book));
-    return this.httpClient.post(BOOKS_API + 'create', book);
+    return this.httpClient.post(BOOKS_API + 'staff/books/create', book);
   }
 
   public getBookById(id): Observable<Book> {
@@ -40,11 +40,20 @@ export class BooksService {
   }
 
   public getAllBooks(): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(BOOKS_API + 'all/');
+    return this.httpClient.get<Book[]>(BOOKS_API + 'books/all/');
+  }
+  public getAllBooksByAuthorId(authorId?:number): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(BOOKS_API + 'books/allByAuthorId/'+authorId);
+  }
+  public getNewBook(): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(BOOKS_API + 'books/newBook/');
+  }
+  public getMaxRent(): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(BOOKS_API + 'books/maxRent/');
   }
 
   public getAllBooksByNumberPage(page, size): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(BOOKS_API + 'AllBookByPage', {
+    return this.httpClient.get<Book[]>(BOOKS_API + 'books/AllBookByPage', {
       params: {
         page: page,
         size: size,
@@ -52,13 +61,8 @@ export class BooksService {
     });
   }
 
-  public getAllBooksById(id): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(BOOKS_API + 'getAllById/' + id);
-  }
-
-
   public getAllPublisher(): Observable<Publisher[]> {
-    return this.httpClient.get<Publisher[]>(BOOKS_API + 'publisher/all');
+    return this.httpClient.get<Publisher[]>(BOOKS_API + 'books/publisher/all');
   }
 
   public getAllAuthors(): Observable<Author[]> {
@@ -94,7 +98,7 @@ export class BooksService {
   }
 
   public searchBook(searchInput?:string,typeSearch?:string):Observable<any>{
-    return this.httpClient.post(BOOKS_API+'search',{
+    return this.httpClient.post(BOOKS_API+'books/search',{
       search:searchInput,
       typeSearch:typeSearch
     });

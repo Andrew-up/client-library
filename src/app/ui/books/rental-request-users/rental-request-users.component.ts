@@ -47,7 +47,7 @@ export class RentalRequestUsersComponent implements OnInit {
       next: (value) => {
         this.users.map(o => {
           if (o.id === userId) {
-            o.bookRental = value;
+            // o.bookRental = value;
             // console.log(o.bookRental);
           }
         });
@@ -81,20 +81,13 @@ export class RentalRequestUsersComponent implements OnInit {
   getAllUsers() {
     this.userService.getAllUsersRequestCreated().subscribe({
         next: (value) => {
-          this.users = value.filter(e=>e.isRequestCreated);
-          console.log(this.users)
-          for (let i = 0; i < this.users.length; i++) {
-            this.getAllBasketToUser(this.users[i].id);
-          }
+          this.users = value;
         },
         error: (err) => {
 
         },
         complete: () => {
-
-          // console.log(ff)
-          // console.log(zz)
-          // console.log(this.users);
+          console.log(this.users)
         }
       }
     )
@@ -122,25 +115,26 @@ export class RentalRequestUsersComponent implements OnInit {
     // console.log(item);
     // console.log(this.users)
 
-    if (item.bookRental != undefined) {
-      for (let i = 0; i < item.bookRental?.length; i++) {
-        console.log(item.bookRental[i].giveOut);
-        if (item.bookRental[i].giveOut) {
+    if (item.basketUser != undefined) {
+      for (let i = 0; i < item.basketUser?.length; i++) {
+        console.log(item.basketUser[i].giveOut);
+        if (item.basketUser[i].giveOut) {
           // console.log(item.bookRental[i].basketId);
           // console.log(item.bookRental[i]);
           // console.log(item.id + 'Id юзера')
           console.log(item);
           // console.log( item.bookRental[i].bookId)
           let obj: RentBook = {
-            bookId: item.bookRental[i].bookId,
-            priceId: item.bookRental[i].priceId,
+            bookId: item.basketUser[i].bookId,
+            priceId: item.basketUser[i].priceId,
             userId: item.id,
             employeeId: this.tokenService.getUser().id,
             dateIssue: dateToday,
+            // dateIssue: dateToday,
             // dateReturn: this.selectedDateReturn,
           }
-          console.log(item.bookRental[i]);
-          this.rentService.addRent(obj, item.bookRental[i].basketId).subscribe({
+          console.log(item.basketUser[i]);
+          this.rentService.addRent(obj, item.basketUser[i].basketId+'').subscribe({
             next: (value) => {
               console.log(value);
             },

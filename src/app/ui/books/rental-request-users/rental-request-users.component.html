@@ -15,17 +15,18 @@
     <td>{{item.firstname}} {{item.lastname}} {{item.surname}}</td>
     <td  class="col-md-6">
       <form>
-        <div *ngFor="let item2 of item.bookRental">
+        <div *ngFor="let item2 of item.basketUser">
           <input type="checkbox" [checked]="item2.giveOut"
-                 (change)="item2.giveOut = !item2.giveOut"> {{item2.bookTitle}}
+                 (change)="item2.giveOut = !item2.giveOut">
+          {{item2.bookTitle}}
         </div>
       </form>
     </td>
     <td  class="">
-      <button [disabled]="!viewButton(item?.bookRental?.length)" (click)="test(item)" class="btn btn-primary">Выдать</button>
+      <button [disabled]="!viewButton(item?.basketUser?.length)" (click)="test(item)" class="btn btn-primary">Выдать</button>
     </td>
     <td>
-      <button  [disabled]="!viewButton(item?.bookRental?.length)" class="btn btn-danger">Отказать </button>
+      <button  [disabled]="!viewButton(item?.basketUser?.length)" class="btn btn-danger">Отказать </button>
 <!--      <p>{{item?.bookRental?.length}}</p>-->
     </td>
 

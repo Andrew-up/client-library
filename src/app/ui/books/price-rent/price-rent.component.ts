@@ -20,7 +20,7 @@ export class PriceRentComponent implements OnInit {
   updateThisObject: Price = {}
   response = 'Ответ: ';
   enableEditIndex = null;
-  fieldNewName?:string;
+  fieldNewName?:string="";
   isFieldEdit = false;
   idDelete?: number;
   isErrorDataFormat = false;
@@ -90,7 +90,7 @@ export class PriceRentComponent implements OnInit {
   addObject() {
     this.loadingInProgress = true;
     let obj: Price = {
-      priceName: this.fieldNewName,
+      priceName: this.fieldNewName+'',
     }
     this.rentPriceService.createPriceRent(obj).subscribe({
       next: (value) => {

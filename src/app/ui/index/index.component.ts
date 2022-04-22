@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from "../../services/token-storage.service";
 import {BooksService} from "../../services/books.service";
 import {ImageService} from "../../services/image.service";
@@ -12,8 +12,11 @@ import {Book} from "../../models/Book";
 export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
-    this.getAllBooks();
+    this.getNewBook();
+    this.getMaxRent();
   }
+  newBook:Book[] =[];
+  maxRent:Book[] =[];
 
   title = 'client';
 
@@ -22,49 +25,53 @@ export class IndexComponent implements OnInit {
               private imageService: ImageService) {
   }
 
-  logout() {
-    this.token.logOut();
-  }
-
-  book: Book[] =
-    [{
-      bookTitle: '123',
-      genreCode: '222',
-      numberPages: '0',
-      bookReleaseDate: '123',
-      genreName: '123'
-    }];
-
-
-  getAllBooks() {
-    this.booksService.getAllBooks().subscribe({
+  getNewBook() {
+    this.booksService.getNewBook().subscribe({
       next: (value) => {
-        this.book = value;
+        this.newBook = value;
+        console.log(value);
       },
-      error: (err) => {
-        console.log(err)
-      },
-      complete: () => {
-        console.log('complete')
-        for (let i = 0; i < this.book.length; i++) {
-          this.imageService.getBookImg(this.book[i].bookId).subscribe({
-            next: (value) => {
-              this.book[i].imageBlob = value;
-              const reader = new FileReader();
-              reader.readAsDataURL(value);
-              reader.addEventListener("load", () => {
-                this.book[i].imageSrcTemp = reader.result;
-              })
-            },
-            error: (err) => {
-              console.log(err)
-            },
-            complete: () => {
-            }
-          })
-        }
+      complete:()=>{
+        this.getImageByBookId(this.newBook);
       }
     })
+  }
+  getMaxRent() {
+    this.booksService.getMaxRent().subscribe({
+      next: (value) => {
+        this.maxRent = value;
+        console.log(value);
+      },
+      complete:()=>{
+        this.getImageByBookId(this.maxRent);
+      }
+    })
+  }
+
+
+  getImageByBookId(book:Book[]) {
+
+    for (let i = 0; i < book.length; i++) {
+      this.imageService.getBookImg(book[i].bookId).subscribe({
+        next: (value) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(value);
+          if (book.length > 0) {
+            book[i].imageBlob = value;
+            reader.addEventListener("load", () => {
+              book[i].imageSrcTemp = reader.result;
+            })
+          }
+        },
+        error: (err) => {
+        },
+        complete: () => {
+
+        }
+      })
+    }
+
+
   }
 
 }

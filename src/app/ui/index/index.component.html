@@ -1,37 +1,49 @@
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="" class="d-block w-100" alt="...">
+
+<div class="flexContainerCenter" >
+  <h4 style="text-align: center;">Новинки!</h4>
+</div>
+<div class="card-customGroup">
+  <div *ngFor="let item of newBook" class="card">
+    <img src="{{item.imageSrcTemp}}"
+         style=" padding:5pt; height: 13rem; width: auto" class="card-img-top" alt="...">
+    <p title="Осталось всего: {{item.countBooks}} шт" *ngIf="item.countBooks!=0 && !item.myBooksRent" class="countBooks">{{item.countBooks}}</p>
+    <mat-icon title="Новинка!" class="newBookIcon">fiber_new</mat-icon>
+    <div class="card-body">
+      <h5 class="card-title">
+        <p style="height: 2rem"> {{item.bookTitle}}</p>
+      </h5>
+      <p class="card-text">{{item.authorsFullName}}</p>
     </div>
-    <div class="carousel-item">
-      <img src="" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="" class="d-block w-100" alt="...">
-    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Жанр: {{item.genreName}}</li>
+      <li class="list-group-item">Страниц: {{item.numberPages}}</li>
+      <li class="list-group-item">Издательство: {{item.publisherName}}</li>
+      <li class="list-group-item">Стоимость аренды: {{item.priceName}}</li>
+    </ul>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
 
-<p> На данный момент работает:</p>
-<li>Регистрация</li>
-<li>Авторизация</li>
-<li>Книги</li>
-<li>Выход</li>
-<li>Меню работника -> Добавить книгу</li>
-<li>Меню работника -> Добавить автора</li>
-<li>Промокоды</li>
-<li>Меню работника -> Жанры</li>
-<li>Меню работника -> Издательство</li>
-<li>Меню работника -> Возрастные ограничения</li>
-<li>Меню работника -> Вид обложки</li>
-<li>Меню работника -> Перевод книг</li>
-<li>Меню работника -> Язык издания</li>
-<li>Меню администратора -> Список пользователей</li>
+<div class="flexContainerCenter" style="margin-top: 20pt" >
+  <h4 style="text-align: center;">Популярные!</h4>
+</div>
+<div class="card-customGroup">
+  <div *ngFor="let item of maxRent" class="card">
+    <img src="{{item.imageSrcTemp}}"
+         style=" padding:5pt; height: 13rem; width: auto" class="card-img-top" alt="...">
+    <p title="Осталось всего: {{item.countBooks}} шт" *ngIf="item.countBooks!=0 && !item.myBooksRent" class="countBooks">{{item.countBooks}}</p>
+    <div class="card-body">
+      <h5 class="card-title">
+        <p style="height: 2rem"> {{item.bookTitle}}</p>
+      </h5>
+      <p class="card-text">{{item.authorsFullName}}</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Жанр: {{item.genreName}}</li>
+      <li class="list-group-item">Страниц: {{item.numberPages}}</li>
+      <li class="list-group-item">Издательство: {{item.publisherName}}</li>
+      <li class="list-group-item">Стоимость аренды: {{item.priceName}}</li>
+    </ul>
+  </div>
+</div>
+
+

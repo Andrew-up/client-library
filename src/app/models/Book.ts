@@ -36,11 +36,11 @@ export interface Book {
 
   imageSrcTemp?:any;
 
-  giveOut?:boolean;
+
   basketId?:string;
 
   myBooksRent?:boolean;
-  dateRent?:string;
+  dateIssue?:string;
   myBooksRequest?:boolean;
   myBooksBasket?:boolean;
 

@@ -1,28 +1,58 @@
-
-.authors {
-  padding-top: 20pt;
-  flex-direction: column;
+.itemBooks {
+  /*background-color: rgba(158, 255, 241, 0.47);*/
+  margin: 10pt;
   display: flex;
-  min-width: 30%;
-  background-color: #F8F9FA;
+  border: 1pt dashed #8c8b8b;
+  justify-content: space-between;
 }
 
-.form-floating {
-  margin-left: auto;
-  margin-right: auto;
+.itemBooks p {
+  font-size: x-large;
+  margin: 0 10pt;
+  text-align: start;
+}
+
+.bookDetail {
+  border: 2pt solid black;
+  padding: 20pt;
+}
+
+.topPanel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.topPanel h5:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.horizontalLine {
+  border-top: 2pt dashed #8c8b8b;
+}
+
+.basicInformation {
+
+}
+
+.btnBack {
   margin-top: 10pt;
-  min-width: 150pt;
-  max-width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.form-input {
-  margin-top: 5pt;
-  margin-bottom: 5pt;
+.imageBook {
+  margin-top: 10pt;
+  margin-bottom: 10pt;
+  width: 200pt;
+  height: 200pt;
+  border-radius: 10pt;
+  box-shadow: 0 0 10pt rgba(0, 0, 0, 0.5);;
 }
 
-input.ng-invalid.ng-touched {
-  border: 1pt solid red;
+.form-input{
+
+  margin: 0 0 10pt auto;
 }
-
-
-

@@ -39,7 +39,9 @@ export class LoginComponent implements OnInit {
   error?: string = '';
   eRole?: string = '';
 
+
   submitForm(form:NgForm){
+
     let o = {
       email: '',
       password: ''
@@ -58,8 +60,9 @@ export class LoginComponent implements OnInit {
           this.tokenStorageService.saveToken(this.token + '');
           this.tokenStorageService.saveRefreshToken(this.refreshToken);
           this.tokenStorageService.saveRole(this.eRole + '');
-
-
+        }
+        if(!v.success){
+          this.notificationService.showSnackBar(v.accessToken+'');
         }
       },
       error: (e) => {
@@ -83,8 +86,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  defaultEmail ='ivanov10@mail.ru';
-  defaultPassword ='test123';
+  defaultEmail ='';
+  defaultPassword ='';
 
   ngOnInit() {
 

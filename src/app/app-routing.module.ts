@@ -4,7 +4,6 @@ import {LoginComponent} from "./auth/login/login.component";
 import {RegisterComponent} from "./auth/register/register.component";
 import {BooksComponent} from "./ui/books/books-list/books.component";
 import {CreateBookComponent} from "./ui/books/create-book/create-book.component";
-import {PromocodeComponent} from "./ui/users/promocode/promocode.component";
 import {CreateAuthorsComponent} from "./ui/books/create-authors/create-authors.component";
 import {IndexComponent} from "./ui/index/index.component";
 import {PublishingHouseComponent} from "./ui/books/publishing-house/publishing-house.component";
@@ -37,7 +36,6 @@ const routes: Routes = [
   {path:'books-list',component:BooksComponent},
   {path:'create-book',component:CreateBookComponent,
     canActivate:[WorkerGuard]},
-  {path:'promo_code',component:PromocodeComponent},
   {path:'create-authors',component:CreateAuthorsComponent,
     canActivate:[WorkerGuard]},
   {path:'index',component:IndexComponent},
@@ -63,10 +61,11 @@ const routes: Routes = [
   {path:'book/genre',component:CommonGenreComponent,
   children:[
     {path:'list',component:GenreListComponent}
-  ],canActivate:[WorkerGuard]},
+  ],               canActivate:[WorkerGuard]},
   {path:'book/age-limit',component:CommonAgeLimitComponent,
   children:[
-    {path:'list',component: AgeLimitListComponent}
+    {path:'list',component: AgeLimitListComponent,
+                  canActivate: [AuthenticationGuard]}
   ]
   },
   {path:'profile',component:ProfileComponent,

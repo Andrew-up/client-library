@@ -23,7 +23,7 @@
       <div *ngFor="let item of book" class="card">
         <img src="{{item.imageSrcTemp}}"
              style=" padding:5pt; height: 13rem; width: auto" class="card-img-top" alt="...">
-        <p title="Осталось всего: {{item.countBooks}} шт" *ngIf="item.countBooks!=null && !item.myBooksRent" class="countBooks">{{item.countBooks}}</p>
+        <p title="Осталось всего: {{item.countBooks}} шт" *ngIf="item.countBooks!=0 && !item.myBooksRent &&isDataLoaded" class="countBooks">{{item.countBooks}}</p>
         <div class="card-body">
           <h5 class="card-title">
             <p style="height: 2rem"> {{item.bookTitle}}</p>
@@ -37,28 +37,31 @@
           <li class="list-group-item">Стоимость аренды: {{item.priceName}}</li>
         </ul>
         <div class="card-body" style="margin-left: 10%; margin-right: 10%;">
-          <button *ngIf="!item.myBooksRent && !item.myBooksBasket && !item.myBooksRequest &&isDataLoaded && item.countBooks!=null"
+          <button *ngIf="!item.myBooksRent && !item.myBooksBasket && !item.myBooksRequest && item.countBooks!=0 &&isDataLoaded"
                   class="btn btn-primary $gray-300" (click)="addBasketToUser(item)">Добавить в корзину</button>
-          <button disabled *ngIf="item.countBooks==null || item.countBooks<=0" class="btn btn-secondary button-info">Нет в наличии</button>
-          <button *ngIf="item.myBooksRequest &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Заявка на книгу создана</button>
-          <button *ngIf="item.myBooksBasket &&isDataLoaded" class="btn btn-warning $gray-300"
+          <button disabled *ngIf="item.countBooks==null || item.countBooks<=0 &&isDataLoaded" class="btn btn-secondary button-info">Нет в наличии</button>
+          <button *ngIf="item.myBooksRequest" class="btn btn-primary $gray-300" disabled>Заявка на книгу создана</button>
+          <button *ngIf="item.myBooksBasket " class="btn btn-warning $gray-300"
                   (click)="deleteBasketToUser(item.basketId,item.bookId)">Убрать из корзины</button>
-          <button *ngIf="item.myBooksRent &&isDataLoaded" class="btn btn-primary $gray-300" disabled>Книга в аренде c {{item.dateRent}}</button>
-          <button class="btn btn-secondary button-info">Подробнее</button>
+          <button *ngIf="item.myBooksRent " class="btn btn-primary $gray-300" disabled>Книга в аренде c {{item.dateIssue}}</button>
+<!--          <button class="btn btn-secondary button-info" (click)="console(item)">Подробнее</button>-->
+          <button type="button" class="btn btn-secondary button-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Подробнее
+          </button>
 
 
 <!--          <h5>{{item.countBooks}}</h5>-->
         </div>
       </div>
     </div>
-  <div *ngIf="isBooksNull">
-    Список пуст или проблемы соеденения с сервером
+  <div *ngIf="!isDataLoaded">
+<!--    Список пуст или проблемы соединения с сервером-->
   </div>
   <div *ngIf="isSearchData">
    Ничего не нашлось =(
   </div>
 
-    <div class="numberPages" *ngIf="!isWorkSearch()">
+    <div  class="numberPages" *ngIf="!isWorkSearch()">
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center ">
         <li class="page-item" [ngClass]="{'disabled': indexPage<=0}">
@@ -86,6 +89,30 @@
       </ul>
     </nav>
   </div>
-  <div></div>
+
+
+  <!-- Кнопка-триггер модального окна -->
+
+
+  <!-- Модальное окно -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Заголовок модального окна</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          <app-authors>
+
+          </app-authors>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="button" class="btn btn-primary">Сохранить изменения</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 

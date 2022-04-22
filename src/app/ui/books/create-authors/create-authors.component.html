@@ -38,7 +38,6 @@
           class="form-control"
           [ngClass]="{'is-invalid': patronymic.invalid && patronymic.touched,'is-valid': !patronymic.invalid && patronymic.touched}"
           ngModel name="patronymic"
-          required
           pattern="[a-zA-Zа-яА-Я]*"
           #patronymic = "ngModel"
           id="patronymic"

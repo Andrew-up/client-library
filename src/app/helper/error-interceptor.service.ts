@@ -74,14 +74,21 @@ export class ErrorInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(catchError(error => {
 
       if (error.status === 403) {
-        let dateNow = new Date();
-        let dateRefreshToken = this.datePipe.transform(this.tokenService.getRefreshTokenDate(), 'long')
-        let dateToday = this.datePipe.transform(dateNow, 'long')
+        const dateRefreshToken = this.datePipe.transform(this.tokenService.getRefreshTokenDate(), 'ddMMYYYYHH24mmss ');
+        const dateToday = this.datePipe.transform(new Date(), 'ddMMYYYYHH24mmss ')
         if (dateToday && dateRefreshToken != null) {
           if (dateToday > dateRefreshToken) {
+            // console.log(dateToday)
+            // console.log(dateRefreshToken)
+            // this.notificationService.showSnackBar("Выход");
             this.tokenService.logOut();
-          } else {
+          }
+          if (dateToday < dateRefreshToken) {
+            console.log(dateToday)
+            console.log(dateRefreshToken)
             this.notificationService.showSnackBar("Нет доступа");
+          } else {
+
           }
         }
 

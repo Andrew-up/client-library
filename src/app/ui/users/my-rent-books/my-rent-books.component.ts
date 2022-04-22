@@ -40,7 +40,7 @@ export class MyRentBooksComponent implements OnInit {
   getAllRentRequestUser() {
     this.baskedService.getAllBasketByUserId(this.tokenService.getUser().id).subscribe({
       next: (value) => {
-        this.myRequestRent = value;
+        this.myRequestRent = value.filter(x => !x.isIssued && !x.isTheBasket);
       }
     })
   }

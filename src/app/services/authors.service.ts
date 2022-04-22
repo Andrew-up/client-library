@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Author} from "../models/Author";
 
-const AUTHORS_API ='http://localhost:8099/api/authors/'
+const AUTHORS_API ='http://localhost:8099/api/'
 @Injectable({
   providedIn: 'root'
 })
@@ -13,10 +13,15 @@ export class AuthorsService {
 
 
   public createAuthor(author:Author):Observable<any>{
-    return this.httpClient.post(AUTHORS_API+'create',author);
+    return this.httpClient.post(AUTHORS_API+'staff/authors/create',author);
   }
   public getAllAuthor():Observable<any>{
-    return this.httpClient.get(AUTHORS_API+'all');
+    return this.httpClient.get(AUTHORS_API+'authors/all');
+  }
+  public searchAuthors(searchInput?:string):Observable<any>{
+    return this.httpClient.post(AUTHORS_API+'authors/search',{
+      search:searchInput,
+    });
   }
 
 }

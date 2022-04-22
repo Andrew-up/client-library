@@ -19,5 +19,7 @@ export interface User{
   dateOfBirth?:string;
   imageProfile?:any;
   bookRental:Book[];
-  isRequestCreated?:boolean;
+  basketUser?:Basket[];
+  newRole?:string;
+  newStatus?:string;
 }

@@ -1,46 +1,97 @@
-<div class="page">
-  <div class="CommonParent">
+<div (click)="event($event)" class="addBookRoot">
+<div class="login-form">
+  <div class="container mt-auto mb-auto">
+    <h4 style="text-align: center; padding-bottom: 15pt">Выдача книги вручную</h4>
+    <form (ngSubmit)="submitForm(formElement)" #formElement="ngForm" >
+      <div class="form-floating">
+        <input
 
-    <p>Дата выдачи</p>
-    <input  class="form-input" type="date" placeholder="Release Date" value="1980-01-01" [max]="maxDate" [(ngModel)]="selectedDateIssue">
-    <p>Дата возврата</p>
-    <input  class="form-input" type="date" placeholder="Release Date" value="1980-01-01" [min]="maxDate" [(ngModel)]="selectedDateReturn">
-    <p>Кем выдано:</p>
-    <p>{{ selectedEmployee }}</p>
-    <p>Книга</p>
-    <select  [(ngModel)]="selectedBookTitle">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of book" [value]="item.bookId">{{item.bookTitle}}</option>
-    </select>
-    <p>{{ selectedBookTitle }}</p>
-
-
-  <p>Оплата: </p>
-
-    <select  [(ngModel)]="selectedPriceRent">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of rent" [value]="item.id">{{item.priceName}}</option>
-    </select>
-    <p>{{ selectedPriceRent }}</p>
-
-    <p>Кому выдана:</p>
-
-    <select [(ngModel)]="selectedUser">
-      <option [value]="null">Не выбрано</option>
-      <option *ngFor="let item of users" [value]="item.id">{{item.username}}</option>
-    </select>
-    <p>{{ selectedUser }}</p>
-
-    <br>
-    <div class="buttonCreateBook">
-      <div>
-        <button  class="btn btn-light" (click)="addRent()">Добавить аренду</button>
+          type="date"
+          class="form-control"
+          [ngClass]="{'is-invalid': dateIssue.invalid && dateIssue.touched,'is-valid': !dateIssue.invalid  && dateIssue.touched}"
+          [(ngModel)]="selectedDateIssue" name="dateIssue"
+          required
+          value="1980-01-01" [max]="maxDate"
+          #dateIssue = "ngModel"
+          id="dateIssue"
+          placeholder="Дата выдачи">
+        <label for="dateIssue">Дата выдачи</label>
       </div>
-    </div>
-    <p>{{response}}</p>
-    <button class="btn btn-primary" type="button" disabled>
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="responseBool"></span>
-    </button>
-  </div>
+      <div *ngIf="employee!=undefined" class="form-group form-floating">
+        <input
+          class="form-control"
+          [ngModel] ="employee.username"
+          disabled
+          name="selectedEmployee"
+          #selectedEmployee = "ngModel"
+          id="selectedEmployee"
+          placeholder="password">
+        <label for="selectedEmployee">Выбранный работник</label>
+      </div>
 
+      <div
+        class="form-floating datalist"
+        (click)="setClickBook(clickBook)"
+        [ngClass]="{'active':clickBook}">
+        <input [(ngModel)]="inputTextBookTitle"
+               name="books"
+               #booksModel="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="books"
+               [ngClass]="{'is-invalid': (booksModel.invalid)  && booksModel.touched ,'is-valid': !booksModel.invalid  && booksModel.touched}"
+               (input)="valueBooksOptionOrInputFilter(booksModel,inputTextBookTitle,books)"
+               placeholder="Выберите жанр">
+        <label for="books">Выберите книгу</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterBooks">
+            <li
+              #optionItem
+              [textContent]="item.bookTitle"
+              (click)="valueBooksOptionOrInputFilter(booksModel,optionItem.textContent,filterBooks,item)"
+              id="{{item.bookId}}">
+            </li>
+          </div>
+        </ul>
+      </div>
+
+      <div
+        class="form-floating datalist"
+        (click)="setClickSelectUser(clickSelectUser)"
+        [ngClass]="{'active':clickSelectUser}">
+        <input [(ngModel)]="inputTextUsers"
+               name="user"
+               #selectUser="ngModel"
+               class="form-control datalist-input"
+               type="text"
+               required
+               id="selectUser"
+               [ngClass]="{'is-invalid': (selectUser.invalid)  && selectUser.touched ,'is-valid': !selectUser.invalid  && selectUser.touched}"
+               (input)="valueUsersOptionOrInputFilter(selectUser,inputTextUsers,users)"
+               placeholder="Выберите пользователя">
+        <label for="selectUser">Выберите пользователя</label>
+        <ul class="datalist-ul">
+          <div *ngFor="let item of filterUsers">
+            <li
+              #optionItem
+              [textContent]="item.firstname +' ' + item.lastname +' '+ item.username"
+              (click)="valueUsersOptionOrInputFilter(selectUser,optionItem.textContent,filterUsers,item)"
+              id="{{item.id}}">
+            </li>
+          </div>
+        </ul>
+      </div>
+
+
+      <div class=" d-grid gap-2 col-4 mx-auto mb-5 p-1">
+        <button
+          class="btn btn-success mt-5"
+          type="submit"
+          [disabled]="!formElement.valid"
+        >Добавить в аренду</button>
+      </div>
+    </form>
+  </div>
+</div>
 </div>

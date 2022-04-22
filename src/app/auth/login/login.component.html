@@ -15,7 +15,7 @@
       placeholder="email">
       <label for="floatingInput233">Эл. почта</label>
     </div>
-    <p *ngIf="emailElement.invalid && emailElement.touched">Email не корректен</p>
+<!--    <p *ngIf="emailElement.invalid && emailElement.touched">Email не корректен</p>-->
   <div class="form-group form-floating">
     <input
       [type]="textOrPass"
@@ -29,13 +29,14 @@
       placeholder="password">
     <label for="floatingInput233222222222">Пароль</label>
   </div>
-  <p *ngIf="passValid.invalid && passValid.touched">Пароль не корректен</p>
+<!--  <p *ngIf="passValid.invalid && passValid.touched">Пароль не корректен</p>-->
   <div class=" d-grid gap-2 col-4 mx-auto mb-5 p-1">
   <button
     class="btn btn-success mt-5"
     type="submit"
     [disabled]="!formElement.valid"
   >Войти</button>
+
   </div>
 </form>
 </div>

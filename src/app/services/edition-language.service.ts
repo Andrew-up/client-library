@@ -4,7 +4,7 @@ import {Translation} from "../models/Translation";
 import {Observable} from "rxjs";
 import {EditionLanguage} from "../models/EditionLanguage";
 
-const EDITION_LANGUAGE_API ='http://localhost:8099/api/books/edition-language/'
+const EDITION_LANGUAGE_API ='http://localhost:8099/api/'
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +15,18 @@ export class EditionLanguageService {
 
 
   public createEditionLanguage(edition:EditionLanguage):Observable<any>{
-    return this.httpClient.post(EDITION_LANGUAGE_API+'create',edition);
+    return this.httpClient.post(EDITION_LANGUAGE_API+'staff/books/edition-language/create',edition);
   }
 
   public getAllEditionLanguage():Observable<EditionLanguage[]>{
-    return this.httpClient.get<EditionLanguage[]>(EDITION_LANGUAGE_API+'all');
+    return this.httpClient.get<EditionLanguage[]>(EDITION_LANGUAGE_API+'books/edition-language/all');
   }
 
   public updateEditionLanguage(update:EditionLanguage):Observable<EditionLanguage>{
-    return this.httpClient.post(EDITION_LANGUAGE_API+'update',update)
+    return this.httpClient.post(EDITION_LANGUAGE_API+'staff/books/edition-language/update',update)
   }
 
   public deleteEditionLanguage(update?:number):Observable<any>{
-    return this.httpClient.post(EDITION_LANGUAGE_API+'delete',update)
+    return this.httpClient.post(EDITION_LANGUAGE_API+'staff/books/edition-language/delete',update)
   }
 }

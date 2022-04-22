@@ -79,3 +79,16 @@
   -webkit-border-radius: 0 0 6px 0;
   border-radius: 0 0 6px 0;
 }
+
+
+.active{
+  color:green;
+  font-weight: bold;
+}
+.not_active{
+  color: red;
+  font-weight: bold;
+}
+.deleted{
+
+}

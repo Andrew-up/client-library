@@ -1,66 +1,94 @@
+<ng-container>
+  <div class="bookDetail">
+    <div class="topPanel">
 
-<div class="authors">
-  <div class="container mt-auto mb-auto">
-    <form (ngSubmit)="submitForm(formElement)" #formElement="ngForm" >
-      <div class="form-floating">
-        <input
-          type="text"
-          class="form-control"
-          [ngClass]="{'is-invalid': firstname.invalid && firstname.touched,'is-valid': !firstname.invalid  && firstname.touched}"
-          ngModel name="firstname"
-          required
-          pattern="[a-zA-Zа-яА-Я]*"
-          #firstname = "ngModel"
-          id="firstname"
-          placeholder="Имя">
-        <label for="firstname">Имя</label>
+
+      <h5 (click)="backToListAuthors()">Все авторы</h5>
+      <mat-icon *ngIf="selectedAuthor.authorsId!=null">keyboard_arrow_right</mat-icon>
+      <h5 (click)="backToListBookToAuthor()">{{selectedAuthor.firstname}} {{selectedAuthor.lastname}}</h5>
+      <mat-icon *ngIf="selectedBook.bookId!=null">keyboard_arrow_right</mat-icon>
+      <p *ngIf="selectedBook.bookId!=null">{{selectedBook.bookTitle}}</p>
+
+      <div class="form-input" *ngIf="selectedBook.bookId==null && booksAuthors.length==0">
+        <form class="input-group search" #formSearch="ngForm" (ngSubmit)="submitFormSearch(formSearch)">
+          <input ngModel name="inputSearch" style="min-width: 100pt" [(ngModel)]="inputSearch" type="search"
+                 class="form-control rounded" placeholder="Поиск по автору"
+                 aria-label="Search" aria-describedby="search-addon"/>
+          <button type="submit" class="btn btn-outline-primary">Поиск</button>
+        </form>
       </div>
-      <div class="form-group form-floating">
-        <input
-          class="form-control"
-          [ngClass]="{'is-invalid': lastname.invalid && lastname.touched,'is-valid': !lastname.invalid && lastname.touched}"
-          ngModel
-          name="lastname"
-          required
-          pattern="[a-zA-Zа-яА-Я]*"
-          #lastname = "ngModel"
-          id="lastname"
-          placeholder="Фамилия">
-        <label for="lastname">Фамилия</label>
-      </div>
-      <div class="form-group form-floating">
-        <input
-          class="form-control"
-          [ngClass]="{'is-invalid': patronymic.invalid && patronymic.touched,'is-valid': !patronymic.invalid && patronymic.touched}"
-          ngModel name="patronymic"
-          required
-          pattern="[a-zA-Zа-яА-Я]*"
-          #patronymic = "ngModel"
-          id="patronymic"
-          placeholder="Отчество">
-        <label for="patronymic">Отчество</label>
-      </div>    <div class="form-group form-floating">
-        <input
-          class="form-control"
-          [ngClass]="{'is-invalid': dateOfBirth.invalid && dateOfBirth.touched,'is-valid': !dateOfBirth.invalid && dateOfBirth.touched}"
-          ngModel name="dateOfBirth"
-          required
-          type="date"
-          #dateOfBirth = "ngModel"
-          id="dateOfBirth"
-          placeholder="Дата рождения">
-        <label for="dateOfBirth">Дата рождения</label>
-      </div>
-      <div class=" d-grid gap-2 col-4 mx-auto mb-5 p-1">
-        <button
-          class="btn btn-success mt-5"
-          type="submit"
-          [disabled]="!formElement.valid"
-        >Добавить автора</button>
-      </div>
-    </form>
-    <div class="flexContainerCenter" style=" margin-top: 20pt">
-      <p style="white-space: pre-wrap; text-align: center; font-size: large">{{response}}
     </div>
+
+
+    <div class="horizontalLine"></div>
+
+    <div style="margin-top: 20pt">
+      <div (click)="setSelectedAuthor(item)" *ngFor="let item of authors" class="listAuthors">
+        <div *ngIf="selectedBook.bookId==null && booksAuthors.length==0"><h5 style="cursor: pointer; color: black"
+                                                                             (click)="getAllBookByAuthor(item)">{{item.firstname}} {{item.patronymic}} {{item.lastname}} </h5>
+        </div>
+      </div>
+      <div *ngFor="let books of booksAuthors; let i = index">
+        <div *ngIf="selectedBook.bookId==null" class="itemBooks">
+          <p>{{books.bookTitle}}</p>
+          <button class="btn btn-secondary" (click)="clickBook(books)"> Подробнее</button>
+        </div>
+      </div>
+    </div>
+    <div>
+    </div>
+    <div *ngIf="selectedBook.bookId!=null" class="basicInformation">
+      <button (click)="backToListBookToAuthor()" class="btn btn-secondary btnBack">
+        <mat-icon>arrow_left</mat-icon>
+        <h5 style="margin: auto">Назад</h5>
+      </button>
+      <div class="row">
+        <div class="col" style="display:flex; align-items: center; justify-content: center; flex-direction: column">
+          <img [src]="selectedBook.imageSrcTemp" alt="image"
+               class="imageBook">
+          <h5>{{selectedBook.priceName}} р/месяц</h5>
+        </div>
+        <div class="col-6">
+          <p>Название: {{selectedBook.bookTitle}}</p>
+          <p>Тип обложки: {{selectedBook.coverName}}</p>
+          <p>Жанр: {{selectedBook.genreName}}</p>
+          <p>Издательство: {{selectedBook.publisherName}}</p>
+          <p>Язык: {{selectedBook.languageName}}</p>
+          <p>Серия: {{selectedBook.seriesName}}</p>
+          <p>Дата выхода: {{selectedBook.bookReleaseDate}}</p>
+          <p>Возрастное ограничение: {{selectedBook.ageLimitName}}</p>
+          <p>Колличество страниц: {{selectedBook.numberPages}}</p>
+          <p>ISBN: {{selectedBook.nameISBN}}</p>
+
+
+          <div class="card-body" style="margin-left: 10%; margin-right: 10%;">
+            <button [disabled]="!isDataLoaded"
+                    *ngIf="!selectedBook.myBooksRent && !selectedBook.myBooksBasket && !selectedBook.myBooksRequest && selectedBook.countBooks!=0 && isDataLoaded"
+                    class="btn btn-primary $gray-300" (click)="addBasketToUser(selectedBook)">Добавить в корзину
+            </button>
+            <button disabled *ngIf="selectedBook.countBooks==null || selectedBook.countBooks<=0"
+                    class="btn btn-secondary button-info">Нет в наличии
+            </button>
+            <button *ngIf="selectedBook.myBooksRequest" class="btn btn-primary $gray-300" disabled>Заявка на книгу
+              создана
+            </button>
+            <button [disabled]="!isDataLoaded" *ngIf="selectedBook.myBooksBasket " class="btn btn-warning $gray-300"
+                    (click)="deleteBasketToUser(selectedBook.basketId)">Убрать из корзины
+            </button>
+            <button *ngIf="selectedBook.myBooksRent " class="btn btn-primary $gray-300" disabled>Книга в аренде
+              c {{selectedBook.dateIssue}}</button>
+            <!--          <button class="btn btn-secondary button-info" (click)="console(item)">Подробнее</button>-->
+            <!--          <h5>{{item.countBooks}}</h5>-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
+</ng-container>
+
+
+<div>
+
 </div>

@@ -24,7 +24,6 @@ import {PublishingHouseComponent} from './ui/books/publishing-house/publishing-h
 import {MyBooksComponent} from './ui/users/my-books/my-books.component';
 import {EditStatusUserComponent} from './ui/users/edit-status-user/edit-status-user.component';
 import {MatListModule} from "@angular/material/list";
-import {PromocodeComponent} from './ui/users/promocode/promocode.component';
 import {authErrorInterceptorProviders} from "./helper/error-interceptor.service";
 import {IndexComponent} from './ui/index/index.component';
 import {EditionLanguageComponent} from './ui/books/edition-language/edition-language.component';
@@ -66,7 +65,6 @@ import { AuthorsComponent } from './ui/books/authors/authors.component';
     PublishingHouseComponent,
     MyBooksComponent,
     EditStatusUserComponent,
-    PromocodeComponent,
     IndexComponent,
     EditionLanguageComponent,
     AddRentToUserComponent,

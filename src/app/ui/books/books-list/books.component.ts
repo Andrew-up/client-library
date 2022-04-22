@@ -65,35 +65,15 @@ export class BooksComponent implements OnInit {
 
       },
       complete: () => {
-        this.getBasketUser();
+        this.viewButtons();
       }
     })
   }
 
-
-  GYFYTFYEDFTVJHG(item) {
-    console.log(item);
-  }
-
-  getRentUser() {
-    this.rentService.getAllRentByUser().subscribe({
-      next: (value) => {
-        for (let i = 0; i < value.length; i++) {
-          if (this.book != undefined) {
-            let index = this.book.findIndex(x => x.bookId === value[i].bookId);
-            if (index > -1) {
-              this.book[index].myBooksRent = true;
-              this.book[index].dateRent = value[i].dateIssue;
-            }
-          }
-        }
-      }
-    })
-  }
 
   deleteBasketToUser(idDelete, bookId) {
     console.log(idDelete);
-    this.basketService.deleteBasketToUser(idDelete,).subscribe({
+    this.basketService.deleteBasketToUser(idDelete).subscribe({
       next: (value) => {
         console.log(value);
         let index = this.book.findIndex(x => x.bookId === bookId);
@@ -106,66 +86,49 @@ export class BooksComponent implements OnInit {
   }
 
 
-  getBasketUser() {
-    this.basketService.getMyBasket().subscribe({
-      next: (value) => {
-        for (let i = 0; i < value.length; i++) {
-          let index = this.book.findIndex(x => x.bookId === value[i].bookId);
-          if (index > -1) {
-            this.book[index].myBooksBasket = true;
-            this.book[index].basketId = value[i].basketId;
-          }
-        }
-      },
-      complete: () => {
-        this.isDataLoaded = true;
-      }
-    })
-  }
+
 
   zzzzzzzzzz(id) {
+
     this.basketService.getAllBasketByUserId(id).subscribe({
       next: (value) => {
         for (let i = 0; i < value.length; i++) {
           let index = this.book.findIndex(x => x.bookId === value[i].bookId);
-          console.log(index);
-          console.log(this.book);
-          if (index > 0) {
+          // console.log(index);
+          // console.log(this.book);
             if (this.book[index] != undefined) {
-              this.book[index].myBooksRequest = true;
+              this.book[index].myBooksRequest = value[i].isRequestCreated;
+              this.book[index].myBooksRequest = value[i].isRequestCreated;
+              this.book[index].myBooksRent = value[i].isIssued;
+              this.book[index].myBooksBasket = value[i].isTheBasket;
+              this.book[index].basketId = value[i].basketId+'';
+              this.book[index].dateIssue = value[i].dateIssue;
             }
-          }
+
         }
+      },
+      complete:()=>{
+        this.isDataLoaded = true;
+        console.log(this.book);
       }
     })
   }
 
 
   viewButtons() {
+
     if (this.tokenService.getToken() != null) {
       this.userService.getCurrentUser().subscribe({
         next: (value) => {
-          this.getRentUser();
-          this.getBasketUser();
           this.zzzzzzzzzz(value.id);
         }
+
       })
     }
   }
 
 
-  searchBook(inputSearch?: string) {
-    console.log(inputSearch);
-    this.booksService.searchBook(inputSearch).subscribe({
-      next: (value) => {
-        this.book = value;
-      },
-      complete: () => {
-        this.viewButtons();
-        this.getImageByBookId();
-      }
-    })
-  }
+
 
   indexPage: number = 0;
   sizeElement: number = 5;
@@ -188,13 +151,9 @@ export class BooksComponent implements OnInit {
 
 
   book: Book[] =
-    [{
-      bookTitle: '123',
-      genreCode: '222',
-      numberPages: '0',
-      bookReleaseDate: '123',
-      genreName: '123'
-    }];
+    [
+
+    ];
 
   bookSearch: Book[] = [];
 
@@ -246,5 +205,9 @@ export class BooksComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllBook();
+  }
+
+  console(item: Book) {
+    console.log(item)
   }
 }

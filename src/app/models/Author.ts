@@ -1,3 +1,5 @@
+import {Book} from "./Book";
+
 export interface Author{
   id?:string|undefined|null;
   authorsId?:number;
@@ -6,4 +8,6 @@ export interface Author{
   patronymic?: string;
   dateOfBirth?: string;
   authorsFullName?:string;
+  books?:Book[];
+  clickAuthor?:boolean;
 }

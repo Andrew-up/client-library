@@ -159,7 +159,6 @@
           #bookSeriesModel="ngModel"
           class="form-control datalist-input"
           type="text"
-          required
           id="bookSeries"
           [ngClass]="{'is-invalid': (bookSeriesModel.invalid || !isDataAuthorsLoad )  && bookSeriesModel.touched ,'is-valid': !bookSeriesModel.invalid  && bookSeriesModel.touched}"
           (input)="valueBookSeriesOptionOrInputFilter(bookSeriesModel,inputTextBookSeries,bookSeries)"
@@ -244,7 +243,6 @@
                #translationModel="ngModel"
                class="form-control datalist-input"
                type="text"
-               required
                id="translation"
                [ngClass]="{'is-invalid': (translationModel.invalid)  && translationModel.touched ,'is-valid': !translationModel.invalid  && translationModel.touched}"
                (input)="valueTranslationOptionOrInputFilter(translationModel,inputTextTranslation,translation)"

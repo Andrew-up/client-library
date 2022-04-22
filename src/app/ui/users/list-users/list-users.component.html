@@ -1,14 +1,15 @@
 <div class="center">
-<div class="bordered">
+<div *ngIf="isDataLoaded" class="bordered">
   <thead>
   <tr>
     <th>id</th>
-    <th>full name</th>
-    <th>email</th>
-    <th>status</th>
-    <th>role</th>
-    <th>Изменить</th>
-    <th>Удалить</th>
+    <th>Фамилия Имя</th>
+    <th>Почта</th>
+    <th>Текущий статус</th>
+    <th>Новый статус</th>
+    <th>Текущая роль</th>
+    <th>Новая роль</th>
+    <th>Сохранить</th>
   </tr>
   </thead>
   <tbody *ngFor="let item of users">
@@ -16,10 +17,19 @@
     <td>{{item.id}}</td>
     <td>{{item.firstname}}  {{item.lastname}} {{item.surname}}</td>
     <td>{{item.username}}</td>
-    <td>{{item.status}}</td>
+    <td [ngClass]="{'active':item.status=='ACTIVE','not_active':item.status=='NOT_ACTIVE'}">{{item.status}}</td>
+    <td>
+      <select name="model" [(ngModel)]="item.newStatus" class="form-select" aria-label="Default select example">
+        <option *ngFor="let item2 of status">{{item2}}</option>
+      </select>
+    </td>
     <td>{{item.role}}</td>
-    <td><button>Изменить</button></td>
-    <td><button>Удалить</button></td>
+    <td>
+      <select [(ngModel)]="item.newRole" class="form-select" aria-label="Default select example">
+        <option *ngFor="let item2 of roles">{{item2}}</option>
+      </select>
+    </td>
+    <td><button (click)="saveUser(item)">Сохранить</button></td>
   </tr>
   </tbody>
 </div>
