@@ -26,10 +26,38 @@
       <td>{{item.priceName}}</td>
       <td>{{summaPriceToday(item.dateIssue,item.priceName)}}</td>
       <td>{{item.userName}}</td>
-      <td><button (click)="deleteRent(item.id)">Вернуть</button></td>
+      <td>
+
+        <button type="button" class="btn btn-primary" (click)="saveObjDeleteRent(item)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Вернуть
+        </button>
+      </td>
 
     </tr>
 
     </tbody>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Подтверждение возврата</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <h5>Взять аренду: {{summaPriceToday(deleteRentObj.dateIssue, deleteRentObj.priceName)}}</h5>
+        <hr>
+     <h5>  Книга возврата: {{deleteRentObj.bookName}}</h5>
+        <hr>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отменить</button>
+        <button type="button"  data-bs-dismiss="modal" (click)="deleteRent()" class="btn btn-primary">Ок</button>
+      </div>
+    </div>
   </div>
 </div>

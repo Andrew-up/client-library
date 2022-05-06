@@ -81,22 +81,55 @@
         </td>
 
         <th class="col-md-5">
-          <div class="input-group">
-          <input type="text" class="form-control"    placeholder="Поиск" [(ngModel)]="searchedKeyword">
-          <button *ngIf="searchedKeyword" type="button" class="btn btn-outline-primary" (click)="searchedKeyword=''">Очистить</button>
-          </div>
-          <select #Select size="3" class="form-select form-select-sm" multiple data-live-search="true" aria-label=".form-select-sm example">
-            <option *ngFor="let item of authors" [value]="item.authorsId" (click)="parseTo(item,searchedKeyword)"> <p>{{item.firstname}} {{item.lastname}}  {{item.patronymic}} {{item.dateOfBirth}}</p></option>
-<!--            <p>{{Select.options}}</p>-->
-         <!-- Output: "bar" -->
 
-          </select>
+          <div class="form-floating datalist"
+            (click)="setClickAuthorsInput(clickAuthorsInput)"
+            [ngClass]="{'active':clickAuthorsInput}">
+            <input
+              [(ngModel)]="inputTextAuthor"
+              name="authors"
+              #authorsModel="ngModel"
+              class="form-control datalist-input"
+              type="text"
+              required
+              id="authors"
+              [ngClass]="{'is-invalid': (authorsModel.invalid)  && authorsModel.touched || selectedAuthor.authorsId==null,'is-valid': !authorsModel.invalid  && authorsModel.touched}"
+              (input)="valueAuthorsOptionOrInputFilter(authorsModel,inputTextAuthor,authors)"
+              placeholder="Выберите автора">
+            <label for="authors">Выберите автора</label>
+            <ul class="datalist-ul">
+              <div *ngFor="let item of filterObjAuthors">
+                <li [textContent]="item.firstname +' ' + item.lastname +' '+ item.patronymic"
+                    #optionItem
+                    (click)="valueAuthorsOptionOrInputFilter(authorsModel,optionItem.textContent,filterObjAuthors,item);"
+                    id="{{item.authorsId}}">
+                </li>
+              </div>
+            </ul>
+          </div>
+
+
+<!--          <div class="input-group">-->
+
+
+<!--         -->
+
+
+<!--          <input type="text" class="form-control"    placeholder="Поиск" [(ngModel)]="searchedKeyword">-->
+<!--          <button *ngIf="searchedKeyword" type="button" class="btn btn-outline-primary" (click)="searchedKeyword=''">Очистить</button>-->
+<!--          </div>-->
+<!--          <select #Select size="3" class="form-select form-select-sm" multiple data-live-search="true" aria-label=".form-select-sm example">-->
+<!--            <option *ngFor="let item of authors" [value]="item.authorsId" (click)="parseTo(item,searchedKeyword)"> <p>{{item.firstname}} {{item.lastname}}  {{item.patronymic}} {{item.dateOfBirth}}</p></option>-->
+<!--&lt;!&ndash;            <p>{{Select.options}}</p>&ndash;&gt;-->
+<!--         &lt;!&ndash; Output: "bar" &ndash;&gt;-->
+
+<!--          </select>-->
 
         </th>
 
 
 
-        <th colspan="3" class="col-md-1 save" (click)="addObject(Select.value)">Добавить
+        <th colspan="3" class="col-md-1 save" (click)="addObject(selectedAuthor.authorsId)">Добавить
           <span *ngIf="loadingInProgress" class="spinner-border spinner-border-sm" role="status"
                 aria-hidden="true"></span>
         </th>
@@ -105,10 +138,10 @@
     </table>
   </div>
 
-<!--  <p>{{ authors | filterBy: ['firstname', 'lastname','dateOfBirth']: searchedKeyword }}</p>-->
+
 
   <div *ngIf="response">
-    {{response}}
+<!--    {{response}}-->
     <button *ngIf="isErrorDataFormat" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="btn btn-info"> Какой
       формат верный?
     </button>
@@ -140,3 +173,5 @@
     </div>
   </div>
 </div>
+
+

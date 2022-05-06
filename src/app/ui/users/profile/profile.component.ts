@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
               private token: TokenStorageService) {
   }
 
-  myProfile: User = {bookRental: []}
+  myProfile: User = {bookRental: [],phone:'0000000000'}
   updateProfile: User = {bookRental: []}
   editProfileBool = false;
   selectedFile: any = null;
@@ -57,7 +57,6 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
-
 
   onFileSelected(event) {
     let listError: Array<String> = [];

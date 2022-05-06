@@ -24,6 +24,7 @@
     "jquery": "^3.6.0",
     "jwt-decode": "^3.1.2",
     "ng2-search-filter": "^0.5.1",
+    "ngx-mask": "^13.1.11",
     "ngx-pipes": "^3.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

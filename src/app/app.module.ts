@@ -46,6 +46,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import { Error404Component } from './ui/common/error404/error404.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { AuthorsComponent } from './ui/books/authors/authors.component';
+import {NgxMaskModule} from "ngx-mask";
 
 
 @NgModule({
@@ -99,7 +100,7 @@ import { AuthorsComponent } from './ui/books/authors/authors.component';
     NgPipesModule,
     MatRadioModule,
     MatPaginatorModule,
-
+    NgxMaskModule.forRoot(),
   ],
   exports: [AppComponent],
   providers: [authInterceptorProviders,

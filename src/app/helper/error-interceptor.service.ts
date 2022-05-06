@@ -7,13 +7,12 @@ import {
   HttpInterceptor,
   HttpRequest
 } from "@angular/common/http";
-import {BehaviorSubject, catchError, delay, filter, Observable, switchMap, throwError} from "rxjs";
+import {BehaviorSubject, catchError, filter, Observable, switchMap, throwError} from "rxjs";
 import {TokenStorageService} from "../services/token-storage.service";
 import {NotificationService} from "../services/notification.service";
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
 import {Router} from "@angular/router";
-import {Token} from "../models/Token";
 import {take} from "rxjs/operators";
 import {DatePipe} from "@angular/common";
 
@@ -93,8 +92,11 @@ export class ErrorInterceptorService implements HttpInterceptor {
         }
 
       }
-      if (error instanceof HttpErrorResponse && error.status === 401) {
-        // console.log(request,next);
+
+      if (error instanceof HttpErrorResponse &&
+        error.status === 401 &&
+        location.pathname != '/login' &&
+        location.pathname != '/register') {
         return this.handle401Error(request, next);
       } else {
         return throwError(error);

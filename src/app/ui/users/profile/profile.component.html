@@ -63,8 +63,9 @@
                 <h6 class="mb-0">Телефон</h6>
               </div>
               <div class="col-sm-9 text-secondary">
-                <p *ngIf="!editProfileBool">{{myProfile.phone}}</p>
-                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.phone}}" [(ngModel)]="updateProfile.phone">
+                <p *ngIf="!editProfileBool">{{'+7'+myProfile.phone | mask:'+0(000) 000-00-00'}}</p>
+<!--                <input type="text" class="input-medium bfh-phone" data-format="+7 (ddd) ddd-dd-dd">-->
+                <input *ngIf="editProfileBool" type="text" class="form-control"  placeholder="{{myProfile.phone}}" [(ngModel)]="updateProfile.phone" prefix="+7" mask='(000) 000-00-00'>
               </div>
             </div>
             <hr>

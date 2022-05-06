@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-edit-book',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-book.component.css']
 })
 export class EditBookComponent implements OnInit {
+
+  @Input() userName: string = "";
+  @Input() userAge: number = 0;
 
   constructor() { }
 

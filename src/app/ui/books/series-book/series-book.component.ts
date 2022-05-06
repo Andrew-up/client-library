@@ -22,14 +22,43 @@ export class SeriesBookComponent implements OnInit {
 
   searchedKeyword!: string;
 
+  setClickAuthorsInput(value: boolean) {
+    this._clickAuthorsInput = !value;
+  }
+  get clickAuthorsInput(): boolean {
+    return this._clickAuthorsInput;
+  }
+  set inputTextAuthor(value: string) {
+    this._inputTextAuthor = value + '';
+  }
+
+  get inputTextAuthor(): string {
+    return this._inputTextAuthor + '';
+  }
+
+  get isDataAuthorsLoad(): boolean {
+    return this._isDataAuthorsLoad;
+  }
+  setIsDataAuthorsLoad(value: boolean) {
+    this._isDataAuthorsLoad = value;
+  }
+  get selectedAuthor(): Author {
+    return this._selectedAuthor;
+  }
+
+  set selectedAuthor(value: Author) {
+    this._selectedAuthor = value;
+  }
+
+  private _selectedAuthor: Author = {authorsId: 0};
+  private _isDataAuthorsLoad: boolean = false;
+  private _clickAuthorsInput = false;
+  private _inputTextAuthor?: string = '';
   logConsole(any) {
     console.log(any);
   }
 
 
-
-
-  addCarStatus = '';
   allObject: Series[] = [{}]
   authors: Author[] = [{}]
 
@@ -75,7 +104,11 @@ export class SeriesBookComponent implements OnInit {
 
   getAllAuthors() {
     this.authorsService.getAllAuthor().subscribe(res => {
-      this.authors = res;
+        this.authors = res;
+        this.filterObjAuthors = this.authors;
+        for (let i = 0; i < res.length; i++) {
+          this.filterObjAuthors[i].filterString = res[i].firstname + ' ' + res[i].lastname + ' ' + res[i].patronymic;
+        }
     },
       error => {
 
@@ -145,7 +178,6 @@ export class SeriesBookComponent implements OnInit {
   }
 
   addObject(value: any) {
-
     console.log(value);
     this.loadingInProgress = true;
     let obj: Series = {
@@ -157,16 +189,18 @@ export class SeriesBookComponent implements OnInit {
         this.loadingInProgress = false;
         if (this.fieldNewName == value.seriesName) {
           this.response = 'Ответ: ' + value.seriesName + '  Успешно добавлен';
+          this.toast.showSnackBar(value.seriesName+' успешно добавлен' );
           this.getAllObject();
           this.fieldNewName = '';
           this.isErrorDataFormat = false;
           this.selectedAuthors = null;
         } else {
-          this.response = 'Ответ: ' + value.seriesName;
+          this.toast.showSnackBar(value.seriesName+'');
           this.isErrorDataFormat = true;
         }
         if (value.seriesId == -2000) {
           this.isErrorDataFormat = false;
+          this.toast.showSnackBar(value.seriesName+'');
           this.response = 'Ответ: ' + value.seriesName;
         }
       },
@@ -192,4 +226,50 @@ export class SeriesBookComponent implements OnInit {
       }
     })
   }
+
+  filterObjAuthors: any[] = [{
+    filterString: '',
+  }];
+
+
+  valueAuthorsOptionOrInputFilter(objNgModel, inputOrOption, objFilter, item?) {
+
+    this.inputTextAuthor = inputOrOption;
+    console.log(inputOrOption)
+    if (item != null) {
+      this.selectedAuthor.authorsFullName = item.firstname + ' ' + item.lastname + ' ' + item.patronymic;
+      this.selectedAuthor.authorsId = item.authorsId;
+      this.filterObjAuthors = this.filterInputByObject(inputOrOption, objFilter, objNgModel.name, true);
+      this.setIsDataAuthorsLoad(true);
+    } else {
+      this.setIsDataAuthorsLoad(false);
+      this.filterObjAuthors = this.filterInputByObject(inputOrOption, objFilter, objNgModel.name, false);
+    }
+    console.log(objNgModel);
+
+  }
+
+  filterInputByObject(filterInput: string, objFilter: any, controls: string, click: boolean): any {
+    let errorArray: Array<string> = [];
+    filterInput = filterInput.toLowerCase();
+    let filterOption = objFilter.filter(x => filterInput === "" || x.filterString?.toLowerCase().includes(filterInput));
+    if (filterOption.length == 0) {
+      errorArray.push('not found length == 0');
+      this.selectedAuthor = {};
+    }
+    if (!click) {
+      errorArray.push('no click Value Option');
+      this.selectedAuthor = {};
+    }
+    if (click) {
+      errorArray.length = 0;
+      console.log('error clear')
+    }
+
+    return filterOption;
+  }
+
+
+
+
 }

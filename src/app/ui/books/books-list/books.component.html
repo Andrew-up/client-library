@@ -45,9 +45,9 @@
                   (click)="deleteBasketToUser(item.basketId,item.bookId)">Убрать из корзины</button>
           <button *ngIf="item.myBooksRent " class="btn btn-primary $gray-300" disabled>Книга в аренде c {{item.dateIssue}}</button>
 <!--          <button class="btn btn-secondary button-info" (click)="console(item)">Подробнее</button>-->
-          <button type="button" class="btn btn-secondary button-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Подробнее
-          </button>
+<!--          <button type="button" class="btn btn-secondary button-info" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--            Подробнее-->
+<!--          </button>-->
 
 
 <!--          <h5>{{item.countBooks}}</h5>-->
@@ -114,5 +114,11 @@
       </div>
     </div>
   </div>
+
+  <hr>
+
+<!--  <app-edit-book [userName]="name" [userAge]="age">-->
+
+<!--  </app-edit-book>-->
 
 

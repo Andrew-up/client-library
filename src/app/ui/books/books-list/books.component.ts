@@ -15,6 +15,9 @@ import {NgForm} from "@angular/forms";
 })
 export class BooksComponent implements OnInit {
 
+
+  name:any='123123123';
+  age:any;
   constructor(private booksService: BooksService,
               private imageService: ImageService,
               private tokenService: TokenStorageService,

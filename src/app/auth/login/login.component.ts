@@ -66,7 +66,9 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (e) => {
-        this.notificationService.showSnackBar(e.error.email + ' ' + e.error.password);
+        if (e.error.email=='Invalid username'){
+          this.notificationService.showSnackBar('Неверный логин или пароль');
+        }
       },
       complete: () => {
         this.userService.getCurrentUser().subscribe({
